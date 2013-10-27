@@ -1,0 +1,6 @@
+package com.yanas.mobileapp.weathercast;
+
+public class StationData {
+	private String temperature;
+
+}

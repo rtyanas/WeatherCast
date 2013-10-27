@@ -1,0 +1,64 @@
+package com.yanas.mobileapp.weathercast;
+
+public class StationData {
+	private WeatherDataValue temperature;
+	private WeatherDataValue predominant;
+	private WeatherDataValue percentPercip;
+	private WeatherDataValue windSustained;
+	private WeatherDataValue windSustainedDirection;
+	private WeatherDataValue windGust;
+	private WeatherDataValue tideLevel;
+	private WeatherDataValue tideDirection;
+	
+	
+	
+	public WeatherDataValue getTemperature() {
+		return temperature;
+	}
+	public void setTemperature(WeatherDataValue temperature) {
+		this.temperature = temperature;
+	}
+	public WeatherDataValue getPredominant() {
+		return predominant;
+	}
+	public void setPredominant(WeatherDataValue predominant) {
+		this.predominant = predominant;
+	}
+	public WeatherDataValue getPercentPercip() {
+		return percentPercip;
+	}
+	public void setPercentPercip(WeatherDataValue percentPercip) {
+		this.percentPercip = percentPercip;
+	}
+	public WeatherDataValue getWindSustained() {
+		return windSustained;
+	}
+	public void setWindSustained(WeatherDataValue windSustained) {
+		this.windSustained = windSustained;
+	}
+	public WeatherDataValue getWindSustainedDirection() {
+		return windSustainedDirection;
+	}
+	public void setWindSustainedDirection(WeatherDataValue windSustainedDirection) {
+		this.windSustainedDirection = windSustainedDirection;
+	}
+	public WeatherDataValue getWindGust() {
+		return windGust;
+	}
+	public void setWindGust(WeatherDataValue windGust) {
+		this.windGust = windGust;
+	}
+	public WeatherDataValue getTideLevel() {
+		return tideLevel;
+	}
+	public void setTideLevel(WeatherDataValue tideLevel) {
+		this.tideLevel = tideLevel;
+	}
+	public WeatherDataValue getTideDirection() {
+		return tideDirection;
+	}
+	public void setTideDirection(WeatherDataValue tideDirection) {
+		this.tideDirection = tideDirection;
+	}
+
+}

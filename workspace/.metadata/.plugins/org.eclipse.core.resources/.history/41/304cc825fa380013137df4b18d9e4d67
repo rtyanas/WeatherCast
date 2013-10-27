@@ -1,0 +1,14 @@
+package com.yanas.mobileapp.weathercast;
+
+public class AssembleWeatherData {
+
+	private String city;
+	private String state;
+	private String zipcode;
+	private String latitude;
+	private String longitude;
+
+	public AssembleWeatherData(String location_in) {
+		
+	}
+}

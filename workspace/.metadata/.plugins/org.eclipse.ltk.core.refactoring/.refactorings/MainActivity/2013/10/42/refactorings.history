@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;fragment_screen_slide_page.xml&apos; to &apos;layout&apos;&#x0D;&#x0A;- Original project: &apos;MainActivity&apos;&#x0D;&#x0A;- Destination element: &apos;layout&apos;&#x0D;&#x0A;- Original element: &apos;fragment_screen_slide_page.xml&apos;" description="Copy file" element1="res/layout/fragment_screen_slide_page.xml" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1382061456334" target="/MainActivity/res/layout" units="0" version="1.0"/>
+</session>

@@ -1,0 +1,50 @@
+package com.yanas.mobileapp.weathercast;
+
+import android.util.Log;
+
+public class AssembleWeatherData {
+
+	private String city;
+	private String state;
+	private String zipcode;
+	private String latitude;
+	private String longitude;
+	
+	boolean useZipcode = false;
+	final int CITY = 0;
+	final int STATE = 1;
+	final int ZIPCODE = 2;
+	final int LATITUDE = 3;
+	final int LONGITUDE = 4;
+
+	public AssembleWeatherData(String location_in) {
+		city = "";
+		state = "";
+		zipcode = "";
+		latitude = "";
+		longitude = "";
+		
+		String stationData[] = location_in.split(",");
+		Log.d("DisplayMessage", "location: "+ stationData);
+		if(stationData.length >= 3) {
+			city = stationData[CITY];
+			state = stationData[STATE];
+			zipcode = stationData[ZIPCODE];
+			if( (stationData[ZIPCODE] != null) && 
+					((! stationData[ZIPCODE].equals("")) && (! stationData[ZIPCODE].equals("null"))) ) {
+				useZipcode = true;
+				Log.i("DisplayWeatherInfoActivity", "Using Zipcode");
+			}
+			else {
+				Log.i("DisplayWeatherInfoActivity", "Zipcode not found, use lat/long");
+			}
+			if( ! useZipcode && stationData.length >= 5) {
+				
+				lat = location_in.split(",")[3];
+				lon = location_in.split(",")[4];
+			}
+		}
+		
+
+	}
+}

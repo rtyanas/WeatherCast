@@ -1,0 +1,5 @@
+package com.yanas.mobileapp.weathercast;
+
+public class WeatherDataSingle {
+
+}

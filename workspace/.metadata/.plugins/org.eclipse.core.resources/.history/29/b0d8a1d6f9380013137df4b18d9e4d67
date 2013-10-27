@@ -1,0 +1,8 @@
+package com.yanas.mobileapp.weathercast;
+
+public class AssembleWeatherData {
+
+	public AssembleWeatherData(String location) {
+		
+	}
+}

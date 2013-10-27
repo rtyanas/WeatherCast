@@ -1,0 +1,352 @@
+package com.yanas.mobileapp.weathercast;
+
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+import android.os.AsyncTask;
+import android.util.Log;
+
+import com.yanas.mobileapp.restaccess.RestClient;
+import com.yanas.mobileapp.restaccess.RestClient.RequestMethod;
+
+public class WeatherData {
+
+	/*
+	 * Execute the weather data request
+	 */
+	public class GetTheWeather extends AsyncTask<SetTheWeather, Integer, Long> {
+		String station;
+		String temperature;
+		String response;
+		
+		GetTheWeather() {
+		
+		}
+		
+	   	protected Long doInBackground(SetTheWeather... weatherReq) {
+			long sizeL = 0L;
+			Log.d("HttpTest", "start doInBackground" );
+			
+			RestClient rc = new RestClient();
+			try {
+				rc.Execute(weatherReq[0].method, weatherReq[0].url, 
+						weatherReq[0].headers, weatherReq[0].params);
+				response = rc.response;
+				Log.d("HttpTest", "Response Data:" + response);
+				
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			return sizeL;
+	   	}
+	   	
+		public String getResponse() {
+			
+			return response;
+		}
+	} // GetTheWeather
+	
+	
+	/*
+	 * Execute the weather data request
+	 */
+	public class XXXXGetTheWeatherMeteorological extends AsyncTask<XXXXSetTheWeatherMeteorological, Integer, Long> {
+		String station;
+		String temperature;
+		String response;
+		
+		XXXXGetTheWeatherMeteorological() {
+		
+		}
+		
+	   	protected Long doInBackground(XXXXSetTheWeatherMeteorological... weatherReq) {
+			long sizeL = 0L;
+			Log.d("HttpTest", "start doInBackground" );
+			
+			RestClient rc = new RestClient();
+			try {
+				rc.Execute(weatherReq[0].method, weatherReq[0].url, 
+						weatherReq[0].headers, weatherReq[0].params);
+				response = rc.response;
+				Log.d("HttpTest", "Response Data:" + response);
+				
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			return sizeL;
+	   	}
+	   	
+		public String getResponse() {
+			
+			return response;
+		}
+	} // GetTheWeather
+	
+	
+	/*
+	 * http://graphical.weather.gov/xml/sample_products/browser_interface/ndfdBrowserClientByDay.php?
+	 * endPoint1Lat=38.99&
+	 * endPoint1Lon=-77.01&
+	 * endPoint2Lat=39.99&
+	 * endPoint2Lon=-78.01&
+	 * format=24+hourly&
+	 * numDays=7
+	 * 
+	 * http://graphical.weather.gov/xml/sample_products/browser_interface/ndfdXMLclient.php?
+	 * lat=38.99&
+	 * lon=-77.01&
+	 * product=time-series&
+	 * begin=2004-01-01T00:00:00&
+	 * end=2013-04-20T00:00:00&
+	 * maxt=maxt&
+	 * mint=mint
+	 * 
+	 * http://graphical.weather.gov/xml/sample_products/browser_interface/ndfdBrowserClientByDay.php?lat=40.2&lon=-73.9&product=time-series&begin=2013-10-04T06%3A00%3A00&end=2013-10-04T06%3A00%3A00&wx=wx HTTP/1.1
+
+	 */
+
+	/*
+	 * Set up the weather data for request.  
+	 */
+	public class XXXXSetTheWeatherMeteorological {
+		
+		public RequestMethod method = RequestMethod.GET;
+		public String url = "";
+		public ArrayList<NameValuePair> headers = new ArrayList<NameValuePair>();
+		public ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+		
+		public String observedData;
+
+		//  8465705, "air_temperature", 2013-09-18T00:00, 2013-09-18T00:00
+		public XXXXSetTheWeatherMeteorological setTheMeteorological(String endPoint1Lat, String endPoint1Lon, 
+										 String beginDate, String endDate) {
+			url = "http://graphical.weather.gov/xml/sample_products/browser_interface/ndfdXMLclient.php";
+			method = RequestMethod.GET;
+			headers = new ArrayList<NameValuePair>();
+			params = new ArrayList<NameValuePair>();
+			
+			headers.add(new BasicNameValuePair("NOAA", "MeteorologicalWeatherData") );
+			
+			params.add(new BasicNameValuePair("lat", endPoint1Lat) );
+			params.add(new BasicNameValuePair("lon", endPoint1Lon) );
+
+			params.add(new BasicNameValuePair("product", "time-series") );
+
+			params.add(new BasicNameValuePair("begin", beginDate +":00") );
+			params.add(new BasicNameValuePair("end",   endDate +":00") );
+	
+			params.add(new BasicNameValuePair("wx",   "wx") );
+			params.add(new BasicNameValuePair("wspd",   "wspd") );
+			params.add(new BasicNameValuePair("wdir",   "wdir") );
+			params.add(new BasicNameValuePair("wgust",   "wgust") );
+			
+			params.add(new BasicNameValuePair("temp",   "temp") );
+
+			return this;
+		}
+		
+	} // SetTheWeatherMeteorological
+	
+	/**
+	 * 
+	 * @param weatherReq
+	 * @return
+	 */
+	public String getObservedPropertyTide(SetTheWeather weatherReq) {
+		String observedDataRet = "Not Available";
+		GetTheWeather weatherRun = new GetTheWeather();
+		
+		weatherRun.execute(weatherReq);
+		
+		// Wait for data return
+		for(int i=0; i < 40; i++ ) {
+			if(weatherRun.response != null)
+				break;
+			
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		Log.d("DisplayMessage", "Resonse: "+ weatherRun.response);
+
+		if(weatherRun.response != null)
+		{
+			if(weatherReq.observedData.equals("air_temperature")) 
+			{
+				String temp = "Not Available";
+				// Java evaluates if statement left to right making the split on "," 
+				// valid if split on "\n" is true
+				if(weatherRun.response != null && weatherRun.response.split("\n").length > 1  && 
+				   weatherRun.response.split("\n")[1].split(",").length > 5)  
+				{
+					temp = weatherRun.response.split("\n")[1].split(",")[5];
+				}
+				else
+				{
+					Log.e("DiaplayMessage", "Temperature value not available");
+				}
+				observedDataRet = temp;
+			}
+			else if(weatherReq.observedData.equals("winds")) 
+			{
+				String temp = "Not Available";
+				// Java evaluates if statement left to right making the split on "," 
+				// valid if split on "\n" is true
+				if(weatherRun.response != null && weatherRun.response.split("\n").length > 1  && 
+				   weatherRun.response.split("\n")[1].split(",").length > 7)  
+				{
+					temp = weatherRun.response.split("\n")[1].split(",")[5] +","+
+					       weatherRun.response.split("\n")[1].split(",")[6] +","+
+					       weatherRun.response.split("\n")[1].split(",")[7];
+				}
+				else
+				{
+					Log.e("DiaplayMessage", "Winds value not available");
+				}
+				observedDataRet = temp;
+			}
+			
+			
+		}
+		
+		
+		return observedDataRet;
+	} // getObservedProperty(SetTheWeatherTide weatherReq) {
+	
+
+	/**
+	 * Get 
+	 * @param weatherReq
+	 * @return
+	 */
+	public String getObservedPropertyMeteorological(SetTheWeather weatherReq) {
+		String observedDataRet = "Not Available";
+		GetTheWeather weatherRun = new GetTheWeather();
+		
+		weatherRun.execute(weatherReq);
+		
+		// Wait for data return
+		for(int i=0; i < 40; i++ ) {
+			if(weatherRun.response != null)
+				break;
+			
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		Log.d("DisplayMessage", "Resonse: "+ weatherRun.response);
+		
+		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+	    Document dom = null;
+		try {
+		    /* Parse the xml-data from our URL. */
+//		    URL url = new URL("http://xyz.com/.../");
+//		    InputStream inputStream = url.openStream();
+		    /*Get Document Builder*/
+		    DocumentBuilder builder = builderFactory.newDocumentBuilder();
+		    // dom = builder.parse(weatherRun.response);
+		    
+		    // parse wants input stream arg even though is will compile with a string arg
+		    dom = builder.parse(
+		    		new InputSource(new ByteArrayInputStream(
+		    				weatherRun.response.getBytes("utf-8")))) ;
+		} catch (Exception e) { 
+			Log.e("DisplayMessage", "Exception: "+ e.getMessage());
+		}
+		
+		Element rootElement = dom.getDocumentElement();
+		
+		String data = getXmlValues(rootElement, "temperature", "hourly");
+		if ( ! data.equals("") ) {
+			observedDataRet = data +"-hourly, ";
+		}
+				
+		data = getXmlValues(rootElement, "temperature", "maximum");
+		if ( ! data.equals("") ) {
+			observedDataRet += data +"-maximum, ";
+		}
+				
+		data = getXmlValues(rootElement, "wind-speed", "sustained");
+		if ( ! data.equals("") ) {
+			observedDataRet += ":"+ data +"-sustained,";
+		}
+				
+		data = getXmlValues(rootElement, "wind-speed", "gust");
+		if ( ! data.equals("") ) {
+			observedDataRet += ":"+ data +"-gust";
+		}
+				
+		return observedDataRet;
+
+	} // getObservedProperty(SetTheWeatherMeteorological weatherReq) {
+	
+	private String getXmlValues(Element rootElement, String propertyIn, String typeIn) {
+		
+		NodeList items = rootElement.getElementsByTagName(propertyIn);
+		
+		String units = "";
+		String value = "";
+		String type = "";
+		
+		for (int i=0;i<items.getLength();i++) {
+			  Node item = items.item(i);
+              NamedNodeMap nodeMap = item.getAttributes();
+  	          if(nodeMap != null && nodeMap.getLength() > 0) {
+  	        	  if(nodeMap.getNamedItem("units") != null) 
+  	        		units = nodeMap.getNamedItem("units").getNodeValue();
+  	        	  
+  	        	  if(nodeMap.getNamedItem("type") != null) 
+  	        		type = nodeMap.getNamedItem("type").getNodeValue();
+		      }
+              
+			  NodeList properties = item.getChildNodes();
+			  for (int j=0;j<properties.getLength();j++){
+			        Node property = properties.item(j);
+			        String name = property.getNodeName();
+			        
+			        if(property.getNodeName() != null && property.getNodeName() != null && 
+			        		property.getNodeName().equals("value"))  {
+			        	if( typeIn.equals("") || type.equals(typeIn)) {
+				        	value = property.getTextContent();
+			        	}
+			        }
+			        	
+			        Log.d(propertyIn, " name: "+ name +
+			        		", value: "+ property.getNodeValue() +
+			        		", text: "+ property.getTextContent() +
+			        		", Local Name: "+ property.getLocalName() +
+			        		", prefix: "+ property.getPrefix());
+			        
+			  }
+		}
+
+		return value +", "+ units;
+	}
+	
+	
+
+}
