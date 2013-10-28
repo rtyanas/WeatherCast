@@ -125,7 +125,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
 
         // Set the title view to show the page number.
         ((TextView) rootView.findViewById(android.R.id.text2)).setText(
-        		stationData.toString().replaceFirst("Rockaway", "Yanas House")) ;
+        		stationData.toString()) ;
 
         return rootView;
     }
