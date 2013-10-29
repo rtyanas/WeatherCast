@@ -124,7 +124,7 @@ public class AssembleWeatherData {
 			}
 		}
 		
-		final int ONE_HOUR = 60 * 60 * 1000;
+		final int ONE_HOUR = 60 * 60 * 1000; // in milliseconds.
 		final long ONE_DAY = ONE_HOUR * 24;
 		
 		if(useZipcode) {
