@@ -174,9 +174,10 @@ public class WeatherData {
 		    // dom = builder.parse(weatherRun.response);
 		    
 		    // parse wants input stream arg even though is will compile with a string arg
-		    dom = builder.parse(
-		    		new InputSource(new ByteArrayInputStream(
-		    				weatherRun.response.getBytes("utf-8")))) ;
+		    InputSource inputSource = new InputSource(new ByteArrayInputStream(
+    				weatherRun.response.getBytes("utf-8"))) ;
+		    dom = builder.parse(inputSource) ;
+		    
 		} catch (Exception e) { 
 			Log.e("DisplayMessage", "Exception: "+ e.getMessage());
 		}
