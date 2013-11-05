@@ -82,7 +82,7 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
 //		textView.setTextSize(18);
 //		
 		AssembleWeatherData assembleWeatherData = new AssembleWeatherData(location);
-		stationDataV = assembleWeatherData.retrieveWeather();
+		stationDataV = assembleWeatherData.retrieveWeather(this);
 		stringSize = stationDataV.size();
 //		textView.setText(assmebleWeatherData.retrieveWeather());
 //		
