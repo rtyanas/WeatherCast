@@ -1,6 +1,7 @@
 package com.yanas.mobileapp.weathercast;
 
 import java.io.Serializable;
+import java.util.Vector;
 
 public class StationData implements Serializable {
 	/**
@@ -18,18 +19,18 @@ public class StationData implements Serializable {
 	private String endDate;
 	private String endTime;
 	
-	private WeatherDataValue temperature;
-	private WeatherDataValue temperatureMin;
-	private WeatherDataValue temperatureMax;
-	private WeatherDataValue predominant;
-	private WeatherDataValue percentPercip;
-	private WeatherDataValue windSustained;
-	private WeatherDataValue windSustainedDirection;
-	private WeatherDataValue windGust;
-	private WeatherDataValue tideLevel;
-	private WeatherDataValue tideDirection;
-	private WeatherDataValue weather;
-	private WeatherDataValue propOfPrecip12;
+	private Vector<WeatherDataValue> temperature;
+	private Vector<WeatherDataValue> temperatureMin;
+	private Vector<WeatherDataValue> temperatureMax;
+	private Vector<WeatherDataValue> predominant;
+	private Vector<WeatherDataValue> percentPercip;
+	private Vector<WeatherDataValue> windSustained;
+	private Vector<WeatherDataValue> windSustainedDirection;
+	private Vector<WeatherDataValue> windGust;
+	private Vector<WeatherDataValue> tideLevel;
+	private Vector<WeatherDataValue> tideDirection;
+	private Vector<WeatherCondDataValue> weather;
+	private Vector<WeatherDataValue> probOfPrecip12;
 	
 	
 	
@@ -105,20 +106,20 @@ public class StationData implements Serializable {
 		this.endTime = endTime;
 	}
 
-	public WeatherDataValue getWeather() {
-		return weather;
+	public WeatherCondDataValue getWeather(int i) {
+		return weather.get(i);
 	}
 
-	public void setWeather(WeatherDataValue weather) {
-		this.weather = weather;
+	public void setWeather(WeatherCondDataValue weather) {
+		this.weather.add(weather);
 	}
 
-	public WeatherDataValue getPropOfPrecip12() {
-		return propOfPrecip12;
+	public WeatherDataValue getprobOfPrecip12(int i) {
+		return probOfPrecip12.get(i);
 	}
 
-	public void setPropOfPrecip12(WeatherDataValue propOfPrecip12) {
-		this.propOfPrecip12 = propOfPrecip12;
+	public void setprobOfPrecip12(WeatherDataValue probOfPrecip12) {
+		this.probOfPrecip12.add(probOfPrecip12);
 	}
 
 	public static long getSerialversionuid() {
@@ -135,6 +136,7 @@ public class StationData implements Serializable {
 		startTime = "";
 		endDate = "";
 		endTime = "";
+		initValues();
 	}
 	
 	public StationData(	String city_in,
@@ -147,67 +149,162 @@ public class StationData implements Serializable {
 		longitude = longitude_in;		
 		startDate = "";
 		endDate = "";
+		initValues();
 	}
 	
-	public WeatherDataValue getTemperature() {
+	private void initValues() {
+		temperature = new Vector<WeatherDataValue>();
+		temperatureMin = new Vector<WeatherDataValue>();
+		temperatureMax = new Vector<WeatherDataValue>();
+		predominant = new Vector<WeatherDataValue>();
+		percentPercip = new Vector<WeatherDataValue>();
+		windSustained = new Vector<WeatherDataValue>();
+		windSustainedDirection = new Vector<WeatherDataValue>();
+		windGust = new Vector<WeatherDataValue>();
+		tideLevel = new Vector<WeatherDataValue>();
+		tideDirection = new Vector<WeatherDataValue>();
+		weather = new Vector<WeatherCondDataValue>();
+		probOfPrecip12 = new Vector<WeatherDataValue>();
+
+	}
+	
+	public Vector<WeatherDataValue> getTemperature() {
 		return temperature;
 	}
-	public void setTemperature(WeatherDataValue temperature) {
-		this.temperature = temperature;
-	}
-	public WeatherDataValue getTemperatureMin() {
+
+	public Vector<WeatherDataValue> getTemperatureMin() {
 		return temperatureMin;
 	}
-	public void setTemperatureMin(WeatherDataValue temperatureMin) {
-		this.temperatureMin = temperatureMin;
-	}
-	public WeatherDataValue getTemperatureMax() {
+
+	public Vector<WeatherDataValue> getTemperatureMax() {
 		return temperatureMax;
 	}
-	public void setTemperatureMax(WeatherDataValue temperatureMax) {
-		this.temperatureMax = temperatureMax;
-	}
-	public WeatherDataValue getPredominant() {
+
+	public Vector<WeatherDataValue> getPredominant() {
 		return predominant;
 	}
-	public void setPredominant(WeatherDataValue predominant) {
-		this.predominant = predominant;
-	}
-	public WeatherDataValue getPercentPercip() {
+
+	public Vector<WeatherDataValue> getPercentPercip() {
 		return percentPercip;
 	}
-	public void setPercentPercip(WeatherDataValue percentPercip) {
-		this.percentPercip = percentPercip;
-	}
-	public WeatherDataValue getWindSustained() {
+
+	public Vector<WeatherDataValue> getWindSustained() {
 		return windSustained;
 	}
-	public void setWindSustained(WeatherDataValue windSustained) {
-		this.windSustained = windSustained;
-	}
-	public WeatherDataValue getWindSustainedDirection() {
+
+	public Vector<WeatherDataValue> getWindSustainedDirection() {
 		return windSustainedDirection;
 	}
-	public void setWindSustainedDirection(WeatherDataValue windSustainedDirection) {
-		this.windSustainedDirection = windSustainedDirection;
-	}
-	public WeatherDataValue getWindGust() {
+
+	public Vector<WeatherDataValue> getWindGust() {
 		return windGust;
 	}
-	public void setWindGust(WeatherDataValue windGust) {
-		this.windGust = windGust;
-	}
-	public WeatherDataValue getTideLevel() {
+
+	public Vector<WeatherDataValue> getTideLevel() {
 		return tideLevel;
 	}
-	public void setTideLevel(WeatherDataValue tideLevel) {
-		this.tideLevel = tideLevel;
-	}
-	public WeatherDataValue getTideDirection() {
+
+	public Vector<WeatherDataValue> getTideDirection() {
 		return tideDirection;
 	}
+
+	public Vector<WeatherCondDataValue> getWeather() {
+		return weather;
+	}
+
+	public Vector<WeatherDataValue> getProbOfPrecip12() {
+		return probOfPrecip12;
+	}
+
+	public WeatherDataValue getTemperature(int i) {
+		if(temperature.size() < 1) {
+			return new WeatherDataValue();
+		}
+		return temperature.get(i);
+	}
+	public void setTemperature(WeatherDataValue temperature) {
+		this.temperature.add(temperature);
+	}
+	public WeatherDataValue getTemperatureMin(int i) {
+		if(temperature.size() < 1) {
+			return new WeatherDataValue();
+		}
+		return temperatureMin.get(i);
+	}
+	public void setTemperatureMin(WeatherDataValue temperatureMin) {
+		this.temperatureMin.add(temperatureMin);
+	}
+	public WeatherDataValue getTemperatureMax(int i) {
+		if(temperature.size() < 1) {
+			return new WeatherDataValue();
+		}
+		return temperatureMax.get(i);
+	}
+	public void setTemperatureMax(WeatherDataValue temperatureMax) {
+		this.temperatureMax.add(temperatureMax);
+	}
+	public WeatherDataValue getPredominant(int i) {
+		if(temperature.size() < 1) {
+			return new WeatherDataValue();
+		}
+		return predominant.get(i);
+	}
+	public void setPredominant(WeatherDataValue predominant) {
+		this.predominant.add(predominant);
+	}
+	public WeatherDataValue getPercentPercip(int i) {
+		if(temperature.size() < 1) {
+			return new WeatherDataValue();
+		}
+		return percentPercip.get(i);
+	}
+	public void setPercentPercip(WeatherDataValue percentPercip) {
+		this.percentPercip.add(percentPercip);
+	}
+	public WeatherDataValue getWindSustained(int i) {
+		if(temperature.size() < 1) {
+			return new WeatherDataValue();
+		}
+		return windSustained.get(i);
+	}
+	public void setWindSustained(WeatherDataValue windSustained) {
+		this.windSustained.add(windSustained);
+	}
+	public WeatherDataValue getWindSustainedDirection(int i) {
+		if(temperature.size() < 1) {
+			return new WeatherDataValue();
+		}
+		return windSustainedDirection.get(i);
+	}
+	public void setWindSustainedDirection(WeatherDataValue windSustainedDirection) {
+		this.windSustainedDirection.add(windSustainedDirection);
+	}
+	public WeatherDataValue getWindGust(int i) {
+		if(temperature.size() < 1) {
+			return new WeatherDataValue();
+		}
+		return windGust.get(i);
+	}
+	public void setWindGust(WeatherDataValue windGust) {
+		this.windGust.add(windGust);
+	}
+	public WeatherDataValue getTideLevel(int i) {
+		if(temperature.size() < 1) {
+			return new WeatherDataValue();
+		}
+		return tideLevel.get(i);
+	}
+	public void setTideLevel(WeatherDataValue tideLevel) {
+		this.tideLevel.add(tideLevel);
+	}
+	public WeatherDataValue getTideDirection(int i) {
+		if(temperature.size() < 1) {
+			return new WeatherDataValue();
+		}
+		return tideDirection.get(i);
+	}
 	public void setTideDirection(WeatherDataValue tideDirection) {
-		this.tideDirection = tideDirection;
+		this.tideDirection.add(tideDirection);
 	}
 
 //	String s = "New Haven, Conn\nTemperature: "+ temperature +"F"+
@@ -225,13 +322,13 @@ public class StationData implements Serializable {
 	public String toString() {
 		return 	"City: "+ city +"- state: "+ state +"- zip: "+ zipcode + "\n"+
 				"Date: Start"+ getStartDate() +" End: "+ getEndDate() +"\n"+
-				"Temp: "+ getTemperature().getValue() +
-				", T Min: "+ getTemperatureMin().getValue() +
-				", T Max: "+ getTemperatureMax().getValue() +
-				"\nWind: "+ getWindSustained().getValue() +
-				", Wind Dir: "+ getWindSustainedDirection().getValue() +
-				" Gust: "+ getWindGust().getValue() +"\n"+
-				"Weather: "+ getWeather().getValue() +" POP: "+ getPropOfPrecip12().getValue() +"\n"
+				"Temp: "+ getTemperature(0).getValue() +
+				", T Min: "+ getTemperatureMin(0).getValue() +
+				", T Max: "+ getTemperatureMax(0).getValue() +
+				"\nWind: "+ getWindSustained(0).getValue() +
+				", Wind Dir: "+ getWindSustainedDirection(0).getValue() +
+				" Gust: "+ getWindGust(0).getValue() +"\n"
+				// "Weather: "+ getWeather(0).getWeather_type() +" POP: "+ getprobOfPrecip12(0).getValue() +"\n"
 				
 				;
 
