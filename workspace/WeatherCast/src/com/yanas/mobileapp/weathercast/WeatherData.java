@@ -1,6 +1,13 @@
 package com.yanas.mobileapp.weathercast;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -15,11 +22,17 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import android.content.Context;
+import android.media.MediaScannerConnection;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 
 import com.yanas.mobileapp.restaccess.RestClient;
 import com.yanas.mobileapp.restaccess.RestClient.RequestMethod;
+
+import android.content.Context.*;
+import android.net.Uri;
 
 public class WeatherData {
 
@@ -134,13 +147,16 @@ public class WeatherData {
 		return observedDataRet;
 	} // getObservedProperty(SetTheWeatherTide weatherReq) {
 	
-
+	boolean DEBUG = false;
+	String xmlFileOut = "weather.xml";
+	
 	/**
 	 * Get 
 	 * @param weatherReq
 	 * @return
 	 */
-	public StationData getObservedPropertyMeteorological(SetTheWeather weatherReq,
+	public StationData getObservedPropertyMeteorological(
+			DisplayWeatherInfoActivity dwThis, SetTheWeather weatherReq,
 			String city, String state, String zipcode, String latitude, String longitude) {
 		String observedDataRet = "Not Available";
 		GetTheWeather weatherRun = new GetTheWeather();
@@ -173,9 +189,44 @@ public class WeatherData {
 		    DocumentBuilder builder = builderFactory.newDocumentBuilder();
 		    // dom = builder.parse(weatherRun.response);
 		    
+		    ByteArrayInputStream bis = new ByteArrayInputStream(weatherRun.response.getBytes("utf-8"));
+		    StringBuilder sb = new StringBuilder();
+		    if(DEBUG) {
+		    	File path = Environment.getExternalStoragePublicDirectory(
+		                Environment.DIRECTORY_DOWNLOADS);
+		    	File file = new File(path, xmlFileOut);
+
+		    	Log.d("WeatherData", "Output file: "+ path +"/"+ xmlFileOut );
+ 				FileOutputStream fos = null;
+		    	try {
+  	 				fos = new FileOutputStream(file);
+  	 				int ch;
+			    	while( (ch=bis.read() ) != -1) {
+				    	fos.write(ch);		    		
+			    	}
+			    	
+			        // Tell the media scanner about the new file so that it is
+			        // immediately available to the user.
+//			        MediaScannerConnection.scanFile(dwThis,
+//			                new String[] { file.toString() }, null,
+//			                new MediaScannerConnection.OnScanCompletedListener() {
+//			            public void onScanCompleted(String path, Uri uri) {
+//			                Log.i("ExternalStorage", "Scanned " + path + ":");
+//			                Log.i("ExternalStorage", "-> uri=" + uri);
+//			            }
+//			        });
+	
+			    	
+		    	} catch(IOException ioe) {
+		    		Log.e("getObservedPropertyMeteorological() : ", ioe.getMessage());
+		    	} finally {
+			    	fos.flush();
+			    	fos.close();
+		    	}
+		    }
 		    // parse wants input stream arg even though is will compile with a string arg
-		    InputSource inputSource = new InputSource(new ByteArrayInputStream(
-    				weatherRun.response.getBytes("utf-8"))) ;
+		    bis.reset();
+		    InputSource inputSource = new InputSource(bis) ;
 		    dom = builder.parse(inputSource) ;
 		    
 		} catch (Exception e) { 
@@ -248,16 +299,16 @@ public class WeatherData {
 			weatherDV.setValue(data);
 			weatherDV.setPeriod("");
 		}
-		stationData.setPropOfPrecip12(weatherDV);
+		stationData.setprobOfPrecip12(weatherDV);
 				
-		data = getXmlValues(rootElement, "weather", "");
-		if ( ! data.equals("") ) {
-			observedDataRet += ":"+ data +"-gust";
-			weatherDV = new WeatherDataValue();
-			weatherDV.setValue(data);
-			weatherDV.setPeriod("");
-		}
-		stationData.setWeather(weatherDV);
+//		data = getXmlValues(rootElement, "weather", "");
+//		if ( ! data.equals("") ) {
+//			observedDataRet += ":"+ data +"-gust";
+//			weatherDV = new WeatherDataValue();
+//			weatherDV.setValue(data);
+//			weatherDV.setPeriod("");
+//		}
+//		stationData.setWeather(weatherDV);
 				
 		
 		return stationData;
