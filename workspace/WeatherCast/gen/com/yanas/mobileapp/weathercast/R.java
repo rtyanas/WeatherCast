@@ -34,23 +34,23 @@ public final class R {
         public static final int content=0x7f080012;
         public static final int date_time=0x7f080004;
         public static final int icon=0x7f080013;
-        public static final int imageView1=0x7f080009;
         public static final int label=0x7f080014;
         public static final int listView=0x7f080003;
         public static final int listview=0x7f080001;
         public static final int pager=0x7f080000;
         public static final int pop=0x7f08000e;
-        public static final int pop_image=0x7f08000d;
+        public static final int pop_icon=0x7f08000d;
         public static final int station_id=0x7f080002;
         public static final int temp_hour=0x7f080006;
         public static final int temp_icon=0x7f080005;
         public static final int temp_max=0x7f080008;
         public static final int temp_min=0x7f080007;
-        public static final int weather_predominant=0x7f08000f;
         public static final int weather_predominant_amount=0x7f080010;
+        public static final int weather_predominant_icon=0x7f08000f;
         public static final int weather_predominant_rain=0x7f080011;
         public static final int wind_direction=0x7f08000b;
         public static final int wind_gust=0x7f08000c;
+        public static final int wind_icon=0x7f080009;
         public static final int wind_sustained=0x7f08000a;
     }
     public static final class layout {
