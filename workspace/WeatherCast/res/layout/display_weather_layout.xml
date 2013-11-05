@@ -23,8 +23,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/temp_icon"
@@ -35,24 +34,27 @@
 
         <TextView
             android:id="@+id/temp_hour"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:ems="10"
             android:inputType="none"
             android:text="50 degrees" />
 
         <TextView
             android:id="@+id/temp_min"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:ems="10"
             android:inputType="none"
             android:text="35 degrees" />
 
         <TextView
             android:id="@+id/temp_max"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:ems="10"
             android:inputType="none"
             android:text="60 degrees" />
@@ -64,7 +66,7 @@
         android:layout_height="wrap_content" >
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/wind_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/wind"
@@ -102,10 +104,9 @@
         android:layout_height="wrap_content" >
 
         <ImageView
-            android:id="@+id/pop_image"
+            android:id="@+id/pop_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.82"
             android:contentDescription="@string/pop"
             android:src="@drawable/app_icon" />
 
@@ -125,7 +126,7 @@
         android:layout_height="wrap_content" >
 
         <ImageView
-            android:id="@+id/weather_predominant"
+            android:id="@+id/weather_predominant_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/weather"
@@ -146,8 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="none"
-            android:text="rain" />
+            android:inputType="none" />
 
     </LinearLayout>
 
