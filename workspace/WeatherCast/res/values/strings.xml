@@ -10,5 +10,9 @@
     <string name="action_search">Action Search</string>
     <string name="title_activity_station_list">Station List</string>
     <string name="title_template_step">Weather</string>
+    <string name="temperature">Temperature</string>
+    <string name="wind">Wind</string>
+    <string name="pop">Probability of precipitation</string>
+    <string name="weather">Weather - amount : type</string>
 
 </resources>
