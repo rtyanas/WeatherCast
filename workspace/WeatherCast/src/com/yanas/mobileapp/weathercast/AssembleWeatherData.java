@@ -58,7 +58,7 @@ public class AssembleWeatherData {
 	 * Get the data 
 	 * @return
 	 */
-	public Vector<StationData> retrieveWeather() {
+	public Vector<StationData> retrieveWeather(DisplayWeatherInfoActivity dwThis) {
 		int sizeRandom = 10;
 		Vector<StationData> stationDataV = new Vector<StationData>();
 		
@@ -132,16 +132,17 @@ public class AssembleWeatherData {
 					// South Amboy 08879 //  Long Branch
 					zipcode,
 					ft.format(nowDate)+"00", 
-					ft.format(nowDate.getTime() + ONE_HOUR /* add one hour */)+"00");			
+					ft.format(nowDate.getTime() + ONE_DAY * 3  /* add one hour */)+"00");			
 		}
 		else {  // use lat/lon
 			weatherReq.setTheMeteorological(
 					// "40.4867", "-74.2790", // South Amboy  // "40.2954", "-73.9899",  Long Branch
 					latitude, longitude,
 					ft.format(nowDate)+"00", 
-					ft.format(nowDate.getTime() + ONE_HOUR /* add one hour */)+"00");
+					ft.format(nowDate.getTime() + ONE_DAY * 3  /* add one hour */)+"00");
 		}
-		StationData stationData = weatherData.getObservedPropertyMeteorological(weatherReq, 
+		StationData stationData = weatherData.getObservedPropertyMeteorological(
+				dwThis, weatherReq, 
 				city, state, zipcode, latitude, longitude);
 				
 		// Test data
