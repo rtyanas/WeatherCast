@@ -30,11 +30,18 @@ import android.util.Log;
 
 import com.yanas.mobileapp.restaccess.RestClient;
 import com.yanas.mobileapp.restaccess.RestClient.RequestMethod;
+import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed;
+import com.yanas.mobileapp.weathercast.parsexml.WeatherXmlParsing;
 
 import android.content.Context.*;
 import android.net.Uri;
 
 public class WeatherData {
+	
+	
+    WeatherDataParsed wdp = null;
+
+	
 
 	/*
 	 * Execute the weather data request
@@ -43,21 +50,21 @@ public class WeatherData {
 		String station;
 		String temperature;
 		String response;
-		
+
 		GetTheWeather() {
 		
 		}
 		
 	   	protected Long doInBackground(SetTheWeather... weatherReq) {
 			long sizeL = 0L;
-			Log.d("HttpTest", "start doInBackground" );
+			if(GlobalSettings.weatherData) Log.d("HttpTest", "start doInBackground" );
 			
 			RestClient rc = new RestClient();
 			try {
 				rc.Execute(weatherReq[0].method, weatherReq[0].url, 
 						weatherReq[0].headers, weatherReq[0].params);
 				response = rc.response;
-				Log.d("HttpTest", "Response Data:" + response);
+				if(GlobalSettings.weatherData) Log.d("HttpTest", "Response Data:" + response);
 				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -101,7 +108,7 @@ public class WeatherData {
 			}
 		}
 		
-		Log.d("DisplayMessage", "Resonse: "+ weatherRun.response);
+		if(GlobalSettings.weatherData) Log.d("DisplayMessage", "Resonse: "+ weatherRun.response);
 
 		if(weatherRun.response != null)
 		{
@@ -117,7 +124,7 @@ public class WeatherData {
 				}
 				else
 				{
-					Log.e("DiaplayMessage", "Temperature value not available");
+					if(GlobalSettings.weatherData) Log.e("DiaplayMessage", "Temperature value not available");
 				}
 				observedDataRet = temp;
 			}
@@ -135,7 +142,7 @@ public class WeatherData {
 				}
 				else
 				{
-					Log.e("DiaplayMessage", "Winds value not available");
+					if(GlobalSettings.weatherData) Log.e("DiaplayMessage", "Winds value not available");
 				}
 				observedDataRet = temp;
 			}
@@ -155,7 +162,7 @@ public class WeatherData {
 	 * @param weatherReq
 	 * @return
 	 */
-	public StationData getObservedPropertyMeteorological(
+	public WeatherDataParsed getObservedPropertyMeteorological(
 			DisplayWeatherInfoActivity dwThis, SetTheWeather weatherReq,
 			String city, String state, String zipcode, String latitude, String longitude) {
 		String observedDataRet = "Not Available";
@@ -172,12 +179,11 @@ public class WeatherData {
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				if(GlobalSettings.weatherData) Log.e("WeatherData", "Error getting response: "+ e.getMessage());
 			}
 		}
 		
-		Log.d("DisplayMessage", "Resonse: "+ weatherRun.response);
+		if(GlobalSettings.weatherData) Log.d("DisplayMessage", "Resonse: "+ weatherRun.response);
 		
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 	    Document dom = null;
@@ -196,7 +202,7 @@ public class WeatherData {
 		                Environment.DIRECTORY_DOWNLOADS);
 		    	File file = new File(path, xmlFileOut);
 
-		    	Log.d("WeatherData", "Output file: "+ path +"/"+ xmlFileOut );
+		    	if(GlobalSettings.weatherData) Log.d("WeatherData", "Output file: "+ path +"/"+ xmlFileOut );
  				FileOutputStream fos = null;
 		    	try {
   	 				fos = new FileOutputStream(file);
@@ -218,7 +224,7 @@ public class WeatherData {
 	
 			    	
 		    	} catch(IOException ioe) {
-		    		Log.e("getObservedPropertyMeteorological() : ", ioe.getMessage());
+		    		if(GlobalSettings.weatherData) Log.e("getObservedPropertyMeteorological() : ", ioe.getMessage());
 		    	} finally {
 			    	fos.flush();
 			    	fos.close();
@@ -229,89 +235,18 @@ public class WeatherData {
 		    InputSource inputSource = new InputSource(bis) ;
 		    dom = builder.parse(inputSource) ;
 		    
+		    WeatherXmlParsing wxp = new WeatherXmlParsing ( new ByteArrayInputStream(weatherRun.response.getBytes())  );
+		    wdp =  wxp.parse();
+		    wdp.updateWeatherDataPeriod();
+		    wdp.stationData.setCity(city);
+		    wdp.stationData.setState(state);
+		    wdp.stationData.setZipcode(zipcode);
+
 		} catch (Exception e) { 
-			Log.e("DisplayMessage", "Exception: "+ e.getMessage());
+			if(GlobalSettings.weatherData) Log.e("DisplayMessage", "Exception: "+ e.getMessage());
 		}
 		
-		Element rootElement = dom.getDocumentElement();
-		
-		stationData.setStartDate(  getXmlDateTimeStartEnd(rootElement, "time-layout") );
-		
-		WeatherDataValue weatherDV = null;
-		String data = getXmlValues(rootElement, "temperature", "hourly");
-		if ( ! data.equals("") ) {
-			observedDataRet = data +"-hourly, ";
-			weatherDV = new WeatherDataValue();
-			weatherDV.setValue(data);
-			weatherDV.setPeriod("hourly");
-		}
-		stationData.setTemperature(weatherDV);
-				
-		data = getXmlValues(rootElement, "temperature", "maximum");
-		if ( ! data.equals("") ) {
-			observedDataRet += data +"-maximum, ";
-			weatherDV = new WeatherDataValue();
-			weatherDV.setValue(data);
-			weatherDV.setPeriod("maximum");
-		}
-		stationData.setTemperatureMax(weatherDV);
-				
-		data = getXmlValues(rootElement, "temperature", "minimum");
-		if ( ! data.equals("") ) {
-			observedDataRet += data +"-minimum, ";
-			weatherDV = new WeatherDataValue();
-			weatherDV.setValue(data);
-			weatherDV.setPeriod("minimum");
-		}
-		stationData.setTemperatureMin(weatherDV);
-				
-		data = getXmlValues(rootElement, "wind-speed", "sustained");
-		if ( ! data.equals("") ) {
-			observedDataRet += ":"+ data +"-sustained,";
-			weatherDV = new WeatherDataValue();
-			weatherDV.setValue(data);
-			weatherDV.setPeriod("");
-		}
-		stationData.setWindSustained(weatherDV);
-				
-		data = getXmlValues(rootElement, "wind-speed", "gust");
-		if ( ! data.equals("") ) {
-			observedDataRet += ":"+ data +"-gust";
-			weatherDV = new WeatherDataValue();
-			weatherDV.setValue(data);
-			weatherDV.setPeriod("");
-		}
-		stationData.setWindGust(weatherDV);
-				
-		data = getXmlValues(rootElement, "direction", "wind");
-		if ( ! data.equals("") ) {
-			observedDataRet += ":"+ data +"-gust";
-			weatherDV = new WeatherDataValue();
-			weatherDV.setValue(data);
-			weatherDV.setPeriod("");
-		}
-		stationData.setWindSustainedDirection(weatherDV);
-				
-		data = getXmlValues(rootElement, "probability-of-precipitation", "12 hour");
-		if ( ! data.equals("") ) {
-			observedDataRet += ":"+ data +"-gust";
-			weatherDV = new WeatherDataValue();
-			weatherDV.setValue(data);
-			weatherDV.setPeriod("");
-		}
-		stationData.setprobOfPrecip12(weatherDV);
-				
-//		data = getXmlValues(rootElement, "weather", "");
-//		if ( ! data.equals("") ) {
-//			observedDataRet += ":"+ data +"-gust";
-//			weatherDV = new WeatherDataValue();
-//			weatherDV.setValue(data);
-//			weatherDV.setPeriod("");
-//		}
-//		stationData.setWeather(weatherDV);
-				
-		
-		return stationData;
+		return wdp;
 
 	} // getObservedProperty(SetTheWeatherMeteorological weatherReq) {
 
@@ -337,7 +272,7 @@ public class WeatherData {
 			        						property.getNodeName().equals("end-valid-time"))  {
 			        		dateTimeStartEnd += property.getTextContent() +", ";
 			        }
-			        Log.d(propertyIn, " name: "+ name +
+			        if(GlobalSettings.weatherData) Log.d(propertyIn, " name: "+ name +
 			        		", value: "+ property.getNodeValue() +
 			        		", text: "+ property.getTextContent() +
 			        		", Local Name: "+ property.getLocalName() +
@@ -381,7 +316,7 @@ public class WeatherData {
 			        	}
 			        }
 			        	
-			        Log.d(propertyIn, " name: "+ name +
+			        if(GlobalSettings.weatherData) Log.d(propertyIn, " name: "+ name +
 			        		", value: "+ property.getNodeValue() +
 			        		", text: "+ property.getTextContent() +
 			        		", Local Name: "+ property.getLocalName() +
