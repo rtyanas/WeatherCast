@@ -22,6 +22,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed;
+import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.DisplayData;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -51,6 +56,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
      */
     private int mPageNumber;
 	StationData stationData;
+	ArrayList<DisplayData> displayDataL;
 
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
@@ -83,14 +89,14 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         super.onCreate(savedInstanceState);
         byte stationBA[] = null;
         
-        if(getArguments() != null) {
+        if(getArguments() != null) {  // Get station data
         	stationBA = getArguments().getByteArray(STATIONDATA_ARG);
         }
         else {
         	Log.e("DisplayWeatherInfoAccessPageFragment", "getArguments() is null");
         }
         
-        if(stationBA != null) {
+        if(stationBA != null) { // Translate from Serial back to StationData
 	        ByteArrayInputStream bin =  new ByteArrayInputStream (stationBA);
 	        
 	        try {
@@ -115,17 +121,20 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+    	DisplayData dd = createTestDisplayData();
         // Inflate the layout containing a title and body text.
         ViewGroup rootView = (ViewGroup) inflater
-                .inflate(R.layout.fragment2_screen_slide_page, container, false);
+                .inflate(R.layout.display_weather_layout, container, false);
 
         // Set the title view to show the page number.
-        ((TextView) rootView.findViewById(android.R.id.text1)).setText(
-                getString(R.string.title_template_step, mPageNumber + 1));
+        ((TextView) rootView.findViewById(R.id.date_time)).setText(
+        		dd.getDateTime());
 
         // Set the title view to show the page number.
-        ((TextView) rootView.findViewById(android.R.id.text2)).setText(
-        		stationData.toString().replaceFirst("Rockaway", "Yanas House")) ;
+        ((TextView) rootView.findViewById(R.id.temp_hour)).setText(
+        		dd.getTemperature() );
+        		
+        		//stationData.toString().replaceFirst("Rockaway", "Yanas House") ); //  +"data source www.weather.gov") ;
 
         return rootView;
     }
@@ -135,5 +144,23 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
      */
     public int getPageNumber() {
         return mPageNumber;
+    }
+    
+    public DisplayData createTestDisplayData() {
+    	
+    	WeatherDataParsed wdp = new WeatherDataParsed();
+    	DisplayData dd = wdp.new DisplayData();
+    	
+    	dd.setDateTime("20121104:T2200");
+    	dd.setPropPrecip12("10");
+    	dd.setTemperature("50");
+    	dd.setTempMax("60");
+    	dd.setTempMin("30");
+    	dd.setWeatherPredominant("light rain showers");
+    	dd.setWindDirection("270");
+    	dd.setWindGust("12");
+    	dd.setWindSustained("9");
+    	
+    	return dd;
     }
 }
