@@ -1,17 +1,27 @@
 package com.yanas.mobileapp.weathercast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.yanas.mobileapp.restaccess.RestClient;
 import com.yanas.mobileapp.restaccess.RestClient.RequestMethod;
+import com.yanas.mobileapp.weathercast.parsexml.Message;
+import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed;
+import com.yanas.mobileapp.weathercast.parsexml.WeatherXmlParsing;
+import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.DisplayData;
+import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.LayoutAndDates;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Contacts.People;
 import android.app.Activity;
 import android.app.ListActivity;
@@ -37,13 +47,6 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		
-//        // We'll define a custom screen layout here (the one shown above), but
-//        // typically, you could just use the standard ListActivity layout.
-//        setContentView(R.layout.custom_list_activity_view);
-//
-//        // Query for all people contacts using the Contacts.People convenience class.
-//        // Put a managed wrapper around the retrieved cursor so we don't have to worry about
-//        // requerying or closing it as the activity changes state.
 //        Cursor mCursor = this.getContentResolver().query(People.CONTENT_URI, null, null, null, null);
 //        startManagingCursor(mCursor);
 //
@@ -74,6 +77,30 @@ public class MainActivity extends Activity {
 	    // The keys used to retrieve the data
 	    // The View id used to show the data. The key number and the view id must match
 	    simpleAdpt = new SimpleAdapter(this, planetsList, android.R.layout.simple_list_item_1, new String[] {"planet"}, new int[] {android.R.id.text1});
+
+	    
+	    /* Test Code
+   		String xmlFileOut = "weather.xml";
+    	File path = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS);
+    	File file = new File(path, xmlFileOut);
+    	Log.d("AminActivity", "Output file: "+ path +"/"+ xmlFileOut );
+    	
+		FileInputStream fis = null;
+	    try {
+			fis = new FileInputStream(file); // "C:/Users/RT/Weather/messasgeExample.xml");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	    WeatherXmlParsing wxp = new WeatherXmlParsing (fis);
+	    WeatherDataParsed wdp =  wxp.parse();
+	    wdp.updateWeatherDataPeriod();
+	    
+	    DisplayData dd = wdp.new DisplayData();
+	    List<DisplayData> ddL = dd.generateDisplayDataList(wdp.stationData);
+	    */
 
 	    lv.setAdapter(simpleAdpt);
 	}
