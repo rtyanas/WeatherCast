@@ -18,7 +18,11 @@ package com.yanas.mobileapp.weathercast;
 //import com.yanas.mobileapp.weathercast.DisplayWeatherInfoActivity.ScreenSlidePagerAdapter;
 
 
+import java.util.List;
 import java.util.Vector;
+
+import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed;
+import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.DisplayData;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,7 +47,7 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
     private ViewPager mPager;
     private String tempsTest[] = { "60F", "61F", "62F", "63F", "64F", "65F" };
     int stringSize;
-	Vector<StationData> stationDataV = new Vector<StationData>();
+    List<DisplayData> ddL = null;
 
     private static final int NUM_PAGES = 5;
 
@@ -82,8 +86,11 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
 //		textView.setTextSize(18);
 //		
 		AssembleWeatherData assembleWeatherData = new AssembleWeatherData(location);
-		stationDataV = assembleWeatherData.retrieveWeather(this);
-		stringSize = stationDataV.size();
+		WeatherDataParsed wdp = assembleWeatherData.retrieveWeather(this);
+		ddL = wdp.generateDisplayDataList();
+		
+		stringSize = ddL.size();
+		
 //		textView.setText(assmebleWeatherData.retrieveWeather());
 //		
 //		setContentView(textView);
@@ -139,8 +146,8 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-        	StationData stationSelected = stationDataV.get(position);
-            return DisplayWeatherInfoAccessPageFragment.create(stationSelected);
+        	DisplayData dd = ddL.get(position);
+            return DisplayWeatherInfoAccessPageFragment.create(dd);
         }
 
         @Override
