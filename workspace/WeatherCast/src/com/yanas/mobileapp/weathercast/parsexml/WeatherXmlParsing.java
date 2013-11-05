@@ -3,6 +3,7 @@ package com.yanas.mobileapp.weathercast.parsexml;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -85,6 +86,11 @@ public class WeatherXmlParsing extends BaseFeedParser {
 	
 	public WeatherXmlParsing(FileInputStream fis){
 		super(fis);
+		initializeData();
+	}
+
+	public WeatherXmlParsing(InputStream is){
+		super(is);
 		initializeData();
 	}
 
@@ -276,14 +282,25 @@ public class WeatherXmlParsing extends BaseFeedParser {
 		});
 		weatherCond.getChild(VALUE).setStartElementListener(new StartElementListener(){
 			public void start(Attributes atts_in) {
-				WeatherCondDataValue wData = new WeatherCondDataValue();
-				wData.setAdditive(atts_in.getValue("additive"));
-				wData.setCoverage(atts_in.getValue("coverage"));
-				wData.setIntensity(atts_in.getValue("intensity"));
-				wData.setQualifier(atts_in.getValue("qualifier"));
-				wData.setWeather_type(atts_in.getValue("weather-type"));
-				wData.setPeriod(weather_TimeLayout.toString());
-				wdp.stationData.setWeather(wData);
+				boolean saveWeather = true;
+				
+				if( atts_in.getValue("additive") != null)
+					saveWeather = false;
+
+				/**
+				 * Temporary fix, need to integrate "additive" 
+				 * to the WeatherCondData class 
+				 */
+				if(saveWeather) {
+					WeatherCondDataValue wData = new WeatherCondDataValue();
+					wData.setAdditive(atts_in.getValue("additive"));
+					wData.setCoverage(atts_in.getValue("coverage"));
+					wData.setIntensity(atts_in.getValue("intensity"));
+					wData.setQualifier(atts_in.getValue("qualifier"));
+					wData.setWeather_type(atts_in.getValue("weather-type"));
+					wData.setPeriod(weather_TimeLayout.toString());
+					wdp.stationData.setWeather(wData);
+				}
 			}
 		});
 
