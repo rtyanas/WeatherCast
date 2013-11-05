@@ -7,6 +7,8 @@ import java.util.TimeZone;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
+import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed;
+
 import android.util.Log;
 
 public class AssembleWeatherData {
@@ -58,9 +60,8 @@ public class AssembleWeatherData {
 	 * Get the data 
 	 * @return
 	 */
-	public Vector<StationData> retrieveWeather(DisplayWeatherInfoActivity dwThis) {
+	public WeatherDataParsed retrieveWeather(DisplayWeatherInfoActivity dwThis) {
 		int sizeRandom = 10;
-		Vector<StationData> stationDataV = new Vector<StationData>();
 		
 		/* hard code station for Testing */
 		String station = "8465705"; // New Haven, Conn - air temp, wind
@@ -141,15 +142,17 @@ public class AssembleWeatherData {
 					ft.format(nowDate)+"00", 
 					ft.format(nowDate.getTime() + ONE_DAY * 3  /* add one hour */)+"00");
 		}
-		StationData stationData = weatherData.getObservedPropertyMeteorological(
+		WeatherDataParsed wdp = weatherData.getObservedPropertyMeteorological(
 				dwThis, weatherReq, 
 				city, state, zipcode, latitude, longitude);
 				
-		// Test data
-		for(int i=0; i < sizeRandom; i++ ) {
-			stationDataV.add(stationData);
-		}
-		return stationDataV;
+//		// Test data
+//		for(int i=0; i < sizeRandom; i++ ) {
+//			stationDataV.add(stationData);
+//		}
+		
+		return wdp;
+		
 	}
 
 	
