@@ -73,8 +73,8 @@ implements LoaderManager.LoaderCallbacks<Cursor> {
 		
 		// getActionBar().setDisplayHomeAsUpEnabled(true);
         // For the cursor adapter, specify which columns go into which views
-        String[] fromColumns = {ContactsContract.Data.DISPLAY_NAME};
-        int[] toViews = {android.R.id.text1}; // The TextView in simple_list_item_1
+//        String[] fromColumns = {ContactsContract.Data.DISPLAY_NAME};
+//        int[] toViews = {android.R.id.text1}; // The TextView in simple_list_item_1
         
         setListAdapter(new StableArrayAdapter(this, 
         		android.R.layout.simple_list_item_1, stationsAL) );
@@ -153,10 +153,10 @@ implements LoaderManager.LoaderCallbacks<Cursor> {
 
 	private void initStationData(StationListActivity this_in) {
 		stations = new Vector<StationSelected>();
-		stations.add(new StationSelected(this_in, "South Amboy", "NJ", "08879"));
-		stations.add(new StationSelected(this_in, "Rock Hall", "MD", "21661"));
-		stations.add(new StationSelected(this_in, "Netcong", "NJ", "07857"));
 		stations.add(new StationSelected(this_in, CURRENT_LOCATION, "", ""));
+		stations.add(new StationSelected(this_in, "Netcong", "NJ", "07857"));
+		stations.add(new StationSelected(this_in, "Rock Hall", "MD", "21661"));
+		stations.add(new StationSelected(this_in, "South Amboy", "NJ", "08879"));
 	}
 
 	
