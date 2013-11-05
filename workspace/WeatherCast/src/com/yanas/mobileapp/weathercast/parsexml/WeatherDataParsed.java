@@ -123,6 +123,13 @@ public class WeatherDataParsed {
 		}
 	}
 	
+	
+	public List<DisplayData> generateDisplayDataList() {
+		DisplayData dd = new DisplayData();
+		
+		return dd.generateDisplayDataList(this.stationData);
+	}
+	
 	/*
 	 * Date list to match weather data.
 	 */
