@@ -200,6 +200,7 @@ public class WeatherDataParsed implements Serializable {
 			windSustained = "";
 			windDirection = "";
 			windGust = "";
+			propPrecip12 = "";
 			weatherPredominant = "";
 			displayL = new ArrayList<DisplayData>();
 		}
@@ -250,7 +251,7 @@ public class WeatherDataParsed implements Serializable {
 				}
 				for(WeatherDataValue w : statnDt.getProbOfPrecip12()) {
 					if(wtemp.getPeriod().substring(0, 18).compareTo(w.getPeriod().substring(0, 18)) <= 0 ) {
-						dd.windDirection = w.getValue();
+						dd.propPrecip12 = w.getValue();
 						break;
 					}
 				}
