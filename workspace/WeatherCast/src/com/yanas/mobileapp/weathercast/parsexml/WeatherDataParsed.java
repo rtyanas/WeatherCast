@@ -1,5 +1,6 @@
 package com.yanas.mobileapp.weathercast.parsexml;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -11,8 +12,9 @@ import com.yanas.mobileapp.weathercast.StationData;
 import com.yanas.mobileapp.weathercast.WeatherCondDataValue;
 import com.yanas.mobileapp.weathercast.WeatherDataValue;
 
-public class WeatherDataParsed {
+public class WeatherDataParsed implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	public StationData stationData;
 	public Vector<LayoutAndDates> layoutAndDatesV;
 	
@@ -133,7 +135,7 @@ public class WeatherDataParsed {
 	/*
 	 * Date list to match weather data.
 	 */
-	public class LayoutAndDates {
+	public class LayoutAndDates implements Serializable {
 		private String layout;
 		Vector<String> startDate;
 		Vector<String> endDate;
@@ -176,8 +178,9 @@ public class WeatherDataParsed {
 	} // LayoutAndDates
 	
 
-	public class DisplayData {
+	public class DisplayData implements Serializable {
 		
+		private static final long serialVersionUID = 1L;
 		String dateTime;
 		String temperature;
 		String tempMax;
