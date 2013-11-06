@@ -315,19 +315,6 @@ public class WeatherXmlParsing extends BaseFeedParser {
 	}
 
 	
-	public List<Message> parse(String disAbleThisMethod) {
-		SAXParserFactory factory = SAXParserFactory.newInstance();
-		try {
-			SAXParser parser = factory.newSAXParser();
-			RssHandler handler = new RssHandler();
-			parser.parse(this.getInputStream(), handler);
-			return handler.getMessages();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		} 
-	}
-	
-	
 	public class Atts {
 		HashMap<String, String> atts;
 		
