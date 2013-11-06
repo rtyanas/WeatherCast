@@ -14,7 +14,6 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.yanas.mobileapp.restaccess.RestClient;
 import com.yanas.mobileapp.restaccess.RestClient.RequestMethod;
-import com.yanas.mobileapp.weathercast.parsexml.Message;
 import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed;
 import com.yanas.mobileapp.weathercast.parsexml.WeatherXmlParsing;
 import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.DisplayData;
