@@ -14,6 +14,6 @@
     <string name="wind">Wind</string>
     <string name="pop">Probability of precipitation</string>
     <string name="weather">Weather - amount : type</string>
-    <string name="howIsSailingExperience">How is your sailing Experience?</string>
+    <string name="howIsSailingExperience">How will your sailing experience be?</string>
 
 </resources>
