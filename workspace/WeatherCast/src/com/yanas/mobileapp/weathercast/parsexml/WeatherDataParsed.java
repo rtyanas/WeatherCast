@@ -181,84 +181,89 @@ public class WeatherDataParsed implements Serializable {
 	public class DisplayData implements Serializable {
 		
 		private static final long serialVersionUID = 1L;
-		String dateTime;
-		String temperature;
-		String tempMax;
-		String tempMin;
-		String windSustained;
-		String windDirection;
-		String windGust;
-		String propPrecip12;
-		String weatherPredominant;
+		String city;
+		String state;
+		String zipcode;
+		WeatherDataValue temperature;
+		WeatherDataValue tempMax;
+		WeatherDataValue tempMin;
+		WeatherDataValue windSustained;
+		WeatherDataValue windDirection;
+		WeatherDataValue windGust;
+		WeatherDataValue propPrecip12;
+		WeatherCondDataValue weatherPredominant;
 		public List<DisplayData> displayL;
 		
 		public DisplayData() {
-			dateTime = "";
-			temperature = "";
-			tempMax = "";
-			tempMin = "";
-			windSustained = "";
-			windDirection = "";
-			windGust = "";
-			propPrecip12 = "";
-			weatherPredominant = "";
+			temperature = null;
+			tempMax = null;
+			tempMin = null;
+			windSustained = null;
+			windDirection = null;
+			windGust = null;
+			propPrecip12 = null;
+			weatherPredominant = null;
 			displayL = new ArrayList<DisplayData>();
 		}
 		
 		public List<DisplayData> generateDisplayDataList(StationData statnDt) {
 			
+			
 			DisplayData dd = null;
 			for(WeatherDataValue wtemp : statnDt.getTemperature()) {
 				dd = new DisplayData();
-				dd.dateTime = wtemp.getPeriod();
-				dd.temperature = wtemp.getValue();
+
+				dd.city = statnDt.getCity();
+				dd.state = statnDt.getState();
+				dd.zipcode = statnDt.getZipcode();
+
+				dd.temperature = wtemp;
 				// Compare dates (2013-11-01T02:00:00-04:00)
 				for(WeatherDataValue w : statnDt.getTemperatureMin()) {
 					if(wtemp.getPeriod().substring(0, 18).compareTo(w.getPeriod().substring(0, 18)) <= 0 ) {
-						dd.tempMin = w.getValue();
+						dd.tempMin = w;
 						break;
 					}
 				}
 				for(WeatherDataValue w : statnDt.getTemperatureMax()) {
 					if(wtemp.getPeriod().substring(0, 18).compareTo(w.getPeriod().substring(0, 18)) <= 0 ) {
-						dd.tempMax = w.getValue();
+						dd.tempMax = w;
 						break;
 					}
 				}
 				for(WeatherDataValue w : statnDt.getWindSustained()) {
 					if(wtemp.getPeriod().substring(0, 18).compareTo(w.getPeriod().substring(0, 18)) <= 0 ) {
-						dd.windSustained = w.getValue();
+						dd.windSustained = w;
 						break;
 					}
 				}
 				for(WeatherDataValue w : statnDt.getWindSustainedDirection()) {
 					if(wtemp.getPeriod().substring(0, 18).compareTo(w.getPeriod().substring(0, 18)) <= 0 ) {
-						dd.windDirection = w.getValue();
+						dd.windDirection = w;
 						break;
 					}
 				}
 				for(WeatherDataValue w : statnDt.getWindGust()) {
 					if(wtemp.getPeriod().substring(0, 18).compareTo(w.getPeriod().substring(0, 18)) <= 0 ) {
-						dd.windGust = w.getValue();
+						dd.windGust = w;
 						break;
 					}
 				}
 				for(WeatherDataValue w : statnDt.getWindSustainedDirection()) {
 					if(wtemp.getPeriod().substring(0, 18).compareTo(w.getPeriod().substring(0, 18)) <= 0 ) {
-						dd.windDirection = w.getValue();
+						dd.windDirection = w;
 						break;
 					}
 				}
 				for(WeatherDataValue w : statnDt.getProbOfPrecip12()) {
 					if(wtemp.getPeriod().substring(0, 18).compareTo(w.getPeriod().substring(0, 18)) <= 0 ) {
-						dd.propPrecip12 = w.getValue();
+						dd.propPrecip12 = w;
 						break;
 					}
 				}
 				for(WeatherCondDataValue w : statnDt.getWeather()) {
 					if(wtemp.getPeriod().substring(0, 18).compareTo(w.getPeriod().substring(0, 18)) <= 0 ) {
-						dd.weatherPredominant = w.getCoverage() +","+ w.getIntensity() +","+ 
-											    w.getWeather_type() +","+ w.getQualifier();
+						dd.weatherPredominant = w;
 						break;
 					}
 				}
@@ -269,77 +274,94 @@ public class WeatherDataParsed implements Serializable {
 		}
 		
 		
-		public String getDateTime() {
-			return dateTime;
+		public String getCity() {
+			return city;
 		}
 
-		public void setDateTime(String dateTime) {
-			this.dateTime = dateTime;
+		public void setCity(String city) {
+			this.city = city;
 		}
 
-		public String getTemperature() {
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		public String getZipcode() {
+			return zipcode;
+		}
+
+		public void setZipcode(String zipcode) {
+			this.zipcode = zipcode;
+		}
+
+		public WeatherDataValue getTemperature() {
 			return temperature;
 		}
 
-		public void setTemperature(String temperature) {
+		public void setTemperature(WeatherDataValue temperature) {
 			this.temperature = temperature;
 		}
 
-		public String getTempMax() {
+		public WeatherDataValue getTempMax() {
 			return tempMax;
 		}
 
-		public void setTempMax(String tempMax) {
+		public void setTempMax(WeatherDataValue tempMax) {
 			this.tempMax = tempMax;
 		}
 
-		public String getTempMin() {
+		public WeatherDataValue getTempMin() {
 			return tempMin;
 		}
 
-		public void setTempMin(String tempMin) {
+		public void setTempMin(WeatherDataValue tempMin) {
 			this.tempMin = tempMin;
 		}
 
-		public String getWindSustained() {
+		public WeatherDataValue getWindSustained() {
 			return windSustained;
 		}
 
-		public void setWindSustained(String windSustained) {
+		public void setWindSustained(WeatherDataValue windSustained) {
 			this.windSustained = windSustained;
 		}
 
-		public String getWindDirection() {
+		public WeatherDataValue getWindDirection() {
 			return windDirection;
 		}
 
-		public void setWindDirection(String windDirection) {
+		public void setWindDirection(WeatherDataValue windDirection) {
 			this.windDirection = windDirection;
 		}
 
-		public String getWindGust() {
+		public WeatherDataValue getWindGust() {
 			return windGust;
 		}
 
-		public void setWindGust(String windGust) {
+		public void setWindGust(WeatherDataValue windGust) {
 			this.windGust = windGust;
 		}
 
-		public String getPropPrecip12() {
+		public WeatherDataValue getPropPrecip12() {
 			return propPrecip12;
 		}
 
-		public void setPropPrecip12(String propPrecip12) {
+		public void setPropPrecip12(WeatherDataValue propPrecip12) {
 			this.propPrecip12 = propPrecip12;
 		}
 
-		public String getWeatherPredominant() {
+		public WeatherCondDataValue getWeatherPredominant() {
 			return weatherPredominant;
 		}
 
-		public void setWeatherPredominant(String weatherPredominant) {
+		public void setWeatherPredominant(WeatherCondDataValue weatherPredominant) {
 			this.weatherPredominant = weatherPredominant;
 		}
+
 
 
 	}
