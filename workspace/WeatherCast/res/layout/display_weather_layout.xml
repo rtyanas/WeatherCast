@@ -14,7 +14,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:text="Jan 1, 1980 12:00" >
+            android:text="Jan 1, 1980 12:00"
+            android:textSize="@dimen/activity_vertical_margin"
+            android:textStyle="bold" >
 
             <requestFocus />
         </TextView>
@@ -148,6 +150,18 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="none" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/sailingExperience"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/howIsSailingExperience" />
 
     </LinearLayout>
 
