@@ -101,7 +101,10 @@ public class MainActivity extends Activity {
 	    List<DisplayData> ddL = dd.generateDisplayDataList(wdp.stationData);
 	    */
 
-	    lv.setAdapter(simpleAdpt);
+	    // lv.setAdapter(simpleAdpt);
+
+		Intent intent = new Intent(this, StationListActivity.class);
+		startActivity(intent);
 	}
 
 	@Override
