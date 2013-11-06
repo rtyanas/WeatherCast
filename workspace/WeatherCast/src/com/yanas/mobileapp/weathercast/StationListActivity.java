@@ -154,9 +154,10 @@ implements LoaderManager.LoaderCallbacks<Cursor> {
 	private void initStationData(StationListActivity this_in) {
 		stations = new Vector<StationSelected>();
 		stations.add(new StationSelected(this_in, CURRENT_LOCATION, "", ""));
+		stations.add(new StationSelected(this_in, "Bedminster", "NJ", "07921"));
 		stations.add(new StationSelected(this_in, "Netcong", "NJ", "07857"));
+		stations.add(new StationSelected(this_in, "New York", "NY", "10018"));
 		stations.add(new StationSelected(this_in, "Rock Hall", "MD", "21661"));
-		stations.add(new StationSelected(this_in, "South Amboy", "NJ", "08879"));
 	}
 
 	
