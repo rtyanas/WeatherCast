@@ -29,18 +29,19 @@ public final class R {
         public static final int temp_guage=0x7f020005;
     }
     public static final class id {
-        public static final int action_search=0x7f080017;
-        public static final int action_settings=0x7f080016;
-        public static final int content=0x7f080013;
+        public static final int LabelSailingExp=0x7f080012;
+        public static final int action_search=0x7f080018;
+        public static final int action_settings=0x7f080017;
+        public static final int content=0x7f080014;
         public static final int date_time=0x7f080004;
-        public static final int icon=0x7f080014;
-        public static final int label=0x7f080015;
+        public static final int icon=0x7f080015;
+        public static final int label=0x7f080016;
         public static final int listView=0x7f080003;
         public static final int listview=0x7f080001;
         public static final int pager=0x7f080000;
         public static final int pop=0x7f08000e;
         public static final int pop_icon=0x7f08000d;
-        public static final int sailingExperience=0x7f080012;
+        public static final int sailingExperience=0x7f080013;
         public static final int station_id=0x7f080002;
         public static final int temp_hour=0x7f080006;
         public static final int temp_icon=0x7f080005;
