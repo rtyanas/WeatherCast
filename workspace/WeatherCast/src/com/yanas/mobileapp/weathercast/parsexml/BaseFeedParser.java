@@ -14,6 +14,7 @@ public abstract class BaseFeedParser /* implements FeedParser */ {
 
 	private final URL feedUrl;
 	private FileInputStream fis;
+	private InputStream is;
 	
 	protected BaseFeedParser(String feedUrl){
 		try {
@@ -29,6 +30,13 @@ public abstract class BaseFeedParser /* implements FeedParser */ {
 	}
 	
 
+	protected BaseFeedParser(InputStream is_in){
+		fis = null;
+		feedUrl = null;
+		is = is_in;
+	}
+	
+
 	protected InputStream getInputStream() {
 		if(feedUrl != null) {
 				try {
@@ -38,8 +46,11 @@ public abstract class BaseFeedParser /* implements FeedParser */ {
 				throw new RuntimeException(e);
 			}
 		} 
-		else {
+		else if(fis != null) {
 			return fis;
+		}
+		else {
+			return is;
 		}
 	
 	}
