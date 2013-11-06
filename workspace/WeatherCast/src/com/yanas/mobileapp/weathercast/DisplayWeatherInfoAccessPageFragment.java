@@ -121,39 +121,61 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-    	DisplayData dd = createTestDisplayData();
+    	// bDisplayData dd = createTestDisplayData();
         // Inflate the layout containing a title and body text.
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.display_weather_layout, container, false);
 
         // Set the title view to show the page number.
         ((TextView) rootView.findViewById(R.id.date_time)).setText(
-        		displayData.getDateTime());
+        		displayData.getCity() +", "+ displayData.getState() +", "+ 
+        		displayData.getZipcode() +", "+ displayData.getTemperature().getPeriod());
 
         ((TextView) rootView.findViewById(R.id.temp_hour)).setText(
-        		displayData.getTemperature() );
+        		displayData.getTemperature().getValue() +" "+ 
+        		displayData.getTemperature().getUnits().substring(0, 1) );
         		
-        ((TextView) rootView.findViewById(R.id.temp_max)).setText(
-        		"Max "+displayData.getTempMax() );
+        String tMax = displayData.getTempMax() == null ? "Max Not Avail" :
+        	"Max "+displayData.getTempMax().getValue() +" "+ 
+         		   displayData.getTempMax().getUnits().substring(0, 1);
+        ((TextView) rootView.findViewById(R.id.temp_max)).setText(tMax);
         		
-        ((TextView) rootView.findViewById(R.id.temp_min)).setText(
-        		"Min "+displayData.getTempMin() );
+		String tMin = displayData.getTempMin() == null ? "Min Not Avail" :
+			"Min "+displayData.getTempMin().getValue() +" "+ 
+			displayData.getTempMin().getUnits().substring(0, 1);
+        ((TextView) rootView.findViewById(R.id.temp_min)).setText(tMin);
         		
-        ((TextView) rootView.findViewById(R.id.wind_sustained)).setText(
-        		"Wind "+displayData.getWindSustained() );
+        String wSus = displayData.getWindSustained() == null ? "Wind Not Avail" :
+        		"Wind "+displayData.getWindSustained().getValue() +" "+ 
+                  	    displayData.getWindSustained().getUnits();
+        ((TextView) rootView.findViewById(R.id.wind_sustained)).setText( wSus );
         		
-        ((TextView) rootView.findViewById(R.id.wind_direction)).setText(
-        		"Direction "+displayData.getWindDirection() );
+        String wDir = displayData.getWindDirection() == null ? "Direction Not Avail" :
+        		"Direction "+displayData.getWindDirection().getValue() +" "+ 
+                   	         displayData.getWindDirection().getUnits();
+        ((TextView) rootView.findViewById(R.id.wind_direction)).setText(wDir );
         		
-        ((TextView) rootView.findViewById(R.id.wind_gust)).setText(
-        		"Gust "+displayData.getWindGust() );
+        String wGust = displayData.getWindGust() == null ? "Gust Not Avail" :
+        		"Gust "+displayData.getWindGust().getValue() +" "+ 
+                   	    displayData.getWindGust().getUnits();
+        ((TextView) rootView.findViewById(R.id.wind_gust)).setText( wGust );
         		
-        ((TextView) rootView.findViewById(R.id.pop)).setText(
-        		"Probability of Precip "+displayData.getPropPrecip12() );
+        String pop = displayData.getPropPrecip12() == null ? "POP Not Available" :
+        		"Probability of Precip "+displayData.getPropPrecip12().getValue() +" "+ 
+                   	   displayData.getPropPrecip12().getUnits();
+        ((TextView) rootView.findViewById(R.id.pop)).setText(pop );
         		
-        ((TextView) rootView.findViewById(R.id.weather_predominant_amount)).setText(
-        		"Wx "+displayData.getWeatherPredominant() );
+		String wx =  displayData.getWeatherPredominant() == null ? "Wx Not Available" : 
+			"Wx "+displayData.getWeatherPredominant().getCoverage() +", "+ 
+					displayData.getWeatherPredominant().getIntensity() +", "+
+					displayData.getWeatherPredominant().getWeather_type()  +", "+ 
+					displayData.getWeatherPredominant().getQualifier();
+		
+        ((TextView) rootView.findViewById(R.id.weather_predominant_amount)).setText(wx);
+        // .getCoverage() +","+ w.getIntensity() +","+ 
+	    // w.getWeather_type() +","+ w.getQualifier()
         		
+        ((TextView) rootView.findViewById(R.id.sailingExperience)).setText( estimatedSailingExperience(displayData) );
 
         
         		//stationData.toString().replaceFirst("Rockaway", "Yanas House") ); //  +"data source www.weather.gov") ;
@@ -161,13 +183,89 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         return rootView;
     }
 
+    
+    private String estimatedSailingExperience(DisplayData displayData) {
+    	StringBuffer sailingEx = new StringBuffer();
+    	int wSus = -1;
+    	int wGust = -1;
+    	int temp = -100;
+    	int pop = -1;
+    	
+    	try {wSus = displayData.getWindSustained() != null ? Integer.parseInt(displayData.getWindSustained().getValue() ) : -1; }
+    	catch (NumberFormatException nfe) {};
+    	try {wGust = displayData.getWindGust() != null ? Integer.parseInt(displayData.getWindGust().getValue() ) : -1 ; }
+    	catch (NumberFormatException nfe) {};
+    	try {temp = displayData.getTemperature() != null ? Integer.parseInt(displayData.getTemperature().getValue() ) : -100; }
+    	catch (NumberFormatException nfe) {};
+    	try {pop = displayData.getPropPrecip12() != null ? Integer.parseInt(displayData.getPropPrecip12().getValue() ) : -1; }
+    	catch (NumberFormatException nfe) {};
+    	
+    	if(wSus < 0 )
+    		sailingEx.append("No wind info ");
+    	else if(wSus >= 0 && wSus < 8 )
+    		sailingEx.append("Light winds ");
+    	else if(wSus >= 8 && wSus < 18 )
+    		sailingEx.append("Good winds ");
+    	else if(wSus >= 18 && wSus < 20 )
+    		sailingEx.append("Strong winds ");
+    	else if(wSus >= 20 && wSus < 25 )
+    		sailingEx.append("Very strong winds - ** Reef ** ");
+    	else if(wSus >= 25)
+    		sailingEx.append("Big storm! - ** motor home ** ");
+    	
+    	if(wGust < 0)
+    		sailingEx.append("No gust info ");
+    	if(wGust >= 0 && wGust < 8 )
+    		sailingEx.append("Light gusts ");
+    	else if(wGust >= 8 && wGust < 18)
+    		sailingEx.append("Medium gusts ");
+    	else if(wGust >= 18 && wGust < 20)
+    		sailingEx.append("Strong gusts ");
+    	else if(wGust >= 20 && wGust < 25)
+    		sailingEx.append("Very strong gusts ");
+    	else if(wGust >= 25 )
+    		sailingEx.append("Definetely reef - gusts ");
+    	
+    	if(temp < -99)
+    		sailingEx.append("Temps not available ");
+    	else if(temp < 50 )
+    		sailingEx.append("Get a parka ");
+    	else if(temp >= 50 && temp < 65 )
+    		sailingEx.append("Temperature is cold ");
+    	else if(temp >= 65 && temp < 72 )
+    		sailingEx.append("Temperature is chilly ");
+    	else if(temp >= 72  && temp < 85 )
+    		sailingEx.append("Temperature is nice ");
+    	else if(temp >= 85  && temp < 90 )
+    		sailingEx.append("Temperature is warm ");
+    	else if(temp >= 90  )
+    		sailingEx.append("Temperature is hot, look for wind ");
+    	
+    	if(pop < 0)
+    		sailingEx.append("Prop precip not available ");
+    	else if(pop < 10 )
+    		sailingEx.append("No rain ");
+    	else if(pop >= 10 && pop < 30 )
+    		sailingEx.append("Maybe some rain ");
+    	else if(pop >= 30 && pop < 50 )
+    		sailingEx.append("Might rain ");
+    	else if(pop >= 50  && pop < 75 )
+    		sailingEx.append("Good chance of rain ");
+    	else if(pop >= 75 )
+    		sailingEx.append("Looks like rain! ");
+    	
+    	return sailingEx.toString();
+    }
+    
+    
     /**
      * Returns the page number represented by this fragment object.
      */
     public int getPageNumber() {
         return mPageNumber;
     }
-    
+
+    /**
     public DisplayData createTestDisplayData() {
     	
     	WeatherDataParsed wdp = new WeatherDataParsed();
@@ -185,4 +283,5 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
     	
     	return dd;
     }
+    **/
 }
