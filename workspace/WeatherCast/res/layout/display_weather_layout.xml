@@ -158,6 +158,20 @@
         android:layout_height="wrap_content" >
 
         <TextView
+            android:id="@+id/LabelSailingExp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/howIsSailingExperience"
+            android:text="@string/howIsSailingExperience"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
             android:id="@+id/sailingExperience"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
