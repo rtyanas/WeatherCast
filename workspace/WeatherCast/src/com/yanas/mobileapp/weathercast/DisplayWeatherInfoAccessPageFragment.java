@@ -49,19 +49,18 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
      */
     public static final String ARG_PAGE = "page";
     public static final String ARG_TEMP = "temp";
-    public static final String STATIONDATA_ARG = "station_Data";
+    public static final String STATIONDATA_DATETIME_ARG = "station_datetime_Data";
 
     /**
      * The fragment's page number, which is set to the argument value for {@link #ARG_PAGE}.
      */
     private int mPageNumber;
-	StationData stationData;
-	ArrayList<DisplayData> displayDataL;
+	DisplayData displayData;
 
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
      */
-    public static DisplayWeatherInfoAccessPageFragment create(StationData stationSelected_in) {
+    public static DisplayWeatherInfoAccessPageFragment create(DisplayData dataSelected_in) {
         DisplayWeatherInfoAccessPageFragment fragment = new DisplayWeatherInfoAccessPageFragment();
         Bundle args = new Bundle();
         
@@ -70,12 +69,13 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         ObjectOutputStream out;
 		try {
 			out = new ObjectOutputStream(bos);
-			out.writeObject(stationSelected_in);
+			out.writeObject(dataSelected_in);
 	        out.close();
-	        args.putByteArray(STATIONDATA_ARG, bos.toByteArray());
+	        args.putByteArray(STATIONDATA_DATETIME_ARG, bos.toByteArray());
 	        fragment.setArguments(args);
 		} catch (IOException e) {
 			Log.e("DisplayWeatherInfoAccessPageFragment", "create, "+ e.getMessage());
+			e.printStackTrace();
 		}
         
         return fragment;
@@ -90,7 +90,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         byte stationBA[] = null;
         
         if(getArguments() != null) {  // Get station data
-        	stationBA = getArguments().getByteArray(STATIONDATA_ARG);
+        	stationBA = getArguments().getByteArray(STATIONDATA_DATETIME_ARG);
         }
         else {
         	Log.e("DisplayWeatherInfoAccessPageFragment", "getArguments() is null");
@@ -101,7 +101,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
 	        
 	        try {
 				ObjectInputStream in = new ObjectInputStream(bin);
-				stationData = (StationData)in.readObject();
+				displayData = (DisplayData)in.readObject();
 			} catch (ClassNotFoundException e) {
 		        Log.e("DisplayWeatherInfoAccessPageFragment", e.getMessage());
 			} catch (StreamCorruptedException e) {
@@ -110,7 +110,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
 		        Log.e("DisplayWeatherInfoAccessPageFragment", e.getMessage());
 			}
 	        
-	        Log.d("DisplayWeatherInfoAccessPageFragment", stationData.toString());
+	        Log.d("DisplayWeatherInfoAccessPageFragment", displayData.toString());
 	        // stationData = getArguments().g.getStringArray(ARG_TEMP);
         }
         else {
@@ -128,12 +128,28 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
 
         // Set the title view to show the page number.
         ((TextView) rootView.findViewById(R.id.date_time)).setText(
-        		dd.getDateTime());
+        		displayData.getDateTime());
 
-        // Set the title view to show the page number.
         ((TextView) rootView.findViewById(R.id.temp_hour)).setText(
-        		dd.getTemperature() );
+        		displayData.getTemperature() );
         		
+        ((TextView) rootView.findViewById(R.id.temp_max)).setText(
+        		displayData.getTempMax() );
+        		
+        ((TextView) rootView.findViewById(R.id.temp_min)).setText(
+        		displayData.getTempMin() );
+        		
+        ((TextView) rootView.findViewById(R.id.wind_sustained)).setText(
+        		displayData.getWindSustained() );
+        		
+        ((TextView) rootView.findViewById(R.id.wind_direction)).setText(
+        		displayData.getWindDirection() );
+        		
+        ((TextView) rootView.findViewById(R.id.weather_predominant_amount)).setText(
+        		displayData.getWeatherPredominant() );
+        		
+
+        
         		//stationData.toString().replaceFirst("Rockaway", "Yanas House") ); //  +"data source www.weather.gov") ;
 
         return rootView;
