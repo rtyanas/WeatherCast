@@ -134,19 +134,25 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         		displayData.getTemperature() );
         		
         ((TextView) rootView.findViewById(R.id.temp_max)).setText(
-        		displayData.getTempMax() );
+        		"Max "+displayData.getTempMax() );
         		
         ((TextView) rootView.findViewById(R.id.temp_min)).setText(
-        		displayData.getTempMin() );
+        		"Min "+displayData.getTempMin() );
         		
         ((TextView) rootView.findViewById(R.id.wind_sustained)).setText(
-        		displayData.getWindSustained() );
+        		"Wind "+displayData.getWindSustained() );
         		
         ((TextView) rootView.findViewById(R.id.wind_direction)).setText(
-        		displayData.getWindDirection() );
+        		"Direction "+displayData.getWindDirection() );
+        		
+        ((TextView) rootView.findViewById(R.id.wind_gust)).setText(
+        		"Gust "+displayData.getWindGust() );
+        		
+        ((TextView) rootView.findViewById(R.id.pop)).setText(
+        		"Probability of Precip "+displayData.getPropPrecip12() );
         		
         ((TextView) rootView.findViewById(R.id.weather_predominant_amount)).setText(
-        		displayData.getWeatherPredominant() );
+        		"Wx "+displayData.getWeatherPredominant() );
         		
 
         
