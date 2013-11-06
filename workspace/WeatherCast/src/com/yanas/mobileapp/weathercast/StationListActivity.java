@@ -155,9 +155,17 @@ implements LoaderManager.LoaderCallbacks<Cursor> {
 		stations = new Vector<StationSelected>();
 		stations.add(new StationSelected(this_in, CURRENT_LOCATION, "", ""));
 		stations.add(new StationSelected(this_in, "Bedminster", "NJ", "07921"));
+		stations.add(new StationSelected(this_in, "Flemington", "NJ", "08822"));
+		stations.add(new StationSelected(this_in, "Fair Haven", "NJ", "07704"));
+		stations.add(new StationSelected(this_in, "Mantoloking", "NJ", "08738"));
 		stations.add(new StationSelected(this_in, "Netcong", "NJ", "07857"));
 		stations.add(new StationSelected(this_in, "New York", "NY", "10018"));
+		stations.add(new StationSelected(this_in, "Perth Amboy", "NJ", "08861"));
 		stations.add(new StationSelected(this_in, "Rock Hall", "MD", "21661"));
+		stations.add(new StationSelected(this_in, "Rockaway", "NJ", "07866"));
+		stations.add(new StationSelected(this_in, "Sandy Hook", "NJ", "07732"));
+		stations.add(new StationSelected(this_in, "Shrewsbury", "NJ", "07702"));
+		stations.add(new StationSelected(this_in, "Toms River", "NJ", "08722"));
 	}
 
 	
