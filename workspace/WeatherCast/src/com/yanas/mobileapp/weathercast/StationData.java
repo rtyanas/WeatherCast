@@ -23,7 +23,6 @@ public class StationData implements Serializable {
 	private Vector<WeatherDataValue> temperatureMin;
 	private Vector<WeatherDataValue> temperatureMax;
 	private Vector<WeatherDataValue> predominant;
-	private Vector<WeatherDataValue> percentPercip;
 	private Vector<WeatherDataValue> windSustained;
 	private Vector<WeatherDataValue> windSustainedDirection;
 	private Vector<WeatherDataValue> windGust;
@@ -106,26 +105,6 @@ public class StationData implements Serializable {
 		this.endTime = endTime;
 	}
 
-	public WeatherCondDataValue getWeather(int i) {
-		return weather.get(i);
-	}
-
-	public void setWeather(WeatherCondDataValue weather) {
-		this.weather.add(weather);
-	}
-
-	public WeatherDataValue getprobOfPrecip12(int i) {
-		return probOfPrecip12.get(i);
-	}
-
-	public void setprobOfPrecip12(WeatherDataValue probOfPrecip12) {
-		this.probOfPrecip12.add(probOfPrecip12);
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	public StationData() {
 		city = "";
 		state = "";
@@ -157,7 +136,6 @@ public class StationData implements Serializable {
 		temperatureMin = new Vector<WeatherDataValue>();
 		temperatureMax = new Vector<WeatherDataValue>();
 		predominant = new Vector<WeatherDataValue>();
-		percentPercip = new Vector<WeatherDataValue>();
 		windSustained = new Vector<WeatherDataValue>();
 		windSustainedDirection = new Vector<WeatherDataValue>();
 		windGust = new Vector<WeatherDataValue>();
@@ -184,10 +162,6 @@ public class StationData implements Serializable {
 		return predominant;
 	}
 
-	public Vector<WeatherDataValue> getPercentPercip() {
-		return percentPercip;
-	}
-
 	public Vector<WeatherDataValue> getWindSustained() {
 		return windSustained;
 	}
@@ -200,20 +174,20 @@ public class StationData implements Serializable {
 		return windGust;
 	}
 
-	public Vector<WeatherDataValue> getTideLevel() {
-		return tideLevel;
-	}
-
-	public Vector<WeatherDataValue> getTideDirection() {
-		return tideDirection;
+	public Vector<WeatherDataValue> getprobOfPrecip12() {
+		return probOfPrecip12;
 	}
 
 	public Vector<WeatherCondDataValue> getWeather() {
 		return weather;
 	}
 
-	public Vector<WeatherDataValue> getProbOfPrecip12() {
-		return probOfPrecip12;
+	public Vector<WeatherDataValue> getTideLevel() {
+		return tideLevel;
+	}
+
+	public Vector<WeatherDataValue> getTideDirection() {
+		return tideDirection;
 	}
 
 	public WeatherDataValue getTemperature(int i) {
@@ -226,7 +200,7 @@ public class StationData implements Serializable {
 		this.temperature.add(temperature);
 	}
 	public WeatherDataValue getTemperatureMin(int i) {
-		if(temperature.size() < 1) {
+		if(temperatureMin.size() < 1) {
 			return new WeatherDataValue();
 		}
 		return temperatureMin.get(i);
@@ -235,7 +209,7 @@ public class StationData implements Serializable {
 		this.temperatureMin.add(temperatureMin);
 	}
 	public WeatherDataValue getTemperatureMax(int i) {
-		if(temperature.size() < 1) {
+		if(temperatureMax.size() < 1) {
 			return new WeatherDataValue();
 		}
 		return temperatureMax.get(i);
@@ -244,7 +218,7 @@ public class StationData implements Serializable {
 		this.temperatureMax.add(temperatureMax);
 	}
 	public WeatherDataValue getPredominant(int i) {
-		if(temperature.size() < 1) {
+		if(predominant.size() < 1) {
 			return new WeatherDataValue();
 		}
 		return predominant.get(i);
@@ -252,17 +226,19 @@ public class StationData implements Serializable {
 	public void setPredominant(WeatherDataValue predominant) {
 		this.predominant.add(predominant);
 	}
-	public WeatherDataValue getPercentPercip(int i) {
-		if(temperature.size() < 1) {
+	public WeatherDataValue getprobOfPrecip12(int i) {
+		if(probOfPrecip12.size() < 1) {
 			return new WeatherDataValue();
 		}
-		return percentPercip.get(i);
+		return probOfPrecip12.get(i);
 	}
-	public void setPercentPercip(WeatherDataValue percentPercip) {
-		this.percentPercip.add(percentPercip);
+
+	public void setprobOfPrecip12(WeatherDataValue probOfPrecip12) {
+		this.probOfPrecip12.add(probOfPrecip12);
 	}
+
 	public WeatherDataValue getWindSustained(int i) {
-		if(temperature.size() < 1) {
+		if(windSustained.size() < 1) {
 			return new WeatherDataValue();
 		}
 		return windSustained.get(i);
@@ -271,7 +247,7 @@ public class StationData implements Serializable {
 		this.windSustained.add(windSustained);
 	}
 	public WeatherDataValue getWindSustainedDirection(int i) {
-		if(temperature.size() < 1) {
+		if(windSustainedDirection.size() < 1) {
 			return new WeatherDataValue();
 		}
 		return windSustainedDirection.get(i);
@@ -280,7 +256,7 @@ public class StationData implements Serializable {
 		this.windSustainedDirection.add(windSustainedDirection);
 	}
 	public WeatherDataValue getWindGust(int i) {
-		if(temperature.size() < 1) {
+		if(windGust.size() < 1) {
 			return new WeatherDataValue();
 		}
 		return windGust.get(i);
@@ -288,8 +264,20 @@ public class StationData implements Serializable {
 	public void setWindGust(WeatherDataValue windGust) {
 		this.windGust.add(windGust);
 	}
+
+	public WeatherCondDataValue getWeather(int i) {
+		if(weather.size() < 1) {
+			return new WeatherCondDataValue();
+		}
+		return weather.get(i);
+	}
+
+	public void setWeather(WeatherCondDataValue weather) {
+		this.weather.add(weather);
+	}
+
 	public WeatherDataValue getTideLevel(int i) {
-		if(temperature.size() < 1) {
+		if(tideLevel.size() < 1) {
 			return new WeatherDataValue();
 		}
 		return tideLevel.get(i);
@@ -298,7 +286,7 @@ public class StationData implements Serializable {
 		this.tideLevel.add(tideLevel);
 	}
 	public WeatherDataValue getTideDirection(int i) {
-		if(temperature.size() < 1) {
+		if(tideDirection.size() < 1) {
 			return new WeatherDataValue();
 		}
 		return tideDirection.get(i);
