@@ -91,9 +91,10 @@ public class SetTheWeather {
 		params.add(new BasicNameValuePair("temp",  "temp") );
 		params.add(new BasicNameValuePair("maxt",  "maxt") );
 		params.add(new BasicNameValuePair("mint",  "mint") );
-		params.add(new BasicNameValuePair("responseFormat", "text/csv") );
+		// params.add(new BasicNameValuePair("responseFormat", "text/csv") );
 
 		params.add(new BasicNameValuePair("pop12", "pop12") );
+		params.add(new BasicNameValuePair("sky", "sky") );
 		return this;
 	}
 
