@@ -34,10 +34,10 @@ public class WeatherDataParsed implements Serializable {
 			}
 		}
 		
-		if(stationData.getProbOfPrecip12().size() > 0) {
+		if(stationData.getprobOfPrecip12().size() > 0) {
 			for(LayoutAndDates lad : layoutAndDatesV) {
-				if(lad.layout.equals(stationData.getProbOfPrecip12().get(0).getPeriod())) {
-					copyPeriods(lad.startDate, stationData.getProbOfPrecip12());
+				if(lad.layout.equals(stationData.getprobOfPrecip12().get(0).getPeriod())) {
+					copyPeriods(lad.startDate, stationData.getprobOfPrecip12());
 				}
 			}
 		}
@@ -208,8 +208,29 @@ public class WeatherDataParsed implements Serializable {
 		
 		public List<DisplayData> generateDisplayDataList(StationData statnDt) {
 			
-			
 			DisplayData dd = null;
+			
+			// Add the first value in each vector since the temp 
+			// period can be after the first period of the other weather values
+			dd = new DisplayData();
+
+			dd.city = statnDt.getCity();
+			dd.state = statnDt.getState();
+			dd.zipcode = statnDt.getZipcode();
+
+			// ToDo Set the period on temperature here to
+			// the smallest period in this display
+			dd.temperature = statnDt.getTemperature(0);
+			dd.tempMin = statnDt.getTemperatureMin(0);
+			dd.tempMax = statnDt.getTemperatureMax(0);
+			dd.windSustained = statnDt.getWindSustained(0);
+			dd.windDirection = statnDt.getWindSustainedDirection(0);
+			dd.windGust = statnDt.getWindGust(0);
+			dd.windDirection = statnDt.getWindSustainedDirection(0);
+			dd.propPrecip12 = statnDt.getprobOfPrecip12(0);
+			dd.weatherPredominant = statnDt.getWeather(0);
+			displayL.add(dd);
+
 			for(WeatherDataValue wtemp : statnDt.getTemperature()) {
 				dd = new DisplayData();
 
@@ -219,6 +240,7 @@ public class WeatherDataParsed implements Serializable {
 
 				dd.temperature = wtemp;
 				// Compare dates (2013-11-01T02:00:00-04:00)
+				// 2013-11-09T19:00:00-05:00
 				for(WeatherDataValue w : statnDt.getTemperatureMin()) {
 					if(wtemp.getPeriod().substring(0, 18).compareTo(w.getPeriod().substring(0, 18)) <= 0 ) {
 						dd.tempMin = w;
@@ -255,7 +277,7 @@ public class WeatherDataParsed implements Serializable {
 						break;
 					}
 				}
-				for(WeatherDataValue w : statnDt.getProbOfPrecip12()) {
+				for(WeatherDataValue w : statnDt.getprobOfPrecip12()) {
 					if(wtemp.getPeriod().substring(0, 18).compareTo(w.getPeriod().substring(0, 18)) <= 0 ) {
 						dd.propPrecip12 = w;
 						break;
