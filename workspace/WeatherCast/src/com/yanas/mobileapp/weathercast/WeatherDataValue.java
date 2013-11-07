@@ -55,4 +55,15 @@ public class WeatherDataValue implements Serializable {
 	public void setTextDesc(String textDesc) {
 		this.textDesc = textDesc;
 	}
+	
+	public WeatherDataValue copy() {
+		WeatherDataValue wdv = new WeatherDataValue();
+		wdv.setIconDesc(this.getIconDesc());
+		wdv.setPeriod(this.getPeriod());
+		wdv.setTextDesc(this.getTextDesc());
+		wdv.setUnits(this.getUnits());
+		wdv.setValue(this.getValue());	
+		
+		return wdv;
+	}
 }
