@@ -218,9 +218,9 @@ public class WeatherDataParsed implements Serializable {
 			dd.state = statnDt.getState();
 			dd.zipcode = statnDt.getZipcode();
 
-			// ToDo Set the period on temperature here to
+			// Set the period on temperature here to
 			// the smallest period in this display
-			dd.temperature = statnDt.getTemperature(0);
+			dd.temperature = statnDt.getTemperature(0).copy();  // CHange the period in the copy not original
 			dd.tempMin = statnDt.getTemperatureMin(0);
 			dd.tempMax = statnDt.getTemperatureMax(0);
 			dd.windSustained = statnDt.getWindSustained(0);
@@ -228,6 +228,7 @@ public class WeatherDataParsed implements Serializable {
 			dd.windGust = statnDt.getWindGust(0);
 			dd.windDirection = statnDt.getWindSustainedDirection(0);
 			dd.propPrecip12 = statnDt.getprobOfPrecip12(0);
+			dd.temperature.setPeriod(statnDt.getprobOfPrecip12(0).getPeriod()); // change period
 			dd.weatherPredominant = statnDt.getWeather(0);
 			displayL.add(dd);
 
