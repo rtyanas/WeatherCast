@@ -126,10 +126,16 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.display_weather_layout, container, false);
 
+        String dateTime[] = {"",""};
+        
+        if(displayData.getTemperature().getPeriod().split("T").length >= 2) {
+        	dateTime = displayData.getTemperature().getPeriod().split("T");
+        }
+        
         // Set the title view to show the page number.
         ((TextView) rootView.findViewById(R.id.date_time)).setText(
         		displayData.getCity() +", "+ displayData.getState() +", "+ 
-        		displayData.getZipcode() +", "+ displayData.getTemperature().getPeriod());
+        		displayData.getZipcode() +"\n"+ dateTime[0] +" ~ "+ dateTime[1].split("-")[0]);
 
         ((TextView) rootView.findViewById(R.id.temp_hour)).setText(
         		displayData.getTemperature().getValue() +" "+ 
