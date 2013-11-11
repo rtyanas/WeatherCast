@@ -86,7 +86,7 @@ public class AssembleWeatherData {
 				station, "air_temperature", 
 				ftGmt.format(nowDate)+"00", ftGmt.format(nowDate)+"00");
 
-		WeatherData weatherData = new WeatherData();
+		WeatherData weatherData = new WeatherData(dwThis );
 //		String temperature = weatherData.getObservedPropertyTide(weatherReq);
 //				
 //		if(pNums.matcher(temperature).find() )
@@ -101,29 +101,29 @@ public class AssembleWeatherData {
 //				station, "winds", 
 //				ftGmt.format(nowDate)+"00", ftGmt.format(nowDate)+"00");
 
-		String winds = weatherData.getObservedPropertyTide(weatherReq);
-		String windDir="Not Available";
-		String windSpeed = "Not Available";
-		String windGust = "Not Available";
-		if(winds.split(",").length >= 3) {
-			double ms_knotsConversionFactor = 1.94384449244;
-			int i=0;
-			for(String w : winds.split(",")) {
-				if(pNums.matcher(w).find() && i == 0 ) // Found wind direction
-				{
-					windDir = w;
-				} 
-				else if(pNums.matcher(w).find() && i == 1 ) // Found wind speed
-				{
-					windSpeed = String.format("%.2f", Double.valueOf((Double.valueOf(w) * ms_knotsConversionFactor)));
-				}
-				else if(pNums.matcher(w).find() && i == 2 ) // Found wind Gust speed
-				{
-					windGust = String.format("%.2f", Double.valueOf((Double.valueOf(w) * ms_knotsConversionFactor)));
-				}
-				i++;
-			}
-		}
+//		String winds = weatherData.getObservedPropertyTide(weatherReq);
+//		String windDir="Not Available";
+//		String windSpeed = "Not Available";
+//		String windGust = "Not Available";
+//		if(winds.split(",").length >= 3) {
+//			double ms_knotsConversionFactor = 1.94384449244;
+//			int i=0;
+//			for(String w : winds.split(",")) {
+//				if(pNums.matcher(w).find() && i == 0 ) // Found wind direction
+//				{
+//					windDir = w;
+//				} 
+//				else if(pNums.matcher(w).find() && i == 1 ) // Found wind speed
+//				{
+//					windSpeed = String.format("%.2f", Double.valueOf((Double.valueOf(w) * ms_knotsConversionFactor)));
+//				}
+//				else if(pNums.matcher(w).find() && i == 2 ) // Found wind Gust speed
+//				{
+//					windGust = String.format("%.2f", Double.valueOf((Double.valueOf(w) * ms_knotsConversionFactor)));
+//				}
+//				i++;
+//			}
+//		}
 		
 		final int ONE_HOUR = 60 * 60 * 1000; // in milliseconds.
 		final long ONE_DAY = ONE_HOUR * 24;
@@ -143,7 +143,7 @@ public class AssembleWeatherData {
 					ft.format(nowDate.getTime() + ONE_DAY * 3  /* add one hour */)+"00");
 		}
 		WeatherDataParsed wdp = weatherData.getObservedPropertyMeteorological(
-				dwThis, weatherReq, 
+				weatherReq, 
 				city, state, zipcode, latitude, longitude);
 				
 //		// Test data
