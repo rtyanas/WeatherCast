@@ -87,19 +87,19 @@ public class AssembleWeatherData {
 				ftGmt.format(nowDate)+"00", ftGmt.format(nowDate)+"00");
 
 		WeatherData weatherData = new WeatherData();
-		String temperature = weatherData.getObservedPropertyTide(weatherReq);
-				
-		if(pNums.matcher(temperature).find() )
-		{
-			double round = 0.5;
-			Double tempD =  Double.valueOf(temperature);
-			tempD = (tempD * 9.0/5.0 + 32) + round;
-			temperature = String.valueOf(tempD.intValue());
-		}
-		
-		weatherReq.setTheTide(
-				station, "winds", 
-				ftGmt.format(nowDate)+"00", ftGmt.format(nowDate)+"00");
+//		String temperature = weatherData.getObservedPropertyTide(weatherReq);
+//				
+//		if(pNums.matcher(temperature).find() )
+//		{
+//			double round = 0.5;
+//			Double tempD =  Double.valueOf(temperature);
+//			tempD = (tempD * 9.0/5.0 + 32) + round;
+//			temperature = String.valueOf(tempD.intValue());
+//		}
+//		
+//		weatherReq.setTheTide(
+//				station, "winds", 
+//				ftGmt.format(nowDate)+"00", ftGmt.format(nowDate)+"00");
 
 		String winds = weatherData.getObservedPropertyTide(weatherReq);
 		String windDir="Not Available";
