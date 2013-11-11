@@ -24,11 +24,18 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.media.MediaScannerConnection;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.yanas.mobileapp.restaccess.RestClient;
 import com.yanas.mobileapp.restaccess.RestClient.RequestMethod;
@@ -43,8 +50,13 @@ public class WeatherData {
 	
     WeatherDataParsed wdp = null;
 
-	
+    DisplayWeatherInfoActivity dwThis;
 
+    public WeatherData(DisplayWeatherInfoActivity dwThis_in) {
+    	dwThis = dwThis_in;
+    }
+    
+    
 	/*
 	 * Execute the weather data request
 	 */
@@ -53,10 +65,44 @@ public class WeatherData {
 		String temperature;
 		String response;
 
+		Dialog dialog;
+		ProgressBar progressBar;
+		TextView tvLoading,tvPer;
+		Button btnCancel;
+
+
 		GetTheWeather() {
 		
 		}
 		
+		
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = new Dialog(dwThis);
+			dialog.setCancelable(false);
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialog.setContentView(R.layout.progressdialog);
+
+			progressBar = (ProgressBar) dialog.findViewById(R.id.progressBar1);
+			tvLoading = (TextView) dialog.findViewById(R.id.tv1);
+			tvPer = (TextView) dialog.findViewById(R.id.tvper);
+			btnCancel = (Button) dialog.findViewById(R.id.btncancel);
+
+			btnCancel.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+//					objMyTask.cancel(true);
+					dialog.dismiss();
+				}
+			});
+
+			dialog.show();
+		}
+
+
+		@Override
 	   	protected String doInBackground(SetTheWeather... weatherReq) {
 
 	   		if(GlobalSettings.weatherData) Log.d("GetTheWeather", "start doInBackground" );
@@ -80,10 +126,19 @@ public class WeatherData {
 			
 			return response;
 		}
+
 		
-		protected void  onPostExecute (Long  result) {
-			if(GlobalSettings.weatherData) Log.d("GetTheWeather", " onPostExecute result: "+ result);
+		protected void onProgressUpdate(Integer vals)  {
+			
 		}
+		
+		@Override
+ 		protected void  onPostExecute (String  result) {
+			super.onPostExecute(result);
+			if(GlobalSettings.weatherData) Log.d("GetTheWeather", " onPostExecute result: "+ result);
+			dialog.dismiss();
+
+ 		}
 
 
 	} // GetTheWeather
@@ -182,7 +237,7 @@ public class WeatherData {
 	 * @return
 	 */
 	public WeatherDataParsed getObservedPropertyMeteorological(
-			DisplayWeatherInfoActivity dwThis, SetTheWeather weatherReq,
+			SetTheWeather weatherReq,
 			String city, String state, String zipcode, String latitude, String longitude) {
 		String observedDataRet = "Not Available";
 		GetTheWeather theWeather = new GetTheWeather();
@@ -192,6 +247,7 @@ public class WeatherData {
 		theWeather.execute(weatherReq);
 		try {
 			observedDataRet = theWeather.get();
+			AsyncTask.Status stat = theWeather.getStatus();
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
