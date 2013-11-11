@@ -9,9 +9,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Result;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -46,7 +48,7 @@ public class WeatherData {
 	/*
 	 * Execute the weather data request
 	 */
-	public class GetTheWeather extends AsyncTask<SetTheWeather, Integer, Long> {
+	public class GetTheWeather extends AsyncTask<SetTheWeather, Integer, String> {
 		String station;
 		String temperature;
 		String response;
@@ -55,29 +57,35 @@ public class WeatherData {
 		
 		}
 		
-	   	protected Long doInBackground(SetTheWeather... weatherReq) {
-			long sizeL = 0L;
-			if(GlobalSettings.weatherData) Log.d("HttpTest", "start doInBackground" );
+	   	protected String doInBackground(SetTheWeather... weatherReq) {
+
+	   		if(GlobalSettings.weatherData) Log.d("GetTheWeather", "start doInBackground" );
 			
 			RestClient rc = new RestClient();
 			try {
 				rc.Execute(weatherReq[0].method, weatherReq[0].url, 
 						weatherReq[0].headers, weatherReq[0].params);
 				response = rc.response;
-				if(GlobalSettings.weatherData) Log.d("HttpTest", "Response Data:" + response);
+				// if(GlobalSettings.weatherData) Log.d("GetTheWeather", "Response Data:" + response);
 				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
-			return sizeL;
+			return response;
 	   	}
 	   	
 		public String getResponse() {
 			
 			return response;
 		}
+		
+		protected void  onPostExecute (Long  result) {
+			if(GlobalSettings.weatherData) Log.d("GetTheWeather", " onPostExecute result: "+ result);
+		}
+
+
 	} // GetTheWeather
 	
 	
@@ -92,8 +100,19 @@ public class WeatherData {
 	public String getObservedPropertyTide(SetTheWeather weatherReq) {
 		String observedDataRet = "Not Available";
 		GetTheWeather weatherRun = new GetTheWeather();
+		String response = "";
 		
 		weatherRun.execute(weatherReq);
+
+		try {
+			response = weatherRun.get();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ExecutionException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		// Wait for data return
 		for(int i=0; i < 40; i++ ) {
@@ -166,24 +185,34 @@ public class WeatherData {
 			DisplayWeatherInfoActivity dwThis, SetTheWeather weatherReq,
 			String city, String state, String zipcode, String latitude, String longitude) {
 		String observedDataRet = "Not Available";
-		GetTheWeather weatherRun = new GetTheWeather();
+		GetTheWeather theWeather = new GetTheWeather();
 		StationData stationData = new StationData(city, state, zipcode, latitude, longitude);
 		
-		weatherRun.execute(weatherReq);
-		
-		// Wait for data return
-		for(int i=0; i < 40; i++ ) {
-			if(weatherRun.response != null)
-				break;
-			
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				if(GlobalSettings.weatherData) Log.e("WeatherData", "Error getting response: "+ e.getMessage());
-			}
+		if(GlobalSettings.weatherData) Log.d("WeatherData getObservedPropertyMeteorological", "Execute");
+		theWeather.execute(weatherReq);
+		try {
+			observedDataRet = theWeather.get();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ExecutionException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		
-		if(GlobalSettings.weatherData) Log.d("DisplayMessage", "Resonse: "+ weatherRun.response);
+		// Wait for data return
+//		for(int i=0; i < 40; i++ ) {
+//			if(theWeather.response != null)
+//				break;
+//			
+//			try {
+//				Thread.sleep(500);
+//			} catch (InterruptedException e) {
+//				if(GlobalSettings.weatherData) Log.e("WeatherData", "Error getting response: "+ e.getMessage());
+//			}
+//		}
+		
+		if(GlobalSettings.weatherData) Log.d("DisplayMessage", "observedDataRet: "+ observedDataRet); // theWeather.response);
 		
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 	    Document dom = null;
@@ -195,7 +224,7 @@ public class WeatherData {
 		    DocumentBuilder builder = builderFactory.newDocumentBuilder();
 		    // dom = builder.parse(weatherRun.response);
 		    
-		    ByteArrayInputStream bis = new ByteArrayInputStream(weatherRun.response.getBytes("utf-8"));
+		    ByteArrayInputStream bis = new ByteArrayInputStream(observedDataRet.getBytes("utf-8")); // theWeather.response.getBytes("utf-8"));
 		    StringBuilder sb = new StringBuilder();
 		    if(DEBUG) {
 		    	File path = Environment.getExternalStoragePublicDirectory(
@@ -235,7 +264,7 @@ public class WeatherData {
 		    InputSource inputSource = new InputSource(bis) ;
 		    dom = builder.parse(inputSource) ;
 		    
-		    WeatherXmlParsing wxp = new WeatherXmlParsing ( new ByteArrayInputStream(weatherRun.response.getBytes())  );
+		    WeatherXmlParsing wxp = new WeatherXmlParsing ( new ByteArrayInputStream(theWeather.response.getBytes())  );
 		    wdp =  wxp.parse();
 		    wdp.updateWeatherDataPeriod();
 		    wdp.stationData.setCity(city);
