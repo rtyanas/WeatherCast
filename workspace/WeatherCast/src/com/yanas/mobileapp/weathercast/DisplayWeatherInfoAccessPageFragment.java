@@ -34,6 +34,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -126,10 +127,18 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.display_weather_layout, container, false);
 
+        String comma = ", ";
         String dateTime[] = {"",""};
         
         if(displayData.getTemperature().getPeriod().split("T").length >= 2) {
         	dateTime = displayData.getTemperature().getPeriod().split("T");
+        }
+        
+        // Set icon for sun or moon
+        int weatherIcon = R.drawable.sun_cloud;
+        if(dateTime[1].length() >= 2) {
+        	if(dateTime[1].substring(0, 1).compareTo("19") > 0  ||  dateTime[1].substring(0, 1).compareTo("06") <= 0 )
+                weatherIcon = R.drawable.moon_cloud;
         }
         
         // Set the title view to show the page number.
@@ -170,12 +179,16 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         		"Probability of Precip "+displayData.getPropPrecip12().getValue() +" "+ 
                    	   displayData.getPropPrecip12().getUnits();
         ((TextView) rootView.findViewById(R.id.pop)).setText(pop );
+        
+        ((ImageView) rootView.findViewById(R.id.weather_predominant_icon)).setImageResource(weatherIcon);        
         		
+		String qual = displayData.getWeatherPredominant() == null ? "" : displayData.getWeatherPredominant().getQualifier();
+		qual = qual.equals("none") ? "" : qual;
 		String wx =  displayData.getWeatherPredominant() == null ? "Wx Not Available" : 
 			"Wx "+displayData.getWeatherPredominant().getCoverage() +", "+ 
 					displayData.getWeatherPredominant().getIntensity() +", "+
-					displayData.getWeatherPredominant().getWeather_type()  +", "+ 
-					displayData.getWeatherPredominant().getQualifier();
+					displayData.getWeatherPredominant().getWeather_type()  + (qual.equals("") ? "" : comma) + 
+					qual;
 		
         ((TextView) rootView.findViewById(R.id.weather_predominant_amount)).setText(wx);
         // .getCoverage() +","+ w.getIntensity() +","+ 
