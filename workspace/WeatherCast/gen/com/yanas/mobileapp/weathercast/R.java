@@ -30,23 +30,27 @@ public final class R {
     }
     public static final class id {
         public static final int LabelSailingExp=0x7f080012;
-        public static final int action_search=0x7f080018;
-        public static final int action_settings=0x7f080017;
+        public static final int action_search=0x7f08001c;
+        public static final int action_settings=0x7f08001b;
+        public static final int btncancel=0x7f080017;
         public static final int content=0x7f080014;
         public static final int date_time=0x7f080004;
-        public static final int icon=0x7f080015;
-        public static final int label=0x7f080016;
+        public static final int icon=0x7f080019;
+        public static final int label=0x7f08001a;
         public static final int listView=0x7f080003;
         public static final int listview=0x7f080001;
         public static final int pager=0x7f080000;
         public static final int pop=0x7f08000e;
         public static final int pop_icon=0x7f08000d;
+        public static final int progressBar1=0x7f080016;
         public static final int sailingExperience=0x7f080013;
         public static final int station_id=0x7f080002;
         public static final int temp_hour=0x7f080006;
         public static final int temp_icon=0x7f080005;
         public static final int temp_max=0x7f080008;
         public static final int temp_min=0x7f080007;
+        public static final int tv1=0x7f080015;
+        public static final int tvper=0x7f080018;
         public static final int weather_predominant_amount=0x7f080010;
         public static final int weather_predominant_icon=0x7f08000f;
         public static final int weather_predominant_rain=0x7f080011;
@@ -64,7 +68,8 @@ public final class R {
         public static final int custom_list_activity_view=0x7f030005;
         public static final int display_weather_layout=0x7f030006;
         public static final int fragment2_screen_slide_page=0x7f030007;
-        public static final int rowlayout=0x7f030008;
+        public static final int progressdialog=0x7f030008;
+        public static final int rowlayout=0x7f030009;
     }
     public static final class menu {
         public static final int display_message=0x7f070000;
