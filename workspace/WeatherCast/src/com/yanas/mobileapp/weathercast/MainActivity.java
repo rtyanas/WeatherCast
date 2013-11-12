@@ -21,7 +21,6 @@ import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.LayoutAndDates
 
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Contacts.People;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
