@@ -5,38 +5,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
-import com.yanas.utils.GPSTracking;
-
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.ListActivity;
-import android.app.LoaderManager;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 public class StationListActivity extends ListActivity         
-implements LoaderManager.LoaderCallbacks<Cursor> {
+/* implements LoaderManager.LoaderCallbacks<Cursor> */ {
 
     // This is the Adapter being used to display the list's data
     SimpleCursorAdapter mAdapter;
@@ -45,22 +30,12 @@ implements LoaderManager.LoaderCallbacks<Cursor> {
 
 	public final static String CURRENT_LOCATION = "XX_Current_Location_YY";
 	
-    // These are the Contacts rows that we will retrieve
-    static final String[] PROJECTION = new String[] {ContactsContract.Data._ID,
-            ContactsContract.Data.DISPLAY_NAME};
-
-    // This is the select criteria
-    static final String SELECTION = "((" + 
-            ContactsContract.Data.DISPLAY_NAME + " NOTNULL) AND (" +
-            ContactsContract.Data.DISPLAY_NAME + " != '' ))";
-
     Vector<StationSelected> stations;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_station_list);
-		final ListView listView = getListView(); // (ListView) findViewById(R.id.listview);
 
 		setupActionBar();
 		initStationData(this);
@@ -71,18 +46,8 @@ implements LoaderManager.LoaderCallbacks<Cursor> {
 			stationsAL.add(sd.getCity() +", "+ sd.getState() +", "+ sd.getZipCode() );
 		}
 		
-		// getActionBar().setDisplayHomeAsUpEnabled(true);
-        // For the cursor adapter, specify which columns go into which views
-//        String[] fromColumns = {ContactsContract.Data.DISPLAY_NAME};
-//        int[] toViews = {android.R.id.text1}; // The TextView in simple_list_item_1
-        
         setListAdapter(new StableArrayAdapter(this, 
         		android.R.layout.simple_list_item_1, stationsAL) );
-
-        // Prepare the loader.  Either re-connect with an existing one,
-        // or start a new one.
-        getLoaderManager().initLoader(0, null, this);
-
 	}
 
 	@Override
@@ -111,29 +76,6 @@ implements LoaderManager.LoaderCallbacks<Cursor> {
 		return super.onOptionsItemSelected(item);
 	}
 	
-    // Called when a new Loader needs to be created
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        // Now create and return a CursorLoader that will take care of
-        // creating a Cursor for the data being displayed.
-        return new CursorLoader(this, ContactsContract.Data.CONTENT_URI,
-                PROJECTION, SELECTION, null, null);
-    }
-
-    // Called when a previously created loader has finished loading
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        // Swap the new cursor in.  (The framework will take care of closing the
-        // old cursor once we return.)
-        // mAdapter.swapCursor(data);
-    }
-
-    // Called when a previously created loader is reset, making the data unavailable
-    public void onLoaderReset(Loader<Cursor> loader) {
-        // This is called when the last Cursor provided to onLoadFinished()
-        // above is about to be closed.  We need to make sure we are no
-        // longer using it.
-        // mAdapter.swapCursor(null);
-    }
-
     @Override 
     public void onListItemClick(ListView l, View v, int position, long id) {
         final String item = (String) l.getItemAtPosition(position);
