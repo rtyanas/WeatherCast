@@ -12,7 +12,7 @@ public class StationSelected {
 	protected String dateTime;
 
 
-	public StationSelected(StationListActivity stationLA, 
+	public StationSelected(MainActivity stationLA, // StationListActivity stationLA, 
 			String city_in, String state_in, String zipCode_in) {
 		
 		city = city_in;
@@ -29,7 +29,7 @@ public class StationSelected {
 		
 	}
 
-	private boolean getCurrentLatLonZipCity(StationListActivity stationLA) {
+	private boolean getCurrentLatLonZipCity(MainActivity stationLA) { // StationListActivity stationLA) {
 		GPSTracking gpsT = new GPSTracking(stationLA);
 
 		boolean canGetLocation = gpsT.canGetLocation();
