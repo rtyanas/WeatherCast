@@ -22,8 +22,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed;
 import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.DisplayData;
@@ -128,23 +132,38 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
                 .inflate(R.layout.display_weather_layout, container, false);
 
         String comma = ", ";
-        String dateTime[] = {"",""};
         
-        if(displayData.getTemperature().getPeriod().split("T").length >= 2) {
-        	dateTime = displayData.getTemperature().getPeriod().split("T");
-        }
+        // 2013-10-24T08:00:00-04:00
+        SimpleDateFormat sdfInput = new SimpleDateFormat( // input parsing
+        		"yyyy-MM-dd'T'HH:mm:ssZ", Locale.US);
+        SimpleDateFormat sdfDisplay = new SimpleDateFormat( // output GUI
+        		"MMM d", Locale.US);
+        SimpleDateFormat sdfSunCheck = new SimpleDateFormat( // output GUI
+        		"HH", Locale.US);
+        SimpleDateFormat sdfDayOfWeek = new SimpleDateFormat( // output GUI
+        		"E", Locale.US);
+        String todaysDate = "Today's Date and Time";
+        Integer hour = 0;
+        String dayOfWeek = "Day of week";
+        try {
+			Date date = sdfInput.parse(displayData.getTemperature().getPeriod());
+			Log.d("DisplayWeatherInfoAccessPageFragmnt", "Date: "+ date);
+			todaysDate = sdfDisplay.format(date);
+			hour = Integer.parseInt(sdfSunCheck.format(date));
+			dayOfWeek = sdfDayOfWeek.format(date) +" "+ hour.toString() +":00";
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
         
         // Set icon for sun or moon
         int weatherIcon = R.drawable.sun_cloud;
-        if(dateTime[1].length() >= 2) {
-        	if(dateTime[1].substring(0, 1).compareTo("19") > 0  ||  dateTime[1].substring(0, 1).compareTo("06") <= 0 )
-                weatherIcon = R.drawable.moon_cloud;
-        }
+       	if(hour > 19  ||  hour <= 06 )
+            weatherIcon = R.drawable.moon_cloud;
         
-        // Set the title view to show the page number.
+        // Set the title view to show city and date/time
         ((TextView) rootView.findViewById(R.id.date_time)).setText(
         		displayData.getCity() +", "+ displayData.getState() +", "+ 
-        		displayData.getZipcode() +"\n"+ dateTime[0] +" ~ "+ dateTime[1].split("-")[0]);
+        		displayData.getZipcode() +"\n"+ todaysDate); // + " "+ dateTime[0] +" ~ "+ dateTime[1].split("-")[0]);
 
         ((TextView) rootView.findViewById(R.id.temp_hour)).setText(
         		displayData.getTemperature().getValue() +" "+ 
@@ -196,6 +215,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         		
         ((TextView) rootView.findViewById(R.id.sailingExperience)).setText( estimatedSailingExperience(displayData) );
 
+        ((TextView) rootView.findViewById(R.id.day_of_week)).setText( dayOfWeek );
         
         		//stationData.toString().replaceFirst("Rockaway", "Yanas House") ); //  +"data source www.weather.gov") ;
 
