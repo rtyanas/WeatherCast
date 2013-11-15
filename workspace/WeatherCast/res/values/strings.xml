@@ -15,5 +15,6 @@
     <string name="pop">Probability of precipitation</string>
     <string name="weather">Weather - amount : type</string>
     <string name="howIsSailingExperience">How will your sailing experience be?</string>
+    <string name="day_of_week">Day of week</string>
 
 </resources>
