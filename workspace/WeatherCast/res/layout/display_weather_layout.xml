@@ -125,13 +125,19 @@
 
         <TextView
             android:id="@+id/pop"
-            android:layout_width="wrap_content"
+            android:layout_width="102dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ems="10"
             android:gravity="center_horizontal"
             android:inputType="none"
             android:text="10" />
+
+        <TextView
+            android:id="@+id/cloudAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="TextView" />
 
     </LinearLayout>
 
