@@ -22,6 +22,13 @@ public class WeatherDataValue implements Serializable {
 	}
 	
 	public String getUnits() {
+		if(units.equals("percent"))
+			return "%";
+		else if(units.equals("knots"))
+			return "KTS";
+//		else if(units.equals("Fahrenheit"))
+//			return "\248";
+		
 		return units;
 	}
 
