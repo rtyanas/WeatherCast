@@ -42,6 +42,14 @@ public class WeatherDataParsed implements Serializable {
 			}
 		}
 
+		if(stationData.getCloudAmount().size() > 0) {
+			for(LayoutAndDates lad : layoutAndDatesV) {
+				if(lad.layout.equals(stationData.getCloudAmount().get(0).getPeriod())) {
+					copyPeriods(lad.startDate, stationData.getCloudAmount());
+				}
+			}
+		}
+
 		if(stationData.getTemperatureMax().size() > 0) {
 			for(LayoutAndDates lad : layoutAndDatesV) {
 				if(lad.layout.equals(stationData.getTemperatureMax().get(0).getPeriod())) {
@@ -191,6 +199,7 @@ public class WeatherDataParsed implements Serializable {
 		WeatherDataValue windDirection;
 		WeatherDataValue windGust;
 		WeatherDataValue propPrecip12;
+		WeatherDataValue cloudAmount;
 		WeatherCondDataValue weatherPredominant;
 		public List<DisplayData> displayL;
 		
@@ -228,6 +237,7 @@ public class WeatherDataParsed implements Serializable {
 			dd.windGust = statnDt.getWindGust(0);
 			dd.windDirection = statnDt.getWindSustainedDirection(0);
 			dd.propPrecip12 = statnDt.getprobOfPrecip12(0);
+			dd.cloudAmount = statnDt.getCloudAmount(0);
 			dd.temperature.setPeriod(statnDt.getprobOfPrecip12(0).getPeriod()); // change period
 			dd.weatherPredominant = statnDt.getWeather(0);
 			displayL.add(dd);
@@ -281,6 +291,12 @@ public class WeatherDataParsed implements Serializable {
 				for(WeatherDataValue w : statnDt.getprobOfPrecip12()) {
 					if(wtemp.getPeriod().substring(0, 18).compareTo(w.getPeriod().substring(0, 18)) <= 0 ) {
 						dd.propPrecip12 = w;
+						break;
+					}
+				}
+				for(WeatherDataValue w : statnDt.getCloudAmount()) {
+					if(wtemp.getPeriod().substring(0, 18).compareTo(w.getPeriod().substring(0, 18)) <= 0 ) {
+						dd.cloudAmount = w;
 						break;
 					}
 				}
@@ -375,6 +391,14 @@ public class WeatherDataParsed implements Serializable {
 
 		public void setPropPrecip12(WeatherDataValue propPrecip12) {
 			this.propPrecip12 = propPrecip12;
+		}
+
+		public WeatherDataValue getCloudAmount() {
+			return cloudAmount;
+		}
+
+		public void setCloudAmount(WeatherDataValue cloudAmount) {
+			this.cloudAmount = cloudAmount;
 		}
 
 		public WeatherCondDataValue getWeatherPredominant() {
