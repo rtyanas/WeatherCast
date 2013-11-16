@@ -195,10 +195,18 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         ((TextView) rootView.findViewById(R.id.wind_gust)).setText( wGust );
         		
         String pop = displayData.getPropPrecip12() == null ? "POP Not Available" :
-        		"Probability of Precip "+displayData.getPropPrecip12().getValue() +" "+ 
-                   	   displayData.getPropPrecip12().getUnits();
+        		displayData.getPropPrecip12().getValue() +
+        		displayData.getPropPrecip12().getUnits() +
+        		" Precip" 
+                   	   ;
         ((TextView) rootView.findViewById(R.id.pop)).setText(pop );
         
+        String cloudAmount = displayData.getPropPrecip12() == null ? "Cloud Coverage Not Available" :
+    		displayData.getCloudAmount().getValue() +
+    		displayData.getCloudAmount().getUnits() +
+    		" Cloud Cover ";
+        ((TextView) rootView.findViewById(R.id.cloudAmount)).setText(cloudAmount );
+    
         ((ImageView) rootView.findViewById(R.id.weather_predominant_icon)).setImageResource(weatherIcon);        
         		
 		String qual = displayData.getWeatherPredominant() == null ? "" : displayData.getWeatherPredominant().getQualifier();
