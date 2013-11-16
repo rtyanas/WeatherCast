@@ -30,6 +30,7 @@ public class StationData implements Serializable {
 	private Vector<WeatherDataValue> tideDirection;
 	private Vector<WeatherCondDataValue> weather;
 	private Vector<WeatherDataValue> probOfPrecip12;
+	private Vector<WeatherDataValue> cloudAmount;
 	
 	
 	
@@ -143,6 +144,7 @@ public class StationData implements Serializable {
 		tideDirection = new Vector<WeatherDataValue>();
 		weather = new Vector<WeatherCondDataValue>();
 		probOfPrecip12 = new Vector<WeatherDataValue>();
+		cloudAmount = new Vector<WeatherDataValue>();
 
 	}
 	
@@ -176,6 +178,10 @@ public class StationData implements Serializable {
 
 	public Vector<WeatherDataValue> getprobOfPrecip12() {
 		return probOfPrecip12;
+	}
+
+	public Vector<WeatherDataValue> getCloudAmount() {
+		return cloudAmount;
 	}
 
 	public Vector<WeatherCondDataValue> getWeather() {
@@ -232,9 +238,19 @@ public class StationData implements Serializable {
 		}
 		return probOfPrecip12.get(i);
 	}
+	public WeatherDataValue getCloudAmount(int i) {
+		if(cloudAmount.size() < 1) {
+			return new WeatherDataValue();
+		}
+		return cloudAmount.get(i);
+	}
 
 	public void setprobOfPrecip12(WeatherDataValue probOfPrecip12) {
 		this.probOfPrecip12.add(probOfPrecip12);
+	}
+
+	public void setCloudAmount(WeatherDataValue cloudAmount) {
+		this.cloudAmount.add(cloudAmount);
 	}
 
 	public WeatherDataValue getWindSustained(int i) {
