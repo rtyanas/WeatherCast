@@ -42,6 +42,7 @@ public class WeatherXmlParsing extends BaseFeedParser {
 	static final String END_VALID_TIME = "end-valid-time";
 	static final String PARAMETERS = "parameters";
 	static final String TEMPERATURE = "temperature";
+	static final String CLOUD_AMOUNT = "cloud-amount";
 	static final String WIND_SPEED = "wind-speed";
 	static final String DIRECTION = "direction";
 	static final String POP = "probability-of-precipitation";
@@ -117,6 +118,7 @@ public class WeatherXmlParsing extends BaseFeedParser {
 		Element windSpeed = parameters.getChild(WIND_SPEED);
 		Element direction = parameters.getChild(DIRECTION);
 		Element pop = parameters.getChild(POP);
+		Element cloudAm = parameters.getChild(CLOUD_AMOUNT);
 		Element weather = parameters.getChild(WEATHER);
 		Element weatherCond = weather.getChild(WEATHER_CONDITION);
 		
@@ -262,6 +264,34 @@ public class WeatherXmlParsing extends BaseFeedParser {
 				wData.setUnits(atts.getAtt("units"));
 				if(atts.getAtt("type").equals("12 hour")) {
 					wdp.stationData.setprobOfPrecip12(wData);
+				}
+			}
+		});
+
+
+		// Cloud Amount
+		parameters.getChild(CLOUD_AMOUNT).setStartElementListener(new StartElementListener(){
+			public void start(Attributes atts_in) {
+				for(int i=0 ; i < atts_in.getLength(); i++) {
+			    	if(GlobalSettings.weatherXmlParsing)
+			    		Log.i("WeatherXmlParsing:parse: ", atts_in.getQName(i) +", "+ atts_in.getValue(i) );
+					atts.addAtt(atts_in.getQName(i), atts_in.getValue(i));
+				}
+			}
+		});
+		parameters.getChild(CLOUD_AMOUNT).setEndElementListener(new EndElementListener(){
+			public void end() {
+				atts.clear();
+			}
+		});
+		cloudAm.getChild(VALUE).setEndTextElementListener(new EndTextElementListener(){
+			public void end(String body) {
+				WeatherDataValue wData = new WeatherDataValue();
+				wData.setValue(body);
+				wData.setPeriod(atts.getAtt("time-layout"));
+				wData.setUnits(atts.getAtt("units"));
+				if(atts.getAtt("type").equals("total")) {
+					wdp.stationData.setCloudAmount(wData);
 				}
 			}
 		});
