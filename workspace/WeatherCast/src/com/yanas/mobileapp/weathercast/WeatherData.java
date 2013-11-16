@@ -296,7 +296,9 @@ public class WeatherData {
 				    	fos.write(ch);		    		
 			    	}
 			    	
-			        // Tell the media scanner about the new file so that it is
+			    	if(GlobalSettings.weatherData) 
+			    		Log.e("getObservedPropertyMeteorological() : ", "Did write "+ path +" "+ xmlFileOut);
+			    	// Tell the media scanner about the new file so that it is
 			        // immediately available to the user.
 //			        MediaScannerConnection.scanFile(dwThis,
 //			                new String[] { file.toString() }, null,
