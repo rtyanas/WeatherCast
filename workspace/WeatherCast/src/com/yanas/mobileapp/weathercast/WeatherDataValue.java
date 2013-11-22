@@ -26,8 +26,10 @@ public class WeatherDataValue implements Serializable {
 			return "%";
 		else if(units.equals("knots"))
 			return "KTS";
-//		else if(units.equals("Fahrenheit"))
-//			return "\248";
+		else if(units.equals("Fahrenheit"))
+			return "\u2109";
+		else if(units.equals("Celsius"))
+			return "\u2103";
 		
 		return units;
 	}
