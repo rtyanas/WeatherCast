@@ -311,7 +311,7 @@ public class WeatherData {
 	
 			    	
 		    	} catch(IOException ioe) {
-		    		if(GlobalSettings.weatherData) Log.e("getObservedPropertyMeteorological() : ", ioe.getMessage());
+		    		if(GlobalSettings.weatherData) Log.e("getObservedPropertyMeteorological() : ", ioe.getMessage() +" Error: "+ observedDataRet);
 		    	} finally {
 			    	fos.flush();
 			    	fos.close();
@@ -332,6 +332,9 @@ public class WeatherData {
 		} catch (Exception e) { 
 			if(GlobalSettings.weatherData) Log.e("DisplayMessage", "Exception: "+ e.getMessage());
 		}
+		
+		if(wdp == null)
+			wdp = new WeatherDataParsed();
 		
 		return wdp;
 
