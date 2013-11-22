@@ -167,16 +167,19 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
 
         ((TextView) rootView.findViewById(R.id.temp_hour)).setText(
         		displayData.getTemperature().getValue() +" "+ 
-        		displayData.getTemperature().getUnits().substring(0, 1) );
+        		(displayData.getTemperature().getUnits().length() >= 1 ?
+        				displayData.getTemperature().getUnits() : "") );
         		
         String tMax = displayData.getTempMax() == null ? "Max Not Avail" :
         	"Max "+displayData.getTempMax().getValue() +" "+ 
-         		   displayData.getTempMax().getUnits().substring(0, 1);
+         		   (displayData.getTempMax().getUnits().length() >= 1 ?
+         				  displayData.getTempMax().getUnits() : "");
         ((TextView) rootView.findViewById(R.id.temp_max)).setText(tMax);
         		
 		String tMin = displayData.getTempMin() == null ? "Min Not Avail" :
 			"Min "+displayData.getTempMin().getValue() +" "+ 
-			displayData.getTempMin().getUnits().substring(0, 1);
+			(displayData.getTempMin().getUnits().length() >= 1 ?
+					displayData.getTempMin().getUnits() : "");
         ((TextView) rootView.findViewById(R.id.temp_min)).setText(tMin);
         		
         String wSus = displayData.getWindSustained() == null ? "Wind Not Avail" :
@@ -184,6 +187,18 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
                   	    displayData.getWindSustained().getUnits();
         ((TextView) rootView.findViewById(R.id.wind_sustained)).setText( wSus );
         		
+
+        String compassDir = "Not Avail";
+        if(displayData.getWindDirection() != null ) {
+        	try {
+        		compassDir = 
+        				getRoseValue(Integer.parseInt(displayData.getWindDirection().getValue()));
+        		
+        	} catch(NumberFormatException nfe) {
+        		if(GlobalSettings.display_weatherInfo_access_pagefrag) 
+        			Log.e("DisplayWeatherInfoAccessPageFragment", "Wind direction number parse error.");
+        	}
+        }
         String wDir = displayData.getWindDirection() == null ? "Direction Not Avail" :
         		"Direction "+displayData.getWindDirection().getValue() +" "+ 
                    	         displayData.getWindDirection().getUnits();
@@ -225,7 +240,18 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
 
         ((TextView) rootView.findViewById(R.id.day_of_week)).setText( dayOfWeek );
         
-        		//stationData.toString().replaceFirst("Rockaway", "Yanas House") ); //  +"data source www.weather.gov") ;
+        ((TextView) rootView.findViewById(R.id.compass_direction)).setText( compassDir );
+
+        int windDirId = rootView.getResources().getIdentifier(
+        		"wind_dir_"+ compassDir.toLowerCase() +"_50", "drawable", "com.yanas.mobileapp.weathercast");
+
+
+        if(windDirId != 0) {
+	        ((ImageView) rootView.findViewById(
+	        		R.id.compass_dir_image)).setImageResource(windDirId);
+        }
+		
+        //stationData.toString().replaceFirst("Rockaway", "Yanas House") ); //  +"data source www.weather.gov") ;
 
         return rootView;
     }
@@ -302,6 +328,64 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
     		sailingEx.append("Looks like rain! ");
     	
     	return sailingEx.toString();
+    }
+    
+    
+    public String getRoseValue(int direction) {
+    	String roseVal = "Not Avail";
+    	int N = 360, NNE = 22,  NE = 45,  ENE = 67;
+    	int E = 90,  ESE = 111, SE = 135, SSE = 157;
+    	int S = 180, SSW = 202, SW = 225, WSW = 247;
+    	int W = 270, WNW = 292, NW = 315, NNW = 337;
+    	int variance = 11;
+
+    	
+    	if( direction <= variance )
+    		roseVal = "N";
+    	else if(inRange(direction, N, variance) )
+    		roseVal = "N";
+    	else if(inRange(direction, NNE, variance) )
+    		roseVal = "NNE";
+    	else if(inRange(direction, NE, variance) )
+    		roseVal = "NE";
+    	else if(inRange(direction, ENE, variance) )
+    		roseVal = "ENE";
+    	else if(inRange(direction, E, variance) )
+    		roseVal = "E";
+    	else if(inRange(direction, ESE, variance) )
+    		roseVal = "ESE";
+    	else if(inRange(direction, SE, variance) )
+    		roseVal = "SE";
+    	else if(inRange(direction, SSE, variance) )
+    		roseVal = "SSE";
+    	else if(inRange(direction, S, variance) )
+    		roseVal = "S";
+    	else if(inRange(direction, SSW, variance) )
+    		roseVal = "SSW";
+    	else if(inRange(direction, SW, variance) )
+    		roseVal = "SW";
+    	else if(inRange(direction, WSW, variance) )
+    		roseVal = "WSW";
+    	else if(inRange(direction, W, variance) )
+    		roseVal = "W";
+    	else if(inRange(direction, WNW, variance) )
+    		roseVal = "WNW";
+    	else if(inRange(direction, NW, variance) )
+    		roseVal = "NW";
+    	else if(inRange(direction, NNW, variance) )
+    		roseVal = "NNW";
+    	else
+    		roseVal = "NESW";
+    	
+    	return roseVal;
+    }
+    
+    
+    public boolean inRange(int direction_in, int compassDir, int variance) {
+    	if( direction_in >= (compassDir - variance)  &&   direction_in <= (compassDir + variance))
+    		return true;
+    		
+    	return false;	
     }
     
     
