@@ -135,9 +135,15 @@ public class WeatherDataParsed implements Serializable {
 	
 	
 	public List<DisplayData> generateDisplayDataList() {
+		List<DisplayData> displayData;
 		DisplayData dd = new DisplayData();
 		
-		return dd.generateDisplayDataList(this.stationData);
+		displayData= dd.generateDisplayDataList(this.stationData);
+		
+		if(displayData == null)
+			displayData = new ArrayList<DisplayData>();
+		
+		return displayData;
 	}
 	
 	/*
