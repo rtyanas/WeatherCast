@@ -11,4 +11,5 @@ public class GlobalSettings {
 	public static boolean weatherXmlParsing = true;
 	public static boolean weatherDataParsed = true;
 
+	public static boolean display_weatherInfo_access_pagefrag = true;
 }
