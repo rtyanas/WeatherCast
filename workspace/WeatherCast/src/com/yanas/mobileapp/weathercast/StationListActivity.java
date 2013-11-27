@@ -53,8 +53,8 @@ public class StationListActivity extends ListActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.station_list, menu);
-		getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+//		getMenuInflater().inflate(R.menu.station_list, menu);
+//		getMenuInflater().inflate(R.menu.main_activity_actions, menu);
 		return true;
 	}
 
