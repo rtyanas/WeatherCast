@@ -5,12 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
+import com.yanas.mobileapp.weathercast.datastore.CityListDbData;
+import com.yanas.mobileapp.weathercast.datastore.CityListDbHelper;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.annotation.TargetApi;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.DatabaseUtils;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -26,11 +30,20 @@ public class MainActivity extends ListActivity
     // This is the Adapter being used to display the list's data
     SimpleCursorAdapter mAdapter;
 
+    CityListDbData cityZipDbData;
+    List<StationSelected> cityZipList;
+    
 	public final static String LOCATION_ID = "com.yanas.mobileapp.weathercast.CURRENT_LOCATION";
 
 	public final static String CURRENT_LOCATION = "XX_Current_Location_YY";
 	
-    Vector<StationSelected> stations;
+	public final static String CITY_ARG = "com.yanas.mobileapp.weathercast.CITY";
+	public final static String STATE_ARG = "com.yanas.mobileapp.weathercast.STATE";
+	public final static String ZIP_ARG = "com.yanas.mobileapp.weathercast.ZIP";
+	public final static String LAT_ARG = "com.yanas.mobileapp.weathercast.LAT";
+	public final static String LON_ARG = "com.yanas.mobileapp.weathercast.LON";
+
+	static final int new_station_result = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +51,18 @@ public class MainActivity extends ListActivity
 		setContentView(R.layout.activity_station_list);
 
 		setupActionBar();
-		initStationData(this);
+		
+		cityZipDbData = new CityListDbData(this);
+		cityZipDbData.open();
+		// long numRecsAdded = cityZipDbData.initDB(stations);
+		// Log.d("MainActivity", "numRecsAdded: "+ numRecsAdded);
 
+		initStationData();
 		ArrayList<String> stationsAL = new ArrayList<String>();
 		
-		for(StationSelected sd : stations) {
+		cityZipList = cityZipDbData.getAllCityZipData();
+		
+		for(StationSelected sd : cityZipList) {
 			stationsAL.add(sd.getCity() +", "+ sd.getState() +", "+ sd.getZipCode() );
 		}
 		
@@ -53,8 +73,9 @@ public class MainActivity extends ListActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.station_list, menu);
-		getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+//		getMenuInflater().inflate(R.menu.station_list, menu);
+//		getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -72,8 +93,53 @@ public class MainActivity extends ListActivity
 			//
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
+		case R.id.action_settings:
+			if(GlobalSettings.main_activity) Log.d("MainActivity", "onOptionsItemSelected, settings menu option selected");
+			Intent intent = new Intent(this, NewStationActivity.class);
+			startActivityForResult(intent, new_station_result);
+
+			break;
+
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		switch(requestCode) {
+		case new_station_result:
+			if(resultCode == RESULT_OK) {
+				if(GlobalSettings.main_activity) Log.d("MainActivity", "onActivityResult, "+ 
+						data.getStringExtra(CITY_ARG) +","+
+						data.getStringExtra(STATE_ARG) +","+
+						data.getStringExtra(ZIP_ARG) +","+
+						data.getStringExtra(LAT_ARG) +","+
+						data.getStringExtra(LON_ARG)
+						);
+				StationSelected ss = new StationSelected(this, 
+						data.getStringExtra(CITY_ARG), data.getStringExtra(STATE_ARG), data.getStringExtra(ZIP_ARG));
+				cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+						ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+
+				ArrayList<String> stationsAL = new ArrayList<String>();
+				
+				cityZipList = cityZipDbData.getAllCityZipData();
+				
+				for(StationSelected sd : cityZipList) {
+					stationsAL.add(sd.getCity() +", "+ sd.getState() +", "+ sd.getZipCode() );
+				}
+				
+		        setListAdapter(new StableArrayAdapter(this, 
+		        		android.R.layout.simple_list_item_1, stationsAL) );
+
+			}
+			else
+				if(GlobalSettings.main_activity) Log.d("MainActivity", "onActivityResult, result code - bad ");
+			break;
+		}
+		
 	}
 	
     @Override 
@@ -82,7 +148,7 @@ public class MainActivity extends ListActivity
         Log.d("OnClick", "item: "+ item);
         
 		Intent intent = new Intent(this, DisplayWeatherInfoActivity.class);
-		intent.putExtra(LOCATION_ID, stations.get(position).getStationData());
+		intent.putExtra(LOCATION_ID, cityZipList.get(position).getStationData());
 		startActivity(intent);
     }
 
@@ -93,27 +159,78 @@ public class MainActivity extends ListActivity
 		}
 	}
 
-	private void initStationData(MainActivity this_in) {
-		stations = new Vector<StationSelected>();
-		stations.add(new StationSelected(this_in, CURRENT_LOCATION, "", ""));
-		stations.add(new StationSelected(this_in, "Bedminster", "NJ", "07921"));
-		stations.add(new StationSelected(this_in, "Detroit", "MI", "48201"));
-		stations.add(new StationSelected(this_in, "Flemington", "NJ", "08822"));
-		stations.add(new StationSelected(this_in, "Fair Haven", "NJ", "07704"));
-		stations.add(new StationSelected(this_in, "Houston", "TX", "77001"));
-		stations.add(new StationSelected(this_in, "Mantoloking", "NJ", "08738"));
-		stations.add(new StationSelected(this_in, "Miami", "FL", "33101"));
-		stations.add(new StationSelected(this_in, "Netcong", "NJ", "07857"));
-		stations.add(new StationSelected(this_in, "New York", "NY", "10018"));
-		stations.add(new StationSelected(this_in, "Perth Amboy", "NJ", "08861"));
-		stations.add(new StationSelected(this_in, "Pittsburgh", "PA", "15122"));
-		stations.add(new StationSelected(this_in, "Portland", "OR", "97086"));
-		stations.add(new StationSelected(this_in, "Rock Hall", "MD", "21661"));
-		stations.add(new StationSelected(this_in, "Rockaway", "NJ", "07866"));
-		stations.add(new StationSelected(this_in, "San Diego", "CA", "92101"));
-		stations.add(new StationSelected(this_in, "Sandy Hook", "NJ", "07732"));
-		stations.add(new StationSelected(this_in, "Shrewsbury", "NJ", "07702"));
-		stations.add(new StationSelected(this_in, "Toms River", "NJ", "08722"));
+	private void initStationData() {
+		
+
+		long numRows = DatabaseUtils.longForQuery(
+				cityZipDbData.getDatabase(), "SELECT COUNT(*) FROM "+ CityListDbHelper.TABLE, null);
+		
+		Log.d("MainActivity", "initStationData num Recs in DB: "+ numRows);
+
+		if(numRows <= 0) {
+			StationSelected ss = new StationSelected(this, CURRENT_LOCATION, "", "");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "Bedminster", "NJ", "07921");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "Detroit", "MI", "48201");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "Flemington", "NJ", "08822");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "Fair Haven", "NJ", "07704");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "Houston", "TX", "77001");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "Mantoloking", "NJ", "08738");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "Miami", "FL", "33101");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "Netcong", "NJ", "07857");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "New York", "NY", "10018");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "Perth Amboy", "NJ", "08861");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "Pittsburgh", "PA", "15122");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "Portland", "OR", "97086");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "Rock Hall", "MD", "21661");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "Rockaway", "NJ", "07866");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "San Diego", "CA", "92101");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "Sandy Hook", "NJ", "07732");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "Shrewsbury", "NJ", "07702");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+			ss = new StationSelected(this, "Toms River", "NJ", "08722");
+			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
+					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
+
+			Log.d("MainActivity", "initStationData num New Recs in DB: "+ numRows);
+		}
+
+
+		
 	}
 
 	
