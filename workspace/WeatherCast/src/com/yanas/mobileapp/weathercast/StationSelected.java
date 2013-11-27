@@ -1,9 +1,15 @@
 package com.yanas.mobileapp.weathercast;
 
+import java.util.Vector;
+
+import android.content.Context;
+
 import com.yanas.utils.GPSTracking;
 
 public class StationSelected {
 	
+	protected long id;  // this is auto generated and is only passed when 
+						// record is retrieved from DB
 	protected String city;
 	protected String state;
 	protected String zipCode;
@@ -12,7 +18,7 @@ public class StationSelected {
 	protected String dateTime;
 
 
-	public StationSelected(MainActivity stationLA, // StationListActivity stationLA, 
+	public StationSelected(Context stationLA, // StationListActivity stationLA, 
 			String city_in, String state_in, String zipCode_in) {
 		
 		city = city_in;
@@ -22,14 +28,14 @@ public class StationSelected {
 		longitude = "";
 		
 		// If there is a zip code then the get weather will use zip code
-		// otherwise get weather using lat/long
+		// otherwise get weather using the current lat/long
 		if(zipCode.equals("")) {
 			getCurrentLatLonZipCity(stationLA);
 		}
 		
 	}
 
-	private boolean getCurrentLatLonZipCity(MainActivity stationLA) { // StationListActivity stationLA) {
+	private boolean getCurrentLatLonZipCity(Context stationLA) { // StationListActivity stationLA) {
 		GPSTracking gpsT = new GPSTracking(stationLA);
 
 		boolean canGetLocation = gpsT.canGetLocation();
@@ -53,6 +59,14 @@ public class StationSelected {
 		return canGetLocation;
 	}
 
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public String getCity() {
 		return city;
