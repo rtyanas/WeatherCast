@@ -16,5 +16,12 @@
     <string name="weather">Weather - amount : type</string>
     <string name="howIsSailingExperience">How will your sailing experience be?</string>
     <string name="day_of_week">Day of week</string>
+    <string name="title_activity_new_station">NewStationActivity</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="zip_code">Zip Code</string>
+    <string name="lat">Latitude</string>
+    <string name="lon">Longitude</string>
+    <string name="done">Done</string>
 
 </resources>
