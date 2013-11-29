@@ -17,12 +17,17 @@ import android.content.Intent;
 import android.database.DatabaseUtils;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 public class MainActivity extends ListActivity         
 /* implements LoaderManager.LoaderCallbacks<Cursor> */ {
@@ -44,6 +49,9 @@ public class MainActivity extends ListActivity
 	public final static String LON_ARG = "com.yanas.mobileapp.weathercast.LON";
 
 	static final int new_station_result = 1;
+	
+	protected Object mActionMode;
+	public int selectedItem = -1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,33 @@ public class MainActivity extends ListActivity
 		// Log.d("MainActivity", "numRecsAdded: "+ numRecsAdded);
 
 		initStationData();
+		
+		populateStationList();
+
+		getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+        	@Override
+        	public boolean onItemLongClick(AdapterView<?> parent, View view, 
+        			int position, long id) {
+        		
+        		if(mActionMode != null) {
+        			return false;
+        		}        
+        		
+        		selectedItem = position;
+        	
+        		mActionMode = MainActivity.this.startActionMode(mActionModeCallback);
+        		view.setSelected(true);
+        		return true;
+        	}
+
+
+        });
+        
+	}
+	
+	
+	private boolean populateStationList() {
+		
 		ArrayList<String> stationsAL = new ArrayList<String>();
 		
 		cityZipList = cityZipDbData.getAllCityZipData();
@@ -68,7 +103,11 @@ public class MainActivity extends ListActivity
 		
         setListAdapter(new StableArrayAdapter(this, 
         		android.R.layout.simple_list_item_1, stationsAL) );
+        
+
+        return true;
 	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -158,7 +197,8 @@ public class MainActivity extends ListActivity
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 	}
-
+	
+	
 	private void initStationData() {
 		
 
@@ -263,5 +303,61 @@ public class MainActivity extends ListActivity
         }
     }
     
+    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
 
+        // called when the action mode is created; startActionMode() was called
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+          // Inflate a menu resource providing context menu items
+          MenuInflater inflater = mode.getMenuInflater();
+          // assumes that you have "contexual.xml" menu resources
+          inflater.inflate(R.menu.rowselection, menu);
+          return true;
+        }
+
+        // the following method is called each time 
+        // the action mode is shown. Always called after
+        // onCreateActionMode, but
+        // may be called multiple times if the mode is invalidated.
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+          return false; // Return false if nothing is done
+        }
+
+        // called when the user selects a contextual menu item
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+          switch (item.getItemId()) {
+          case R.id.delete:
+        	  removeStation();
+            // the Action was executed, close the CAB
+            mode.finish();
+            return true;
+          default:
+            return false;
+          }
+        }
+
+        // called when the user exits the action mode
+        public void onDestroyActionMode(ActionMode mode) {
+          mActionMode = null;
+          selectedItem = -1;
+        }
+      };
+
+      private void removeStation() {
+    	  if(GlobalSettings.main_activity) Log.d("MainActivity", "show toast");
+    	  
+    	  Toast.makeText(MainActivity.this,
+    	        String.valueOf(selectedItem) + 
+    	        cityZipList.get(selectedItem).getId() +","+ 
+    	        cityZipList.get(selectedItem).getCity() +","+ 
+    	        cityZipList.get(selectedItem).getState() +","+
+    	        cityZipList.get(selectedItem).getZipCode(),
+    	        Toast.LENGTH_LONG).show();
+    	  
+    	  cityZipDbData.deleteStation(cityZipList.get(selectedItem));
+    	  
+    	  populateStationList();
+
+      }
+
+      
 }
