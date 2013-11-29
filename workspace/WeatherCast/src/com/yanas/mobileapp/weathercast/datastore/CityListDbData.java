@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import com.yanas.mobileapp.weathercast.GlobalSettings;
 import com.yanas.mobileapp.weathercast.StationSelected;
 
 import android.content.ContentValues;
@@ -67,9 +68,9 @@ public class CityListDbData {
 	    return newBuilding;
 	  }
 
-	  public void deleteBuilding(StationSelected comment) {
+	  public void deleteStation(StationSelected comment) {
 	    long id = comment.getId();
-	    System.out.println("Building deleted with id: " + id);
+	    if(GlobalSettings.city_list_db_data) Log.i("CityListDbData", "delete Station with id: " + id);
 	    database.delete(CityListDbHelper.TABLE, CityListDbHelper.COLUMN_ID
 	        + " = " + id, null);
 	  }
@@ -135,6 +136,8 @@ public class CityListDbData {
 		StationSelected station = new StationSelected(
 				context, cursor.getString(1), cursor.getString(2), cursor.getString(3));
 
+		station.setId(Long.parseLong(cursor.getString(0)) );
+		
 		station.setLatitude(cursor.getString(4));
 		station.setLongitude(cursor.getString(5));
 
