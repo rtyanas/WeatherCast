@@ -57,6 +57,7 @@ public final class R {
         public static final int content=0x7f080020;
         public static final int date_time=0x7f08000c;
         public static final int day_of_week=0x7f08000d;
+        public static final int delete=0x7f080029;
         public static final int done_button=0x7f08000b;
         public static final int icon=0x7f080025;
         public static final int label=0x7f080026;
@@ -106,7 +107,8 @@ public final class R {
         public static final int main=0x7f070001;
         public static final int main_activity_actions=0x7f070002;
         public static final int new_station=0x7f070003;
-        public static final int station_list=0x7f070004;
+        public static final int rowselection=0x7f070004;
+        public static final int station_list=0x7f070005;
     }
     public static final class string {
         public static final int action_search=0x7f050006;
@@ -115,6 +117,7 @@ public final class R {
         public static final int button_send=0x7f050004;
         public static final int city=0x7f050010;
         public static final int day_of_week=0x7f05000e;
+        public static final int delete_str=0x7f050016;
         public static final int done=0x7f050015;
         public static final int hello_world=0x7f050002;
         public static final int howIsSailingExperience=0x7f05000d;
