@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_MJ-SoJ5gEeO07r1aUNBZnw" name="model">
+  <ownedComment xmi:type="uml:Comment" xmi:id="_1-QosJ7_EeO07r1aUNBZnw">
+    <body>Enter valiues:&#xD;
+- City&#xD;
+- State&#xD;
+- Zip - used for lookup&#xD;
+- Latitude&#xD;
+- Longitude&#xD;
+</body>
+  </ownedComment>
+  <ownedComment xmi:type="uml:Comment" xmi:id="_YP3XEJ8IEeO07r1aUNBZnw">
+    <body>City, State Zip&#xD;
+Date&#xD;
+Weekday, Time&#xD;
+Temperature&#xD;
+Wind&#xD;
+Precipitation&#xD;
+Forecast</body>
+  </ownedComment>
+  <ownedComment xmi:type="uml:Comment" xmi:id="_pMyLMJ8IEeO07r1aUNBZnw">
+    <body>Swipe through pages of day in - 3 hour increments&#xD;
+</body>
+  </ownedComment>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_pj2oYJ79EeO07r1aUNBZnw" name="WeacherCast User"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_1w1ioJ79EeO07r1aUNBZnw" name="City List"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_mO1X4J7-EeO07r1aUNBZnw" name="Settings"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_oJLksJ7-EeO07r1aUNBZnw" name="Add city to list"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_3w7OQJ8BEeO07r1aUNBZnw" name="A_weachercast user_settings" memberEnd="_3w7OQZ8BEeO07r1aUNBZnw _3w7ORJ8BEeO07r1aUNBZnw">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_3w7OQZ8BEeO07r1aUNBZnw" name="weachercast user" type="_pj2oYJ79EeO07r1aUNBZnw" association="_3w7OQJ8BEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3w7OQp8BEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3w7OQ58BEeO07r1aUNBZnw" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_3w7ORJ8BEeO07r1aUNBZnw" name="settings" type="_mO1X4J7-EeO07r1aUNBZnw" association="_3w7OQJ8BEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3w7ORZ8BEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3w71UJ8BEeO07r1aUNBZnw" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_7vANYJ8BEeO07r1aUNBZnw" name="A_settings_add city to list" memberEnd="_7vANYZ8BEeO07r1aUNBZnw _7vANZJ8BEeO07r1aUNBZnw">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_7vANYZ8BEeO07r1aUNBZnw" name="settings" type="_mO1X4J7-EeO07r1aUNBZnw" association="_7vANYJ8BEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_7vANYp8BEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_7vANY58BEeO07r1aUNBZnw" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_7vANZJ8BEeO07r1aUNBZnw" name="add city to list" type="_oJLksJ7-EeO07r1aUNBZnw" association="_7vANYJ8BEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_7vANZZ8BEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_7vANZp8BEeO07r1aUNBZnw" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_ChzW4J8CEeO07r1aUNBZnw" name="A_weachercast user_city list" memberEnd="_ChzW4Z8CEeO07r1aUNBZnw _ChzW5J8CEeO07r1aUNBZnw">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_ChzW4Z8CEeO07r1aUNBZnw" name="weachercast user" type="_pj2oYJ79EeO07r1aUNBZnw" association="_ChzW4J8CEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ChzW4p8CEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ChzW458CEeO07r1aUNBZnw" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_ChzW5J8CEeO07r1aUNBZnw" name="city list" type="_1w1ioJ79EeO07r1aUNBZnw" association="_ChzW4J8CEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ChzW5Z8CEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ChzW5p8CEeO07r1aUNBZnw" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_OzXPIJ8CEeO07r1aUNBZnw" name="Display forecast - Click title to return to list"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_SS6fMJ8CEeO07r1aUNBZnw" name="Select city from list"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_UcQxUJ8CEeO07r1aUNBZnw" name="A_city list_select city from list" memberEnd="_UcQxUZ8CEeO07r1aUNBZnw _UcQxVJ8CEeO07r1aUNBZnw">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_UcQxUZ8CEeO07r1aUNBZnw" name="city list" type="_1w1ioJ79EeO07r1aUNBZnw" association="_UcQxUJ8CEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_UcQxUp8CEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_UcQxU58CEeO07r1aUNBZnw" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_UcQxVJ8CEeO07r1aUNBZnw" name="select city from list" type="_SS6fMJ8CEeO07r1aUNBZnw" association="_UcQxUJ8CEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_UcQxVZ8CEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_UcQxVp8CEeO07r1aUNBZnw" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_ZRPjQJ8CEeO07r1aUNBZnw" name="A_select city from list_display forecast" memberEnd="_ZRPjQZ8CEeO07r1aUNBZnw _ZRPjRJ8CEeO07r1aUNBZnw">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_ZRPjQZ8CEeO07r1aUNBZnw" name="select city from list" type="_SS6fMJ8CEeO07r1aUNBZnw" association="_ZRPjQJ8CEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ZRPjQp8CEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ZRPjQ58CEeO07r1aUNBZnw" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_ZRPjRJ8CEeO07r1aUNBZnw" name="display forecast" type="_OzXPIJ8CEeO07r1aUNBZnw" association="_ZRPjQJ8CEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ZRPjRZ8CEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ZRPjRp8CEeO07r1aUNBZnw" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_kbFKMJ8dEeO07r1aUNBZnw" name="MainActivity">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_FUnzEJ8eEeO07r1aUNBZnw" name="onCreate"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_JXl5QJ8eEeO07r1aUNBZnw" name="onOptionsItemSelected"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_LXbqEJ8eEeO07r1aUNBZnw" name="onActivityResult"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_QEAt8J8eEeO07r1aUNBZnw" name="onListItemClick"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_SdiKEJ8eEeO07r1aUNBZnw" name="setupActionBar"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_UWLGsJ8eEeO07r1aUNBZnw" name="initStationData"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_kXzXQJ8eEeO07r1aUNBZnw" name="removeStation"/>
+    <nestedClassifier xmi:type="uml:Class" xmi:id="_W9ypMJ8eEeO07r1aUNBZnw" name="StableArrayAdapter"/>
+  </packagedElement>
+</uml:Model>
