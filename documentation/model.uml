@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_MJ-SoJ5gEeO07r1aUNBZnw" name="model">
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_MJ-SoJ5gEeO07r1aUNBZnw" name="model">
   <ownedComment xmi:type="uml:Comment" xmi:id="_1-QosJ7_EeO07r1aUNBZnw">
     <body>Enter valiues:&#xD;
 - City&#xD;
@@ -79,6 +79,21 @@ Forecast</body>
     </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_kbFKMJ8dEeO07r1aUNBZnw" name="MainActivity">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_LB2JsJ8gEeO07r1aUNBZnw" name="mActionModeCallback" visibility="public">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NlWoQJ8gEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NlWoQZ8gEeO07r1aUNBZnw" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_NlXPUJ8gEeO07r1aUNBZnw">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_nmp34J8pEeO07r1aUNBZnw" name="stationSelected" type="_geszMJ8oEeO07r1aUNBZnw" association="_nmp3458pEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nmp34Z8pEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nmp34p8pEeO07r1aUNBZnw" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_NI8ecJ8zEeO07r1aUNBZnw" name="displayWeatherInfoActivity" type="_FMv2MJ8uEeO07r1aUNBZnw" association="_NI9FgJ8zEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NI8ecZ8zEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NI8ecp8zEeO07r1aUNBZnw" value="1"/>
+    </ownedAttribute>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_FUnzEJ8eEeO07r1aUNBZnw" name="onCreate"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_JXl5QJ8eEeO07r1aUNBZnw" name="onOptionsItemSelected"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_LXbqEJ8eEeO07r1aUNBZnw" name="onActivityResult"/>
@@ -87,5 +102,101 @@ Forecast</body>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_UWLGsJ8eEeO07r1aUNBZnw" name="initStationData"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_kXzXQJ8eEeO07r1aUNBZnw" name="removeStation"/>
     <nestedClassifier xmi:type="uml:Class" xmi:id="_W9ypMJ8eEeO07r1aUNBZnw" name="StableArrayAdapter"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_geszMJ8oEeO07r1aUNBZnw" name="StationSelected">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_iJkZkJ8oEeO07r1aUNBZnw" name="city" visibility="public">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_jDGCkJ8oEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_jDGpoJ8oEeO07r1aUNBZnw" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_jDHQsJ8oEeO07r1aUNBZnw">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_kvQpcJ8oEeO07r1aUNBZnw" name="state" visibility="public">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_k_gE4J8oEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_k_gr8J8oEeO07r1aUNBZnw" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_k_gr8Z8oEeO07r1aUNBZnw">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_nVedwJ8oEeO07r1aUNBZnw" name="zipCode" visibility="public">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nk4ywJ8oEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nk5Z0J8oEeO07r1aUNBZnw" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_nk6n8J8oEeO07r1aUNBZnw">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_n08A8J8oEeO07r1aUNBZnw" name="latitude" visibility="public">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oC-c8J8oEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oC-c8Z8oEeO07r1aUNBZnw" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_oC_EAJ8oEeO07r1aUNBZnw">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_ov1i8J8oEeO07r1aUNBZnw" name="longitude" visibility="public">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_o8zn8J8oEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_o80PAJ8oEeO07r1aUNBZnw" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_o802EJ8oEeO07r1aUNBZnw">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_pQLP4J8oEeO07r1aUNBZnw" name="dateTime" visibility="public">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_phTcIJ8oEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_phUDMJ8oEeO07r1aUNBZnw" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_phUqQJ8oEeO07r1aUNBZnw">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_xMK2EJ8oEeO07r1aUNBZnw" name="getCurrentLatLonZipCity"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_nmp3458pEeO07r1aUNBZnw" name="mainActivity_stationSelected_1" memberEnd="_nmp35J8pEeO07r1aUNBZnw _nmp34J8pEeO07r1aUNBZnw">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_nmp35J8pEeO07r1aUNBZnw" name="mainActivity" type="_kbFKMJ8dEeO07r1aUNBZnw" association="_nmp3458pEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nmp35Z8pEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nmp35p8pEeO07r1aUNBZnw" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_FMv2MJ8uEeO07r1aUNBZnw" name="DisplayWeatherInfoActivity">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Ka6kMJ8uEeO07r1aUNBZnw" name="ViewPager" visibility="public">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_LaVZ0J8uEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_LaVZ0Z8uEeO07r1aUNBZnw" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_LaWA4J8uEeO07r1aUNBZnw">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_p6wZwJ8vEeO07r1aUNBZnw" name="assembleWeatherData" type="_osq2AJ8vEeO07r1aUNBZnw" association="_p6wZw58vEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_p6wZwZ8vEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_p6wZwp8vEeO07r1aUNBZnw" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_BoR3oJ8zEeO07r1aUNBZnw" name="displayWeatherInfoAccessPageFragment" type="_UMgvMJ8wEeO07r1aUNBZnw" association="_BoSesJ8zEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_BoR3oZ8zEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_BoR3op8zEeO07r1aUNBZnw" value="1"/>
+    </ownedAttribute>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_VVpzcJ8uEeO07r1aUNBZnw" name="onCreate"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_XY0lEJ8uEeO07r1aUNBZnw" name="onCreateOptionsMenu"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_ZvIVIJ8uEeO07r1aUNBZnw" name="onOptionsItemSelected"/>
+    <nestedClassifier xmi:type="uml:Class" xmi:id="_fT164J8uEeO07r1aUNBZnw" name="ScreenSlidePagerAdapter"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_osq2AJ8vEeO07r1aUNBZnw" name="AssembleWeatherData"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_p6wZw58vEeO07r1aUNBZnw" name="displayWeatherInfoActivity_assembleWeatherData_1" memberEnd="_p6wZxJ8vEeO07r1aUNBZnw _p6wZwJ8vEeO07r1aUNBZnw">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_p6wZxJ8vEeO07r1aUNBZnw" name="displayWeatherInfoActivity" type="_FMv2MJ8uEeO07r1aUNBZnw" association="_p6wZw58vEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_p6wZxZ8vEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_p6wZxp8vEeO07r1aUNBZnw" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_UMgvMJ8wEeO07r1aUNBZnw" name="DisplayWeatherInfoAccessPageFragment">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="__eq8QJ8xEeO07r1aUNBZnw" name="create"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_wExkoJ8yEeO07r1aUNBZnw" name="onCreate"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_yfIuQJ8yEeO07r1aUNBZnw" name="onCreateView"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_BoSesJ8zEeO07r1aUNBZnw" name="displayWeatherInfoActivity_displayWeatherInfoAccessPageFragment_1" memberEnd="_BoSesZ8zEeO07r1aUNBZnw _BoR3oJ8zEeO07r1aUNBZnw">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_BoSesZ8zEeO07r1aUNBZnw" name="displayWeatherInfoActivity" type="_FMv2MJ8uEeO07r1aUNBZnw" association="_BoSesJ8zEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_BoSesp8zEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_BoSes58zEeO07r1aUNBZnw" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_NI9FgJ8zEeO07r1aUNBZnw" name="mainActivity_displayWeatherInfoActivity_1" memberEnd="_NI9FgZ8zEeO07r1aUNBZnw _NI8ecJ8zEeO07r1aUNBZnw">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_NI9FgZ8zEeO07r1aUNBZnw" name="mainActivity" type="_kbFKMJ8dEeO07r1aUNBZnw" association="_NI9FgJ8zEeO07r1aUNBZnw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NI9Fgp8zEeO07r1aUNBZnw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NI9Fg58zEeO07r1aUNBZnw" value="1"/>
+    </ownedEnd>
   </packagedElement>
 </uml:Model>
