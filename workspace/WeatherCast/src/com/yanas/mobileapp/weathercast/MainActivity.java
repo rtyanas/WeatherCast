@@ -58,7 +58,7 @@ public class MainActivity extends ListActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_station_list);
 
-		setupActionBar();
+//		setupActionBar();
 		
 		cityZipDbData = new CityListDbData(this);
 		cityZipDbData.open();
@@ -98,7 +98,10 @@ public class MainActivity extends ListActivity
 		cityZipList = cityZipDbData.getAllCityZipData();
 		
 		for(StationSelected sd : cityZipList) {
-			stationsAL.add(sd.getCity() +", "+ sd.getState() +", "+ sd.getZipCode() );
+			stationsAL.add(sd.getCity() +", "+ 
+					(sd.getState().equals("") ? "" : sd.getState() +", ") + 
+					sd.getZipCode() );
+//					sd.getState() +", "+ sd.getZipCode() );
 		}
 		
         setListAdapter(new StableArrayAdapter(this, 
@@ -162,17 +165,8 @@ public class MainActivity extends ListActivity
 				cityZipDbData.createStation(ss.getCity(), ss.getState(), 
 						ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
 
-				ArrayList<String> stationsAL = new ArrayList<String>();
+				populateStationList();
 				
-				cityZipList = cityZipDbData.getAllCityZipData();
-				
-				for(StationSelected sd : cityZipList) {
-					stationsAL.add(sd.getCity() +", "+ sd.getState() +", "+ sd.getZipCode() );
-				}
-				
-		        setListAdapter(new StableArrayAdapter(this, 
-		        		android.R.layout.simple_list_item_1, stationsAL) );
-
 			}
 			else
 				if(GlobalSettings.main_activity) Log.d("MainActivity", "onActivityResult, result code - bad ");
