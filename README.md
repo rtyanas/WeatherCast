@@ -20,7 +20,7 @@ Weather data displayed
 
 The user may swipe through the pages at 3 hour increments.  To select a different city return back to the city list by tapping the title.  
 
-When on the list page select menu to add a city, state and zip code.  This will be added to the bottom of the list and will be available for selection of weather data for that specific area.
+When on the list page select menu to add a city, state and zip code.  This will be added to the bottom of the list and will be available for selection of weather data for that specific area.  To delete a city from the list long click the city to remove then select DELETE from the title.
 
 
 
