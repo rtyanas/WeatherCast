@@ -7,15 +7,15 @@ Weather data displayed
            City, State, Zip
                 Date
 
-Temperature
+  Temperature
 
-Wind
+  Wind
 
-Precipitation   Cloud Cover
+  Precipitation   Cloud Cover
 
-Forecast
+  Forecast
 
-Summary
+  Summary
 
 
 The user may swipe through the pages at 3 hour increments.  To select a different city return back to the city list by tapping the title.  
