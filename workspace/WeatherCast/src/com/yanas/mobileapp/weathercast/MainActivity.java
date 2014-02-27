@@ -97,7 +97,14 @@ public class MainActivity extends ListActivity
 		
 		cityZipList = cityZipDbData.getAllCityZipData();
 		
+		boolean first = true;
+		
 		for(StationSelected sd : cityZipList) {
+			if (first) {
+				// Reset to get current location
+				sd = new StationSelected(this, CURRENT_LOCATION, "", "");
+				first = false;
+			}
 			stationsAL.add(sd.getCity() +", "+ 
 					(sd.getState().equals("") ? "" : sd.getState() +", ") + 
 					sd.getZipCode() );
