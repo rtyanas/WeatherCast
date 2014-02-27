@@ -361,6 +361,11 @@
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_FMxrY58uEeO07r1aUNBZnw" source="QualifiedName">
         <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_FMxrZJ8uEeO07r1aUNBZnw" key="QualifiedNameDepth" value="1000"/>
       </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XvhpUJ84EeO07r1aUNBZnw" source="PapyrusHyperLink_Document">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_XvhpUZ84EeO07r1aUNBZnw" key="tooltip_text" value="C:\Users\RT\Weather\WeatherCastRepository\documentation\comments\DisplayWeatherInfoActivity.txt"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_XvhpUp84EeO07r1aUNBZnw" key="localization" value="C:\Users\RT\Weather\WeatherCastRepository\documentation\comments\DisplayWeatherInfoActivity.txt"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_XvhpU584EeO07r1aUNBZnw" key="is_default_navigation" value="false"/>
+      </eAnnotations>
       <children xmi:type="notation:DecorationNode" xmi:id="_FMxrZZ8uEeO07r1aUNBZnw" type="5029"/>
       <children xmi:type="notation:BasicCompartment" xmi:id="_FMxrZp8uEeO07r1aUNBZnw" type="7017">
         <children xmi:type="notation:Shape" xmi:id="_Ka7LQJ8uEeO07r1aUNBZnw" type="3012" fontName="Segoe UI" lineColor="0">
@@ -462,6 +467,11 @@
           <layoutConstraint xmi:type="notation:Location" xmi:id="_wEyywZ8yEeO07r1aUNBZnw"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_yfJ8YJ8yEeO07r1aUNBZnw" type="3013" fontName="Segoe UI" description="Add appropriate city/date/time data to the page" lineColor="0">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_NiwTUJ84EeO07r1aUNBZnw" source="PapyrusHyperLink_Document">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_NiwTUZ84EeO07r1aUNBZnw" key="tooltip_text" value="C:\Users\RT\Weather\WeatherCastRepository\documentation\comments\DisplayWeatherInfoActivity.txt"/>
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_NiwTUp84EeO07r1aUNBZnw" key="localization" value="C:\Users\RT\Weather\WeatherCastRepository\documentation\comments\DisplayWeatherInfoActivity.txt"/>
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_NiwTU584EeO07r1aUNBZnw" key="is_default_navigation" value="false"/>
+          </eAnnotations>
           <element xmi:type="uml:Operation" href="model.uml#_yfIuQJ8yEeO07r1aUNBZnw"/>
           <layoutConstraint xmi:type="notation:Location" xmi:id="_yfJ8YZ8yEeO07r1aUNBZnw"/>
         </children>
