@@ -22,10 +22,13 @@ Forecast</body>
     <body>Swipe through pages of day in - 3 hour increments&#xD;
 </body>
   </ownedComment>
+  <ownedComment xmi:type="uml:Comment" xmi:id="_P6F3cKCTEeOOPY2sGeDEPg">
+    <body>Current location will be the first city in the list.</body>
+  </ownedComment>
   <packagedElement xmi:type="uml:Actor" xmi:id="_pj2oYJ79EeO07r1aUNBZnw" name="WeacherCast User"/>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_1w1ioJ79EeO07r1aUNBZnw" name="City List"/>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_mO1X4J7-EeO07r1aUNBZnw" name="Settings"/>
-  <packagedElement xmi:type="uml:UseCase" xmi:id="_oJLksJ7-EeO07r1aUNBZnw" name="Add city to list"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_oJLksJ7-EeO07r1aUNBZnw" name="Add a city to list"/>
   <packagedElement xmi:type="uml:Association" xmi:id="_3w7OQJ8BEeO07r1aUNBZnw" name="A_weachercast user_settings" memberEnd="_3w7OQZ8BEeO07r1aUNBZnw _3w7ORJ8BEeO07r1aUNBZnw">
     <ownedEnd xmi:type="uml:Property" xmi:id="_3w7OQZ8BEeO07r1aUNBZnw" name="weachercast user" type="_pj2oYJ79EeO07r1aUNBZnw" association="_3w7OQJ8BEeO07r1aUNBZnw">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3w7OQp8BEeO07r1aUNBZnw" value="1"/>
@@ -198,5 +201,46 @@ Forecast</body>
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NI9Fgp8zEeO07r1aUNBZnw" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NI9Fg58zEeO07r1aUNBZnw" value="1"/>
     </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_gR1boJ_HEeOKR9CT06nTmg" name="Interaction1">
+    <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_N1yZQJ_WEeOb_s1pxZKk2w" name="ActionExecSpec0Start" covered="_7_aqEJ_UEeOb_s1pxZKk2w" execution="_N1yZQZ_WEeOb_s1pxZKk2w"/>
+    <fragment xmi:type="uml:ActionExecutionSpecification" xmi:id="_N1yZQZ_WEeOb_s1pxZKk2w" name="ActionExecSpec0" covered="_7_aqEJ_UEeOb_s1pxZKk2w" finish="_R2Hz0KAmEeOOPY2sGeDEPg" start="_N1yZQJ_WEeOb_s1pxZKk2w"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_OOrzEKAmEeOOPY2sGeDEPg" name="MessageSend" covered="_7_aqEJ_UEeOb_s1pxZKk2w" message="_OOrMAKAmEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:ActionExecutionSpecification" xmi:id="_FD3GQZ_6EeOOPY2sGeDEPg" name="ActionExecSpec2" covered="_-71X4J_UEeOb_s1pxZKk2w" finish="_FD3tUJ_6EeOOPY2sGeDEPg" start="_OOsaIKAmEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_OOsaIKAmEeOOPY2sGeDEPg" name="MessageRecv" covered="_-71X4J_UEeOb_s1pxZKk2w" message="_OOrMAKAmEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_R2HMwKAmEeOOPY2sGeDEPg" name="MessageSend0" covered="_-71X4J_UEeOb_s1pxZKk2w" message="_R2GlsKAmEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_R2Hz0KAmEeOOPY2sGeDEPg" name="MessageRecv0" covered="_7_aqEJ_UEeOb_s1pxZKk2w" message="_R2GlsKAmEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_FD3tUJ_6EeOOPY2sGeDEPg" name="ActionExecSpec2Finish" covered="_-71X4J_UEeOb_s1pxZKk2w" execution="_FD3GQZ_6EeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_8L1RoKAlEeOOPY2sGeDEPg" name="ActionExecSpec1Start" covered="_8m4SsJ_UEeOb_s1pxZKk2w" execution="_RMPp0J_5EeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_cuiH0KAmEeOOPY2sGeDEPg" name="MessageSend1" covered="_7_aqEJ_UEeOb_s1pxZKk2w" message="_cuhgwKAmEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:ActionExecutionSpecification" xmi:id="_A49vIaAmEeOOPY2sGeDEPg" name="ActionExecSpec4" covered="_7_aqEJ_UEeOb_s1pxZKk2w" finish="_hJEZcKAmEeOOPY2sGeDEPg" start="_cuiH0KAmEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:ActionExecutionSpecification" xmi:id="_RMPp0J_5EeOOPY2sGeDEPg" name="ActionExecSpec1" covered="_8m4SsJ_UEeOb_s1pxZKk2w" finish="_cuiu4KAmEeOOPY2sGeDEPg" start="_8L1RoKAlEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_cuiu4KAmEeOOPY2sGeDEPg" name="MessageRecv1" covered="_8m4SsJ_UEeOb_s1pxZKk2w" message="_cuhgwKAmEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_wnkHwKAmEeOOPY2sGeDEPg" name="MessageSend2" covered="_8m4SsJ_UEeOb_s1pxZKk2w" message="_wnjgsKAmEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_-evBoJ_TEeOb_s1pxZKk2w" name="ActionExecSpecStart" covered="_RQmboJ_IEeOKR9CT06nTmg" execution="_-evosJ_TEeOb_s1pxZKk2w"/>
+    <fragment xmi:type="uml:ActionExecutionSpecification" xmi:id="_-evosJ_TEeOb_s1pxZKk2w" name="ActionExecSpec" covered="_RQmboJ_IEeOKR9CT06nTmg" finish="_wnku0KAmEeOOPY2sGeDEPg" start="_-evBoJ_TEeOb_s1pxZKk2w"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_wnku0KAmEeOOPY2sGeDEPg" name="MessageRecv2" covered="_RQmboJ_IEeOKR9CT06nTmg" message="_wnjgsKAmEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_hJEZcKAmEeOOPY2sGeDEPg" name="ActionExecSpec4Finish" covered="_7_aqEJ_UEeOb_s1pxZKk2w" execution="_A49vIaAmEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="__sQO8KAmEeOOPY2sGeDEPg" name="BehaviorExecSpecStart" covered="_RQmboJ_IEeOKR9CT06nTmg" execution="__sQ2AKAmEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="__sQ2AKAmEeOOPY2sGeDEPg" name="BehaviorExecSpec" covered="_RQmboJ_IEeOKR9CT06nTmg" finish="_YaMS4aAoEeOOPY2sGeDEPg" start="__sQO8KAmEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_PjWqgKAnEeOOPY2sGeDEPg" name="MessageRecv4" covered="_RQmboJ_IEeOKR9CT06nTmg"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_KeaxAKAnEeOOPY2sGeDEPg" name="MessageSend3" covered="_RQmboJ_IEeOKR9CT06nTmg" message="_KeZi4KAnEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:ActionExecutionSpecification" xmi:id="_F_WeIZ_6EeOOPY2sGeDEPg" name="ActionExecSpec3" covered="_ljP1cJ_IEeOKR9CT06nTmg" finish="_F_WeIp_6EeOOPY2sGeDEPg" start="_KebYEKAnEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_KebYEKAnEeOOPY2sGeDEPg" name="MessageRecv3" covered="_ljP1cJ_IEeOKR9CT06nTmg" message="_KeZi4KAnEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_PjWDcaAnEeOOPY2sGeDEPg" name="MessageSend4" covered="_ljP1cJ_IEeOKR9CT06nTmg"/>
+    <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_F_WeIp_6EeOOPY2sGeDEPg" name="ActionExecSpec3Finish" covered="_ljP1cJ_IEeOKR9CT06nTmg" execution="_F_WeIZ_6EeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_YaMS4KAoEeOOPY2sGeDEPg" name="MessageSend5" covered="_ljP1cJ_IEeOKR9CT06nTmg" message="_YaLr0KAoEeOOPY2sGeDEPg"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_YaMS4aAoEeOOPY2sGeDEPg" name="MessageRecv5" covered="_RQmboJ_IEeOKR9CT06nTmg" message="_YaLr0KAoEeOOPY2sGeDEPg"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_RQmboJ_IEeOKR9CT06nTmg" name="Display Fragment" coveredBy="_-evBoJ_TEeOb_s1pxZKk2w _-evosJ_TEeOb_s1pxZKk2w _wnku0KAmEeOOPY2sGeDEPg __sQO8KAmEeOOPY2sGeDEPg __sQ2AKAmEeOOPY2sGeDEPg _KeaxAKAnEeOOPY2sGeDEPg _PjWqgKAnEeOOPY2sGeDEPg _YaMS4aAoEeOOPY2sGeDEPg"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_ljP1cJ_IEeOKR9CT06nTmg" name="weather.gov" coveredBy="_F_WeIp_6EeOOPY2sGeDEPg _F_WeIZ_6EeOOPY2sGeDEPg _KebYEKAnEeOOPY2sGeDEPg _PjWDcaAnEeOOPY2sGeDEPg _YaMS4KAoEeOOPY2sGeDEPg"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_7_aqEJ_UEeOb_s1pxZKk2w" name="User" coveredBy="_N1yZQJ_WEeOb_s1pxZKk2w _N1yZQZ_WEeOb_s1pxZKk2w _A49vIaAmEeOOPY2sGeDEPg _OOrzEKAmEeOOPY2sGeDEPg _R2Hz0KAmEeOOPY2sGeDEPg _cuiH0KAmEeOOPY2sGeDEPg _hJEZcKAmEeOOPY2sGeDEPg"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_8m4SsJ_UEeOb_s1pxZKk2w" name="City List" coveredBy="_RMPp0J_5EeOOPY2sGeDEPg _8L1RoKAlEeOOPY2sGeDEPg _cuiu4KAmEeOOPY2sGeDEPg _wnkHwKAmEeOOPY2sGeDEPg"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_-71X4J_UEeOb_s1pxZKk2w" name="Sqlite" coveredBy="_FD3tUJ_6EeOOPY2sGeDEPg _FD3GQZ_6EeOOPY2sGeDEPg _OOsaIKAmEeOOPY2sGeDEPg _R2HMwKAmEeOOPY2sGeDEPg"/>
+    <message xmi:type="uml:Message" xmi:id="_OOrMAKAmEeOOPY2sGeDEPg" name="1:CityList" receiveEvent="_OOsaIKAmEeOOPY2sGeDEPg" sendEvent="_OOrzEKAmEeOOPY2sGeDEPg"/>
+    <message xmi:type="uml:Message" xmi:id="_R2GlsKAmEeOOPY2sGeDEPg" name="2:DbData" messageSort="reply" receiveEvent="_R2Hz0KAmEeOOPY2sGeDEPg" sendEvent="_R2HMwKAmEeOOPY2sGeDEPg"/>
+    <message xmi:type="uml:Message" xmi:id="_cuhgwKAmEeOOPY2sGeDEPg" name="3:RequestCityData" receiveEvent="_cuiu4KAmEeOOPY2sGeDEPg" sendEvent="_cuiH0KAmEeOOPY2sGeDEPg"/>
+    <message xmi:type="uml:Message" xmi:id="_wnjgsKAmEeOOPY2sGeDEPg" name="4:DisplaySliderPages" receiveEvent="_wnku0KAmEeOOPY2sGeDEPg" sendEvent="_wnkHwKAmEeOOPY2sGeDEPg"/>
+    <message xmi:type="uml:Message" xmi:id="_KeZi4KAnEeOOPY2sGeDEPg" name="5:RequestWeatherData" receiveEvent="_KebYEKAnEeOOPY2sGeDEPg" sendEvent="_KeaxAKAnEeOOPY2sGeDEPg"/>
+    <message xmi:type="uml:Message" xmi:id="_YaLr0KAoEeOOPY2sGeDEPg" name="6:WeatherData" messageSort="reply" receiveEvent="_YaMS4aAoEeOOPY2sGeDEPg" sendEvent="_YaMS4KAoEeOOPY2sGeDEPg"/>
   </packagedElement>
 </uml:Model>
