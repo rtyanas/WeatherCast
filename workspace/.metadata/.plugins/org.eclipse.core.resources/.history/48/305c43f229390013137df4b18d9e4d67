@@ -1,7 +1,0 @@
-package com.yanas.mobileapp.weathercast;
-
-public class WeatherDataSingle {
-	private String value;
-	private String iconDesc;
-	private String textDesc;
-}
