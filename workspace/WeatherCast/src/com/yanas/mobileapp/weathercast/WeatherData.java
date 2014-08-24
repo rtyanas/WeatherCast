@@ -115,18 +115,12 @@ public class WeatherData {
 				// if(GlobalSettings.weatherData) Log.d("GetTheWeather", "Response Data:" + response);
 				
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
 			return response;
 	   	}
 	   	
-		public String getResponse() {
-			
-			return response;
-		}
-
 		
 		protected void onProgressUpdate(Integer vals)  {
 			
@@ -282,6 +276,9 @@ public class WeatherData {
 		    
 		    ByteArrayInputStream bis = new ByteArrayInputStream(observedDataRet.getBytes("utf-8")); // theWeather.response.getBytes("utf-8"));
 		    StringBuilder sb = new StringBuilder();
+		    
+		    
+		    /***  Test for xml ReST input, when DEBUG is true  ***/
 		    if(DEBUG) {
 		    	File path = Environment.getExternalStoragePublicDirectory(
 		                Environment.DIRECTORY_DOWNLOADS);
@@ -317,6 +314,10 @@ public class WeatherData {
 			    	fos.close();
 		    	}
 		    }
+		    /****  Test for xml ReST input  ****/
+		    
+		    
+		    
 		    // parse wants input stream arg even though is will compile with a string arg
 		    bis.reset();
 		    InputSource inputSource = new InputSource(bis) ;
