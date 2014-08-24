@@ -4,18 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Vector;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.Attributes;
 
 import com.yanas.mobileapp.weathercast.GlobalSettings;
-import com.yanas.mobileapp.weathercast.StationData;
 import com.yanas.mobileapp.weathercast.WeatherCondDataValue;
 import com.yanas.mobileapp.weathercast.WeatherDataValue;
 import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.LayoutAndDates;
@@ -31,338 +24,369 @@ import android.util.Xml;
 
 public class WeatherXmlParsing extends BaseFeedParser {
 
-	// names of the XML tags
-	static final String DWML = "dwml";
-	static final String DATA = "data";
-	static final String TIME_LAYOUT = "time-layout";
-	static final String PUB_DATE = "pubDate";
-	static final String DESCRIPTION = "description";
-	static final String LAYOUT_KEY = "layout-key";
-	static final String START_VALID_TIME = "start-valid-time";
-	static final String END_VALID_TIME = "end-valid-time";
-	static final String PARAMETERS = "parameters";
-	static final String TEMPERATURE = "temperature";
-	static final String CLOUD_AMOUNT = "cloud-amount";
-	static final String WIND_SPEED = "wind-speed";
-	static final String DIRECTION = "direction";
-	static final String POP = "probability-of-precipitation";
-	static final String WEATHER = "weather";
-	static final String WEATHER_CONDITION = "weather-conditions";
-	static final String VALUE = "value";
-	static final String VISIBILITY = "visibility";  // To do get this data from VALUE.getChild()
-	
-//	StationData stationData;
-//	Vector<LayoutAndDates> layoutAndDatesV;
-	
-	// If this variable is defined in the method a compile error is generated
-	WeatherDataParsed wdp;  
+    // names of the XML tags
+    static final String DWML = "dwml";
+    static final String DATA = "data";
+    static final String TIME_LAYOUT = "time-layout";
+    static final String PUB_DATE = "pubDate";
+    static final String DESCRIPTION = "description";
+    static final String LAYOUT_KEY = "layout-key";
+    static final String START_VALID_TIME = "start-valid-time";
+    static final String END_VALID_TIME = "end-valid-time";
+    static final String PARAMETERS = "parameters";
+    static final String TEMPERATURE = "temperature";
+    static final String CLOUD_AMOUNT = "cloud-amount";
+    static final String WIND_SPEED = "wind-speed";
+    static final String DIRECTION = "direction";
+    static final String POP = "probability-of-precipitation";
+    static final String WEATHER = "weather";
+    static final String WEATHER_CONDITION = "weather-conditions";
+    static final String VALUE = "value";
+    static final String VISIBILITY = "visibility"; // To do get this data from
+                                                   // VALUE.getChild()
 
-	   public static void main(String args[])
-	   {
-	       	System.out.println("Start SAX Parse");
-	   		String xmlFileOut = "weather.xml";
-	    	File path = Environment.getExternalStoragePublicDirectory(
-	                Environment.DIRECTORY_DOWNLOADS);
-	    	File file = new File(path, xmlFileOut);
-	    	if(GlobalSettings.weatherXmlParsing)
-	    		Log.d("WeatherData", "Output file: "+ path +"/"+ xmlFileOut );
+    // StationData stationData;
+    // Vector<LayoutAndDates> layoutAndDatesV;
 
-			FileInputStream fis = null;
-		    try {
-				fis = new FileInputStream(file); // "C:/Users/RT/Weather/messasgeExample.xml");
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		    
-		    WeatherXmlParsing sx = new WeatherXmlParsing(fis);
-		     WeatherDataParsed wdp = sx.parse();
-		    System.out.println("End SAX Parse"+ wdp);
-	   }
+    // If this variable is defined in the method a compile error is generated
+    WeatherDataParsed wdp;
 
-	protected WeatherXmlParsing(String feedUrl){
-		super(feedUrl);
-		initializeData();
-	}
-	
-	public WeatherXmlParsing(FileInputStream fis){
-		super(fis);
-		initializeData();
-	}
+    public static void main(String args[]) {
+        System.out.println("Start SAX Parse");
+        String xmlFileOut = "weather.xml";
+        File path = Environment
+                .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File file = new File(path, xmlFileOut);
+        if (GlobalSettings.weatherXmlParsing)
+            Log.d("WeatherData", "Output file: " + path + "/" + xmlFileOut);
 
-	public WeatherXmlParsing(InputStream is){
-		super(is);
-		initializeData();
-	}
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file); // "C:/Users/RT/Weather/messasgeExample.xml");
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-	private void initializeData() {
-//		layoutAndDatesV = new Vector<LayoutAndDates>() ;
-//		stationData = new StationData();
-		wdp = new WeatherDataParsed();
-	}
-	
+        WeatherXmlParsing sx = new WeatherXmlParsing(fis);
+        WeatherDataParsed wdp = sx.parse();
+        System.out.println("End SAX Parse" + wdp);
+    }
 
-	/**
-	 * Parse through the XML data and put into StationData Structure and LayoutAndDates list.
-	 * These structures are in WeatherDataParsed class this class will merge 
-	 * the data and the layout dates into the StationData structures. 
-	 */
-	public WeatherDataParsed parse() {
-		
-		final LayoutAndDates layoutAndDates = wdp.new LayoutAndDates();
-		RootElement root = new RootElement(DWML);
-		Element data = root.getChild(DATA);
-		Element time_layout = data.getChild(TIME_LAYOUT);
-		Element parameters = data.getChild(PARAMETERS);
-		Element temp = parameters.getChild(TEMPERATURE);
-		Element windSpeed = parameters.getChild(WIND_SPEED);
-		Element direction = parameters.getChild(DIRECTION);
-		Element pop = parameters.getChild(POP);
-		Element cloudAm = parameters.getChild(CLOUD_AMOUNT);
-		Element weather = parameters.getChild(WEATHER);
-		Element weatherCond = weather.getChild(WEATHER_CONDITION);
-		
-		final StringBuffer weather_TimeLayout = new StringBuffer();
+    protected WeatherXmlParsing(String feedUrl) {
+        super(feedUrl);
+        initializeData();
+    }
 
-		final Atts atts = new Atts();
-		
-		// Time Layouts for weather values
-		time_layout.setEndElementListener(new EndElementListener(){
-			public void end() {
-				wdp.layoutAndDatesV.add(layoutAndDates.copy());
-				layoutAndDates.clear() ;
-			}
-		});
-		time_layout.getChild(START_VALID_TIME).setEndTextElementListener(new EndTextElementListener(){
-			public void end(String body) {
-				layoutAndDates.startDate.add(body);
-			}
-		});
-		time_layout.getChild(END_VALID_TIME).setEndTextElementListener(new EndTextElementListener(){
-			public void end(String body) {
-				layoutAndDates.endDate.add(body);
-			}
-		});
-		time_layout.getChild(LAYOUT_KEY).setEndTextElementListener(new EndTextElementListener(){
-			public void end(String body) {
-				layoutAndDates.setLayout(body);
-			}
-		});
+    public WeatherXmlParsing(FileInputStream fis) {
+        super(fis);
+        initializeData();
+    }
 
-		// Temperature
-		parameters.getChild(TEMPERATURE).setStartElementListener(new StartElementListener(){
-			public void start(Attributes atts_in) {
-				for(int i=0 ; i < atts_in.getLength(); i++) {
-			    	if(GlobalSettings.weatherXmlParsing)
-			    		Log.i("WeatherXmlParsing:parse: ", atts_in.getQName(i) +", "+ atts_in.getValue(i) );
-					atts.addAtt(atts_in.getQName(i), atts_in.getValue(i));
-				}
-			}
-		});
-		parameters.getChild(TEMPERATURE).setEndElementListener(new EndElementListener(){
-			public void end() {
-				atts.clear();
-			}
-		});
-		temp.getChild(VALUE).setEndTextElementListener(new EndTextElementListener(){
-			public void end(String body) {
-				WeatherDataValue wData = new WeatherDataValue();
-				wData.setValue(body);
-				wData.setPeriod(atts.getAtt("time-layout"));
-				wData.setUnits(atts.getAtt("units"));
-				if(atts.getAtt("type").equals("maximum")) {
-					wdp.stationData.setTemperatureMax(wData);
-				}
-				else if(atts.getAtt("type").equals("minimum")) {
-					wdp.stationData.setTemperatureMin(wData);
-				}
-				else if(atts.getAtt("type").equals("hourly")) {
-					wdp.stationData.setTemperature(wData);
-				}
-			}
-		});
+    public WeatherXmlParsing(InputStream is) {
+        super(is);
+        initializeData();
+    }
 
-		// Wind Speed
-		parameters.getChild(WIND_SPEED).setStartElementListener(new StartElementListener(){
-			public void start(Attributes atts_in) {
-				for(int i=0 ; i < atts_in.getLength(); i++) {
-			    	if(GlobalSettings.weatherXmlParsing)
-			    		Log.i("WeatherXmlParsing:parse: ", atts_in.getQName(i) +", "+ atts_in.getValue(i) );
-					atts.addAtt(atts_in.getQName(i), atts_in.getValue(i));
-				}
-			}
-		});
-		parameters.getChild(WIND_SPEED).setEndElementListener(new EndElementListener(){
-			public void end() {
-				atts.clear();
-			}
-		});
-		windSpeed.getChild(VALUE).setEndTextElementListener(new EndTextElementListener(){
-			public void end(String body) {
-				WeatherDataValue wData = new WeatherDataValue();
-				wData.setValue(body);
-				wData.setPeriod(atts.getAtt("time-layout"));
-				wData.setUnits(atts.getAtt("units"));
-				if(atts.getAtt("type").equals("sustained")) {
-					wdp.stationData.setWindSustained(wData);
-				}
-				else if(atts.getAtt("type").equals("gust")) {
-					wdp.stationData.setWindGust(wData);
-				}
-			}
-		});
+    private void initializeData() {
+        // layoutAndDatesV = new Vector<LayoutAndDates>() ;
+        // stationData = new StationData();
+        wdp = new WeatherDataParsed();
+    }
 
+    /**
+     * Parse through the XML data and put into StationData Structure and
+     * LayoutAndDates list. These structures are in WeatherDataParsed class this
+     * class will merge the data and the layout dates into the StationData
+     * structures.
+     */
+    public WeatherDataParsed parse() {
 
-		// Wind Direction
-		parameters.getChild(DIRECTION).setStartElementListener(new StartElementListener(){
-			public void start(Attributes atts_in) {
-				for(int i=0 ; i < atts_in.getLength(); i++) {
-			    	if(GlobalSettings.weatherXmlParsing)
-			    		Log.i("WeatherXmlParsing:parse: ", atts_in.getQName(i) +", "+ atts_in.getValue(i) );
-					atts.addAtt(atts_in.getQName(i), atts_in.getValue(i));
-				}
-			}
-		});
-		parameters.getChild(DIRECTION).setEndElementListener(new EndElementListener(){
-			public void end() {
-				atts.clear();
-			}
-		});
-		direction.getChild(VALUE).setEndTextElementListener(new EndTextElementListener(){
-			public void end(String body) {
-				WeatherDataValue wData = new WeatherDataValue();
-				wData.setValue(body);
-				wData.setPeriod(atts.getAtt("time-layout"));
-				wData.setUnits(atts.getAtt("units"));
-				if(atts.getAtt("type").equals("wind")) {
-					wdp.stationData.setWindSustainedDirection(wData);
-				}
-			}
-		});
+        final LayoutAndDates layoutAndDates = wdp.new LayoutAndDates();
+        RootElement root = new RootElement(DWML);
+        Element data = root.getChild(DATA);
+        Element time_layout = data.getChild(TIME_LAYOUT);
+        Element parameters = data.getChild(PARAMETERS);
+        Element temp = parameters.getChild(TEMPERATURE);
+        Element windSpeed = parameters.getChild(WIND_SPEED);
+        Element direction = parameters.getChild(DIRECTION);
+        Element pop = parameters.getChild(POP);
+        Element cloudAm = parameters.getChild(CLOUD_AMOUNT);
+        Element weather = parameters.getChild(WEATHER);
+        Element weatherCond = weather.getChild(WEATHER_CONDITION);
 
+        final StringBuffer weather_TimeLayout = new StringBuffer();
 
-		// Probability of Precipitation
-		parameters.getChild(POP).setStartElementListener(new StartElementListener(){
-			public void start(Attributes atts_in) {
-				for(int i=0 ; i < atts_in.getLength(); i++) {
-			    	if(GlobalSettings.weatherXmlParsing)
-			    		Log.i("WeatherXmlParsing:parse: ", atts_in.getQName(i) +", "+ atts_in.getValue(i) );
-					atts.addAtt(atts_in.getQName(i), atts_in.getValue(i));
-				}
-			}
-		});
-		parameters.getChild(POP).setEndElementListener(new EndElementListener(){
-			public void end() {
-				atts.clear();
-			}
-		});
-		pop.getChild(VALUE).setEndTextElementListener(new EndTextElementListener(){
-			public void end(String body) {
-				WeatherDataValue wData = new WeatherDataValue();
-				wData.setValue(body);
-				wData.setPeriod(atts.getAtt("time-layout"));
-				wData.setUnits(atts.getAtt("units"));
-				if(atts.getAtt("type").equals("12 hour")) {
-					wdp.stationData.setprobOfPrecip12(wData);
-				}
-			}
-		});
+        final Atts atts = new Atts();
 
+        // Time Layouts for weather values
+        time_layout.setEndElementListener(new EndElementListener() {
+            public void end() {
+                wdp.layoutAndDatesV.add(layoutAndDates.copy());
+                layoutAndDates.clear();
+            }
+        });
+        time_layout.getChild(START_VALID_TIME).setEndTextElementListener(
+                new EndTextElementListener() {
+                    public void end(String body) {
+                        layoutAndDates.startDate.add(body);
+                    }
+                });
+        time_layout.getChild(END_VALID_TIME).setEndTextElementListener(
+                new EndTextElementListener() {
+                    public void end(String body) {
+                        layoutAndDates.endDate.add(body);
+                    }
+                });
+        time_layout.getChild(LAYOUT_KEY).setEndTextElementListener(
+                new EndTextElementListener() {
+                    public void end(String body) {
+                        layoutAndDates.setLayout(body);
+                    }
+                });
 
-		// Cloud Amount
-		parameters.getChild(CLOUD_AMOUNT).setStartElementListener(new StartElementListener(){
-			public void start(Attributes atts_in) {
-				for(int i=0 ; i < atts_in.getLength(); i++) {
-			    	if(GlobalSettings.weatherXmlParsing)
-			    		Log.i("WeatherXmlParsing:parse: ", atts_in.getQName(i) +", "+ atts_in.getValue(i) );
-					atts.addAtt(atts_in.getQName(i), atts_in.getValue(i));
-				}
-			}
-		});
-		parameters.getChild(CLOUD_AMOUNT).setEndElementListener(new EndElementListener(){
-			public void end() {
-				atts.clear();
-			}
-		});
-		cloudAm.getChild(VALUE).setEndTextElementListener(new EndTextElementListener(){
-			public void end(String body) {
-				WeatherDataValue wData = new WeatherDataValue();
-				wData.setValue(body);
-				wData.setPeriod(atts.getAtt("time-layout"));
-				wData.setUnits(atts.getAtt("units"));
-				if(atts.getAtt("type").equals("total")) {
-					wdp.stationData.setCloudAmount(wData);
-				}
-			}
-		});
+        // Temperature
+        parameters.getChild(TEMPERATURE).setStartElementListener(
+                new StartElementListener() {
+                    public void start(Attributes atts_in) {
+                        for (int i = 0; i < atts_in.getLength(); i++) {
+                            if (GlobalSettings.weatherXmlParsing)
+                                Log.i("WeatherXmlParsing:parse: ",
+                                        atts_in.getQName(i) + ", "
+                                                + atts_in.getValue(i));
+                            atts.addAtt(atts_in.getQName(i),
+                                    atts_in.getValue(i));
+                        }
+                    }
+                });
+        parameters.getChild(TEMPERATURE).setEndElementListener(
+                new EndElementListener() {
+                    public void end() {
+                        atts.clear();
+                    }
+                });
+        temp.getChild(VALUE).setEndTextElementListener(
+                new EndTextElementListener() {
+                    public void end(String body) {
+                        WeatherDataValue wData = new WeatherDataValue();
+                        wData.setValue(body);
+                        wData.setPeriod(atts.getAtt("time-layout"));
+                        wData.setUnits(atts.getAtt("units"));
+                        if (atts.getAtt("type").equals("maximum")) {
+                            wdp.stationData.setTemperatureMax(wData);
+                        } else if (atts.getAtt("type").equals("minimum")) {
+                            wdp.stationData.setTemperatureMin(wData);
+                        } else if (atts.getAtt("type").equals("hourly")) {
+                            wdp.stationData.setTemperature(wData);
+                        }
+                    }
+                });
 
+        // Wind Speed
+        parameters.getChild(WIND_SPEED).setStartElementListener(
+                new StartElementListener() {
+                    public void start(Attributes atts_in) {
+                        for (int i = 0; i < atts_in.getLength(); i++) {
+                            if (GlobalSettings.weatherXmlParsing)
+                                Log.i("WeatherXmlParsing:parse: ",
+                                        atts_in.getQName(i) + ", "
+                                                + atts_in.getValue(i));
+                            atts.addAtt(atts_in.getQName(i),
+                                    atts_in.getValue(i));
+                        }
+                    }
+                });
+        parameters.getChild(WIND_SPEED).setEndElementListener(
+                new EndElementListener() {
+                    public void end() {
+                        atts.clear();
+                    }
+                });
+        windSpeed.getChild(VALUE).setEndTextElementListener(
+                new EndTextElementListener() {
+                    public void end(String body) {
+                        WeatherDataValue wData = new WeatherDataValue();
+                        wData.setValue(body);
+                        wData.setPeriod(atts.getAtt("time-layout"));
+                        wData.setUnits(atts.getAtt("units"));
+                        if (atts.getAtt("type").equals("sustained")) {
+                            wdp.stationData.setWindSustained(wData);
+                        } else if (atts.getAtt("type").equals("gust")) {
+                            wdp.stationData.setWindGust(wData);
+                        }
+                    }
+                });
 
-		// Weather Condition
-		parameters.getChild(WEATHER).setStartElementListener(new StartElementListener(){
-			public void start(Attributes atts_in) {
-				if(weather_TimeLayout.length() > 0)
-					weather_TimeLayout.delete(0, weather_TimeLayout.length() - 1);
-				weather_TimeLayout.append(atts_in.getValue("time-layout"));
-			}
-		});
-		parameters.getChild(WEATHER).setEndElementListener(new EndElementListener(){
-			public void end() {
-				atts.clear();
-			}
-		});
-		weatherCond.getChild(VALUE).setStartElementListener(new StartElementListener(){
-			public void start(Attributes atts_in) {
-				boolean saveWeather = true;
-				
-				if( atts_in.getValue("additive") != null)
-					saveWeather = false;
+        // Wind Direction
+        parameters.getChild(DIRECTION).setStartElementListener(
+                new StartElementListener() {
+                    public void start(Attributes atts_in) {
+                        for (int i = 0; i < atts_in.getLength(); i++) {
+                            if (GlobalSettings.weatherXmlParsing)
+                                Log.i("WeatherXmlParsing:parse: ",
+                                        atts_in.getQName(i) + ", "
+                                                + atts_in.getValue(i));
+                            atts.addAtt(atts_in.getQName(i),
+                                    atts_in.getValue(i));
+                        }
+                    }
+                });
+        parameters.getChild(DIRECTION).setEndElementListener(
+                new EndElementListener() {
+                    public void end() {
+                        atts.clear();
+                    }
+                });
+        direction.getChild(VALUE).setEndTextElementListener(
+                new EndTextElementListener() {
+                    public void end(String body) {
+                        WeatherDataValue wData = new WeatherDataValue();
+                        wData.setValue(body);
+                        wData.setPeriod(atts.getAtt("time-layout"));
+                        wData.setUnits(atts.getAtt("units"));
+                        if (atts.getAtt("type").equals("wind")) {
+                            wdp.stationData.setWindSustainedDirection(wData);
+                        }
+                    }
+                });
 
-				/**
-				 * Temporary fix, need to integrate "additive" 
-				 * to the WeatherCondData class 
-				 */
-				if(saveWeather) {
-					WeatherCondDataValue wData = new WeatherCondDataValue();
-					wData.setAdditive(atts_in.getValue("additive"));
-					wData.setCoverage(atts_in.getValue("coverage"));
-					wData.setIntensity(atts_in.getValue("intensity"));
-					wData.setQualifier(atts_in.getValue("qualifier"));
-					wData.setWeather_type(atts_in.getValue("weather-type"));
-					wData.setPeriod(weather_TimeLayout.toString());
-					wdp.stationData.setWeather(wData);
-				}
-			}
-		});
+        // Probability of Precipitation
+        parameters.getChild(POP).setStartElementListener(
+                new StartElementListener() {
+                    public void start(Attributes atts_in) {
+                        for (int i = 0; i < atts_in.getLength(); i++) {
+                            if (GlobalSettings.weatherXmlParsing)
+                                Log.i("WeatherXmlParsing:parse: ",
+                                        atts_in.getQName(i) + ", "
+                                                + atts_in.getValue(i));
+                            atts.addAtt(atts_in.getQName(i),
+                                    atts_in.getValue(i));
+                        }
+                    }
+                });
+        parameters.getChild(POP).setEndElementListener(
+                new EndElementListener() {
+                    public void end() {
+                        atts.clear();
+                    }
+                });
+        pop.getChild(VALUE).setEndTextElementListener(
+                new EndTextElementListener() {
+                    public void end(String body) {
+                        WeatherDataValue wData = new WeatherDataValue();
+                        wData.setValue(body);
+                        wData.setPeriod(atts.getAtt("time-layout"));
+                        wData.setUnits(atts.getAtt("units"));
+                        if (atts.getAtt("type").equals("12 hour")) {
+                            wdp.stationData.setprobOfPrecip12(wData);
+                        }
+                    }
+                });
 
+        // Cloud Amount
+        parameters.getChild(CLOUD_AMOUNT).setStartElementListener(
+                new StartElementListener() {
+                    public void start(Attributes atts_in) {
+                        for (int i = 0; i < atts_in.getLength(); i++) {
+                            if (GlobalSettings.weatherXmlParsing)
+                                Log.i("WeatherXmlParsing:parse: ",
+                                        atts_in.getQName(i) + ", "
+                                                + atts_in.getValue(i));
+                            atts.addAtt(atts_in.getQName(i),
+                                    atts_in.getValue(i));
+                        }
+                    }
+                });
+        parameters.getChild(CLOUD_AMOUNT).setEndElementListener(
+                new EndElementListener() {
+                    public void end() {
+                        atts.clear();
+                    }
+                });
+        cloudAm.getChild(VALUE).setEndTextElementListener(
+                new EndTextElementListener() {
+                    public void end(String body) {
+                        WeatherDataValue wData = new WeatherDataValue();
+                        wData.setValue(body);
+                        wData.setPeriod(atts.getAtt("time-layout"));
+                        wData.setUnits(atts.getAtt("units"));
+                        if (atts.getAtt("type").equals("total")) {
+                            wdp.stationData.setCloudAmount(wData);
+                        }
+                    }
+                });
 
-		try {
-			Xml.parse(this.getInputStream(), Xml.Encoding.UTF_8, root.getContentHandler());
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		
-		return wdp;
-	}
+        // Weather Condition
+        parameters.getChild(WEATHER).setStartElementListener(
+                new StartElementListener() {
+                    public void start(Attributes atts_in) {
+                        if (weather_TimeLayout.length() > 0)
+                            weather_TimeLayout.delete(0,
+                                    weather_TimeLayout.length() - 1);
+                        weather_TimeLayout.append(atts_in
+                                .getValue("time-layout"));
+                    }
+                });
+        parameters.getChild(WEATHER).setEndElementListener(
+                new EndElementListener() {
+                    public void end() {
+                        atts.clear();
+                    }
+                });
+        weatherCond.getChild(VALUE).setStartElementListener(
+                new StartElementListener() {
+                    public void start(Attributes atts_in) {
+                        boolean saveWeather = true;
 
-	
-	public class Atts {
-		HashMap<String, String> atts;
-		
-		public Atts () {
-			atts = new HashMap<String, String>();
-		}
+                        if (atts_in.getValue("additive") != null)
+                            saveWeather = false;
 
-		public String getAtt(String key) {
-			return atts.get(key);
-		}
+                        /**
+                         * Temporary fix, need to integrate "additive" to the
+                         * WeatherCondData class
+                         */
+                        if (saveWeather) {
+                            WeatherCondDataValue wData = new WeatherCondDataValue();
+                            wData.setAdditive(atts_in.getValue("additive"));
+                            wData.setCoverage(atts_in.getValue("coverage"));
+                            wData.setIntensity(atts_in.getValue("intensity"));
+                            wData.setQualifier(atts_in.getValue("qualifier"));
+                            wData.setWeather_type(atts_in
+                                    .getValue("weather-type"));
+                            wData.setPeriod(weather_TimeLayout.toString());
+                            wdp.stationData.setWeather(wData);
+                        }
+                    }
+                });
 
-		public void addAtt(String key, String value) {
-			this.atts.put(key, value);
-		}
-		
-		public void clear() {
-			atts.clear();
-		}
-	}
+        try {
+            Xml.parse(this.getInputStream(), Xml.Encoding.UTF_8,
+                    root.getContentHandler());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return wdp;
+    }
+
+    public class Atts {
+        HashMap<String, String> atts;
+
+        public Atts() {
+            atts = new HashMap<String, String>();
+        }
+
+        public String getAtt(String key) {
+            return atts.get(key);
+        }
+
+        public void addAtt(String key, String value) {
+            this.atts.put(key, value);
+        }
+
+        public void clear() {
+            atts.clear();
+        }
+    }
 
 }
