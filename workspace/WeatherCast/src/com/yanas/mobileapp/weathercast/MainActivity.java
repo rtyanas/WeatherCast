@@ -106,7 +106,7 @@ public class MainActivity extends ListActivity
 				first = false;
 			}
 			stationsAL.add(sd.getCity() +", "+ 
-					(sd.getState().equals("") ? "" : sd.getState() +", ") + 
+					(sd.getState().equals("") ? "," : sd.getState() +", ") + 
 					sd.getZipCode() );
 //					sd.getState() +", "+ sd.getZipCode() );
 		}
@@ -188,7 +188,7 @@ public class MainActivity extends ListActivity
         Log.d("OnClick", "item: "+ item);
         
 		Intent intent = new Intent(this, DisplayWeatherInfoActivity.class);
-		intent.putExtra(LOCATION_ID, cityZipList.get(position).getStationData());
+		intent.putExtra(LOCATION_ID, item);
 		startActivity(intent);
     }
 
