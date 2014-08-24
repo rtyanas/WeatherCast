@@ -5,10 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-import java.util.Vector;
-
-import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.LayoutAndDates;
 
 public abstract class BaseFeedParser /* implements FeedParser */ {
 
@@ -39,7 +35,7 @@ public abstract class BaseFeedParser /* implements FeedParser */ {
 
 	protected InputStream getInputStream() {
 		if(feedUrl != null) {
-				try {
+			try {
 			
 				return feedUrl.openConnection().getInputStream();
 			} catch (IOException e) {
