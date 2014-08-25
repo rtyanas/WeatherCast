@@ -36,9 +36,9 @@ public class AssembleWeatherData {
 		String stationData[] = location_in.split(",");
 		Log.d("DisplayMessage", "location: "+ stationData);
 		if(stationData.length >= 3) {
-			city = stationData[CITY];
-			state = stationData[STATE];
-			zipcode = stationData[ZIPCODE];
+			city = stationData[CITY].trim();
+			state = stationData[STATE].trim();
+			zipcode = stationData[ZIPCODE].trim();
 			if( (stationData[ZIPCODE] != null) && 
 					((! stationData[ZIPCODE].equals("")) && (! stationData[ZIPCODE].equals("null"))) ) {
 				useZipcode = true;
