@@ -1,22 +1,6 @@
 package com.yanas.mobileapp.weathercast;
 
 
-//import javax.xml.parsers.DocumentBuilder;
-//import javax.xml.parsers.DocumentBuilderFactory;
-//
-//import org.apache.http.NameValuePair;
-//import org.apache.http.message.BasicNameValuePair;
-//import org.w3c.dom.Document;
-//import org.w3c.dom.Element;
-//import org.w3c.dom.NamedNodeMap;
-//import org.w3c.dom.Node;
-//import org.w3c.dom.NodeList;
-//import org.xml.sax.InputSource;
-// import org.w3c.dom.Document;
-
-//import com.example.android.animationsdemo.R;
-//import com.yanas.mobileapp.weathercast.DisplayWeatherInfoActivity.ScreenSlidePagerAdapter;
-
 
 import java.util.List;
 import java.util.Vector;
@@ -45,11 +29,9 @@ import android.os.Build;
 public class DisplayWeatherInfoActivity extends FragmentActivity {
 
     private ViewPager mPager;
-    private String tempsTest[] = { "60F", "61F", "62F", "63F", "64F", "65F" };
     int stringSize;
     List<DisplayData> ddL = null;
-
-    private static final int NUM_PAGES = 5;
+    String location;
 
     /**
      * The pager adapter, which provides the pages to the view pager widget.
@@ -78,23 +60,39 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
             }
         });
 
-//		
 		Intent intent = getIntent();
-		String location = intent.getStringExtra(StationListActivity.LOCATION_ID);
-//		
-//		TextView textView = new TextView(this);
-//		textView.setTextSize(18);
-//		
-		AssembleWeatherData assembleWeatherData = new AssembleWeatherData(location);
-		WeatherDataParsed wdp = assembleWeatherData.retrieveWeather(this);
-		ddL = wdp.generateDisplayDataList();
+		location = intent.getStringExtra(StationListActivity.LOCATION_ID);
 		
-		stringSize = ddL.size();
-		
-//		textView.setText(assmebleWeatherData.retrieveWeather());
-//		
-//		setContentView(textView);
+		new AssembleWeatherAsync().execute(this);
 
+	}
+	
+	
+	public class AssembleWeatherAsync extends AsyncTask<DisplayWeatherInfoActivity, 
+	                                                   Integer, WeatherDataParsed> {
+	    protected WeatherDataParsed doInBackground(DisplayWeatherInfoActivity... displayW )
+	    {
+	        AssembleWeatherData assembleWeatherData = new AssembleWeatherData(
+	                DisplayWeatherInfoActivity.this.location);
+	        WeatherDataParsed wdp = assembleWeatherData.retrieveWeather(
+	                DisplayWeatherInfoActivity.this);
+
+	        return wdp;
+	    }
+	    
+	    protected void onPostExecute(WeatherDataParsed wdp_in)
+	    {
+	        // Update the data for displaying
+	        DisplayWeatherInfoActivity.this.ddL = wdp_in.generateDisplayDataList();   
+	        stringSize = ddL.size();
+	        
+	        // Display the data onPostExecute
+	        DisplayWeatherInfoActivity.this.mPagerAdapter.notifyDataSetChanged();
+	    }
+	}
+	
+	protected void onResume() {
+	    super.onResume();
 	}
 
 	/**
