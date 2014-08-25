@@ -23,6 +23,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 // 
@@ -70,18 +71,37 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
 	
 	public class AssembleWeatherAsync extends AsyncTask<DisplayWeatherInfoActivity, 
 	                                                   Integer, WeatherDataParsed> {
+	    
+        private ProgressDialog progressD;
+        
+	    public AssembleWeatherAsync() {
+	        progressD = new ProgressDialog(DisplayWeatherInfoActivity.this);	        
+	    }
+	    
+	    protected void onPreExecute() {
+	        this.progressD.setMessage("Retrieving weather");
+	        this.progressD.setTitle("Please Wait");
+	        
+	        if( ! this.progressD.isShowing())
+	            this.progressD.show();
+	    }
+	    
 	    protected WeatherDataParsed doInBackground(DisplayWeatherInfoActivity... displayW )
 	    {
 	        AssembleWeatherData assembleWeatherData = new AssembleWeatherData(
 	                DisplayWeatherInfoActivity.this.location);
 	        WeatherDataParsed wdp = assembleWeatherData.retrieveWeather(
 	                DisplayWeatherInfoActivity.this);
-
+	        
 	        return wdp;
 	    }
 	    
 	    protected void onPostExecute(WeatherDataParsed wdp_in)
 	    {
+	        if(progressD.isShowing()) {
+	            progressD.dismiss();
+	        }
+	        
 	        // Update the data for displaying
 	        DisplayWeatherInfoActivity.this.ddL = wdp_in.generateDisplayDataList();   
 	        stringSize = ddL.size();
