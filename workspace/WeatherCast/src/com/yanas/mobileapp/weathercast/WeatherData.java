@@ -49,98 +49,12 @@ public class WeatherData {
 	
 	
     WeatherDataParsed wdp = null;
-
     DisplayWeatherInfoActivity dwThis;
 
     public WeatherData(DisplayWeatherInfoActivity dwThis_in) {
     	dwThis = dwThis_in;
     }
     
-    
-	/*
-	 * Execute the weather data request
-	 */
-	public class GetTheWeather extends AsyncTask<SetTheWeather, Integer, String> {
-		String station;
-		String temperature;
-		String response;
-
-		Dialog dialog;
-		ProgressBar progressBar;
-		TextView tvLoading,tvPer;
-		Button btnCancel;
-
-
-		GetTheWeather() {
-		
-		}
-		
-		
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			dialog = new Dialog(dwThis);
-			dialog.setCancelable(false);
-			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-			dialog.setContentView(R.layout.progressdialog);
-
-			progressBar = (ProgressBar) dialog.findViewById(R.id.progressBar1);
-			tvLoading = (TextView) dialog.findViewById(R.id.tv1);
-			tvPer = (TextView) dialog.findViewById(R.id.tvper);
-			btnCancel = (Button) dialog.findViewById(R.id.btncancel);
-
-			btnCancel.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-//					objMyTask.cancel(true);
-					dialog.dismiss();
-				}
-			});
-
-			dialog.show();
-		}
-
-
-		@Override
-	   	protected String doInBackground(SetTheWeather... weatherReq) {
-
-	   		if(GlobalSettings.weatherData) Log.d("GetTheWeather", "start doInBackground" );
-			
-			RestClient rc = new RestClient();
-			try {
-				rc.Execute(weatherReq[0].method, weatherReq[0].url, 
-						weatherReq[0].headers, weatherReq[0].params);
-				response = rc.response;
-				// if(GlobalSettings.weatherData) Log.d("GetTheWeather", "Response Data:" + response);
-				
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-
-			return response;
-	   	}
-	   	
-		
-		protected void onProgressUpdate(Integer vals)  {
-			
-		}
-		
-		@Override
- 		protected void  onPostExecute (String  result) {
-			super.onPostExecute(result);
-			if(GlobalSettings.weatherData) Log.d("GetTheWeather", " onPostExecute result: "+ result);
-			dialog.dismiss();
-
- 		}
-
-
-	} // GetTheWeather
-	
-	
-	/*
-	 * Execute the weather data request
-	 */
 	/**
 	 * 
 	 * @param weatherReq
@@ -148,77 +62,22 @@ public class WeatherData {
 	 */
 	public String getObservedPropertyTide(SetTheWeather weatherReq) {
 		String observedDataRet = "Not Available";
-		GetTheWeather weatherRun = new GetTheWeather();
 		String response = "";
 		
-		weatherRun.execute(weatherReq);
+        RestClient rc = new RestClient();
+        try {
+            rc.Execute(weatherReq.method, weatherReq.url, 
+                    weatherReq.headers, weatherReq.params);
+            response = rc.response;
+            // if(GlobalSettings.weatherData) Log.d("GetTheWeather", "Response Data:" + response);
+            
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        // *** 
 
-		try {
-			response = weatherRun.get();
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (ExecutionException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		// Wait for data return
-		for(int i=0; i < 40; i++ ) {
-			if(weatherRun.response != null)
-				break;
-			
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		if(GlobalSettings.weatherData) Log.d("DisplayMessage", "Resonse: "+ weatherRun.response);
+        
 
-		if(weatherRun.response != null)
-		{
-			if(weatherReq.observedData.equals("air_temperature")) 
-			{
-				String temp = "Not Available";
-				// Java evaluates if statement left to right making the split on "," 
-				// valid if split on "\n" is true
-				if(weatherRun.response != null && weatherRun.response.split("\n").length > 1  && 
-				   weatherRun.response.split("\n")[1].split(",").length > 5)  
-				{
-					temp = weatherRun.response.split("\n")[1].split(",")[5];
-				}
-				else
-				{
-					if(GlobalSettings.weatherData) Log.e("DiaplayMessage", "Temperature value not available");
-				}
-				observedDataRet = temp;
-			}
-			else if(weatherReq.observedData.equals("winds")) 
-			{
-				String temp = "Not Available";
-				// Java evaluates if statement left to right making the split on "," 
-				// valid if split on "\n" is true
-				if(weatherRun.response != null && weatherRun.response.split("\n").length > 1  && 
-				   weatherRun.response.split("\n")[1].split(",").length > 7)  
-				{
-					temp = weatherRun.response.split("\n")[1].split(",")[5] +","+
-					       weatherRun.response.split("\n")[1].split(",")[6] +","+
-					       weatherRun.response.split("\n")[1].split(",")[7];
-				}
-				else
-				{
-					if(GlobalSettings.weatherData) Log.e("DiaplayMessage", "Winds value not available");
-				}
-				observedDataRet = temp;
-			}
-			
-			
-		}
-		
-		
 		return observedDataRet;
 	} // getObservedProperty(SetTheWeatherTide weatherReq) {
 	
@@ -233,47 +92,32 @@ public class WeatherData {
 	public WeatherDataParsed getObservedPropertyMeteorological(
 			SetTheWeather weatherReq,
 			String city, String state, String zipcode, String latitude, String longitude) {
-		String observedDataRet = "Not Available";
-		GetTheWeather theWeather = new GetTheWeather();
-		StationData stationData = new StationData(city, state, zipcode, latitude, longitude);
+	
+	    String observedDataRet = "Not Available";
 		
 		if(GlobalSettings.weatherData) Log.d("WeatherData getObservedPropertyMeteorological", "Execute");
-		theWeather.execute(weatherReq);
-		try {
-			observedDataRet = theWeather.get();
-			AsyncTask.Status stat = theWeather.getStatus();
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (ExecutionException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+
+		// theWeather.execute(weatherReq);
 		
-		// Wait for data return
-//		for(int i=0; i < 40; i++ ) {
-//			if(theWeather.response != null)
-//				break;
-//			
-//			try {
-//				Thread.sleep(500);
-//			} catch (InterruptedException e) {
-//				if(GlobalSettings.weatherData) Log.e("WeatherData", "Error getting response: "+ e.getMessage());
-//			}
-//		}
+	    // Copied from AsynTask
+        RestClient rc = new RestClient();
+        try {
+            rc.Execute(weatherReq.method, weatherReq.url, 
+                    weatherReq.headers, weatherReq.params);
+            // response = rc.response;
+            // if(GlobalSettings.weatherData) Log.d("GetTheWeather", "Response Data:" + response);
+            
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        // *** 
+
 		
 		if(GlobalSettings.weatherData) Log.d("DisplayMessage", "observedDataRet: "+ observedDataRet); // theWeather.response);
 		
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 	    Document dom = null;
 		try {
-		    /* Parse the xml-data from our URL. */
-//		    URL url = new URL("http://xyz.com/.../");
-//		    InputStream inputStream = url.openStream();
-		    /*Get Document Builder*/
-		    DocumentBuilder builder = builderFactory.newDocumentBuilder();
-		    // dom = builder.parse(weatherRun.response);
-		    
 		    ByteArrayInputStream bis = new ByteArrayInputStream(observedDataRet.getBytes("utf-8")); // theWeather.response.getBytes("utf-8"));
 		    StringBuilder sb = new StringBuilder();
 		    
@@ -314,16 +158,9 @@ public class WeatherData {
 			    	fos.close();
 		    	}
 		    }
-		    /****  Test for xml ReST input  ****/
+		    /****  Test for xml ReST file input  ****/
 		    
-		    
-		    
-		    // parse wants input stream arg even though is will compile with a string arg
-		    bis.reset();
-		    InputSource inputSource = new InputSource(bis) ;
-		    dom = builder.parse(inputSource) ;
-		    
-		    WeatherXmlParsing wxp = new WeatherXmlParsing ( new ByteArrayInputStream(theWeather.response.getBytes())  );
+		    WeatherXmlParsing wxp = new WeatherXmlParsing ( new ByteArrayInputStream(rc.response.getBytes())  );
 		    wdp =  wxp.parse();
 		    wdp.updateWeatherDataPeriod();
 		    wdp.stationData.setCity(city);
