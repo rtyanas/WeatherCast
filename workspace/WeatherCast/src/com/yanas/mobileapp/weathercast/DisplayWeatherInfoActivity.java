@@ -79,8 +79,11 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
 	    }
 	    
 	    protected void onPreExecute() {
-	        this.progressD.setMessage("Retrieving weather");
-	        this.progressD.setTitle("Please Wait");
+	        this.progressD.setTitle("Retrieving weather");
+            this.progressD.setMessage(
+                    (DisplayWeatherInfoActivity.this.location.split(",").length > 1 ? 
+                            DisplayWeatherInfoActivity.this.location.split(",")[0] : "This land") +
+                    " is a pleasant place.");
 	        
 	        if( ! this.progressD.isShowing())
 	            this.progressD.show();
