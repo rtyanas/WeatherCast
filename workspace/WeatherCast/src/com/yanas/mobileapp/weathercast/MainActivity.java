@@ -1,5 +1,6 @@
 package com.yanas.mobileapp.weathercast;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,12 +8,19 @@ import java.util.Vector;
 
 import com.yanas.mobileapp.weathercast.datastore.CityListDbData;
 import com.yanas.mobileapp.weathercast.datastore.CityListDbHelper;
+import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DatabaseUtils;
 import android.support.v4.app.NavUtils;
@@ -182,15 +190,140 @@ public class MainActivity extends ListActivity
 		
 	}
 	
+	String titleError = "Apologies, cannot get weather";
+	
     @Override 
     public void onListItemClick(ListView l, View v, int position, long id) {
         final String item = (String) l.getItemAtPosition(position);
         Log.d("OnClick", "item: "+ item);
         
-		Intent intent = new Intent(this, DisplayWeatherInfoActivity.class);
-		intent.putExtra(LOCATION_ID, item);
-		startActivity(intent);
+        String error = "Error detected.";
+        boolean isZipCodeOK = true;
+        String stationData[] = item.split(",");
+        int ZIPCODE = 2;
+        if(stationData.length >= 3) {
+            boolean isZip = true, isInternet = true;
+            if( (isZip = "".equals(stationData[ZIPCODE]) ) ) {
+                isZipCodeOK = false;
+                
+                if( ! isZip)
+                    error = "Sorry, zip code is required.";
+                
+                Log.e("MainActivity", "Zipcode invalid");
+                
+            }
+        }
+        else if(stationData.length < 3) {
+            isZipCodeOK = false;
+            error = "Please enter correct city, state and zip code.  Zip Code is currently required";
+        }
+        
+        if(isZipCodeOK) {
+            new ValidateInternetRunDisplayAsync().execute(item);
+        }
+        else {
+            showValidateAlert(titleError, error);
+        }
     }
+
+    
+    /**
+     * Show Alert dialog passing in Title and message.  This alert has one 
+     * OK button for dismissing.
+     * @param title
+     * @param error
+     */
+    private void showValidateAlert(String title, String error) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(error) .setTitle(title);
+        builder
+            .setCancelable(true)
+            .setNeutralButton(R.string.ok,  new DialogInterface.OnClickListener() {          
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+        });
+        AlertDialog alDialog = builder.create();
+        alDialog.show();
+    }
+    
+    
+    /**
+     * Run thread to get weather data
+     * @author RT
+     *
+     */
+    public class ValidateInternetRunDisplayAsync extends AsyncTask<String, Integer, String> {
+        
+//        private ProgressDialog progressD;
+        
+        public ValidateInternetRunDisplayAsync() {
+//            progressD = new ProgressDialog(MainActivity.this);            
+        }
+        
+        protected void onPreExecute() {
+//            this.progressD.setTitle("Retrieving weather");
+//            this.progressD.setMessage(
+//                    (DisplayWeatherInfoActivity.this.location.split(",").length > 1 ? 
+//                            DisplayWeatherInfoActivity.this.location.split(",")[0] : "This land") +
+//                    " is a pleasant place.");
+//            
+//            if( ! this.progressD.isShowing())
+//                this.progressD.show();
+        }
+        
+        protected String doInBackground(String... station_in )
+        {
+            String station=null;
+            
+            if(station_in.length > 0)
+                station = station_in[0];
+            
+            ConnectivityManager cm =
+                      (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+              
+            
+            if (netInfo == null ) {
+                return "";
+            }
+
+//            if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+//                  return station + "["+ netInfo.toString() +"]";
+//            }
+
+            try {
+              InetAddress ipAddr = InetAddress.getByName("yahoo.com"); 
+            
+              if ("".equals(ipAddr.toString()) ) {
+                  return "";
+              } else {
+                  return station +",<"+ ipAddr.toString() +">"+ ipAddr.isReachable(500);
+              }
+            } catch (Exception e) {
+                return "";
+            } 
+        }
+        
+        protected void onPostExecute(String station_in)
+        {
+//            if(progressD.isShowing()) {
+//                progressD.dismiss();
+//            }
+            if("".equalsIgnoreCase(station_in) ) {
+                showValidateAlert(titleError, "Internet is not available.");
+            }
+            else {
+                // showValidateAlert("Weather Debug", "Internet is available. " + station_in);
+                Intent intent = new Intent(MainActivity.this, DisplayWeatherInfoActivity.class);
+                intent.putExtra(LOCATION_ID, station_in);
+                startActivity(intent);                            
+            }
+        }
+        
+    }
+    
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void setupActionBar() {
