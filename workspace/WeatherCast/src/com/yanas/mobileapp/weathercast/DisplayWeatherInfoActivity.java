@@ -69,6 +69,11 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
 	}
 	
 	
+	/**
+	 * Run thread to get weather data
+	 * @author RT
+	 *
+	 */
 	public class AssembleWeatherAsync extends AsyncTask<DisplayWeatherInfoActivity, 
 	                                                   Integer, WeatherDataParsed> {
 	    
@@ -105,6 +110,10 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
 	            progressD.dismiss();
 	        }
 	        
+	        if(wdp_in == null) {
+	            return;
+	        }
+	        
 	        // Update the data for displaying
 	        DisplayWeatherInfoActivity.this.ddL = wdp_in.generateDisplayDataList();   
 	        stringSize = ddL.size();
@@ -112,10 +121,12 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
 	        // Display the data onPostExecute
 	        DisplayWeatherInfoActivity.this.mPagerAdapter.notifyDataSetChanged();
 	    }
+	    
 	}
 	
 	protected void onResume() {
 	    super.onResume();
+	    
 	}
 
 	/**
