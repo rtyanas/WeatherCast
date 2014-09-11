@@ -31,6 +31,7 @@ import java.util.Locale;
 
 import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed;
 import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.DisplayData;
+import com.yanas.utils.StringUtils;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -161,9 +162,13 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
             weatherIcon = R.drawable.moon_cloud;
         
         // Set the title view to show city and date/time
-        ((TextView) rootView.findViewById(R.id.date_time)).setText(
-        		displayData.getCity() +", "+ displayData.getState() +", "+ 
-        		displayData.getZipcode() +"\n"+ todaysDate); // + " "+ dateTime[0] +" ~ "+ dateTime[1].split("-")[0]);
+        ((TextView) rootView.findViewById(R.id.date_time)).setText(todaysDate); // + " "+ dateTime[0] +" ~ "+ dateTime[1].split("-")[0]);
+
+        // Set the title view to show city and date/time
+        ((TextView) rootView.findViewById(R.id.city_zip)).setText(
+                StringUtils.createStationRow(displayData.getCity(), 
+                        displayData.getState(), 
+                        displayData.getZipcode()));
 
         ((TextView) rootView.findViewById(R.id.temp_hour)).setText(
         		displayData.getTemperature().getValue() +" "+ 
