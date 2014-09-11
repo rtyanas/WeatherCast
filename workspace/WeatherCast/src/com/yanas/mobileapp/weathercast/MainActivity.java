@@ -9,6 +9,7 @@ import java.util.Vector;
 import com.yanas.mobileapp.weathercast.datastore.CityListDbData;
 import com.yanas.mobileapp.weathercast.datastore.CityListDbHelper;
 import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed;
+import com.yanas.utils.StringUtils;
 
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -45,6 +46,7 @@ public class MainActivity extends ListActivity
 
     CityListDbData cityZipDbData;
     List<StationSelected> cityZipList;
+    HashMap<Integer, String> selecedList = new HashMap<Integer, String>();
     
 	public final static String LOCATION_ID = "com.yanas.mobileapp.weathercast.CURRENT_LOCATION";
 
@@ -107,16 +109,23 @@ public class MainActivity extends ListActivity
 		
 		boolean first = true;
 		
+		String station = "";
+		Integer Int = Integer.valueOf(0);
 		for(StationSelected sd : cityZipList) {
 			if (first) {
 				// Reset to get current location
 				sd = new StationSelected(this, CURRENT_LOCATION, "", "");
 				first = false;
 			}
-			stationsAL.add(sd.getCity() +", "+ 
-					(sd.getState().equals("") ? "," : sd.getState() +", ") + 
-					sd.getZipCode() );
-//					sd.getState() +", "+ sd.getZipCode() );
+			
+			station = StringUtils.createStationRow(
+			        sd.getCity(), sd.getState(), sd.getZipCode());  
+			stationsAL.add(station);
+
+			station = sd.getCity() +", "+ sd.getState() +", "+ sd.getZipCode();
+			selecedList.put(Int, station);
+
+			Int++;
 		}
 		
         setListAdapter(new StableArrayAdapter(this, 
@@ -194,7 +203,7 @@ public class MainActivity extends ListActivity
 	
     @Override 
     public void onListItemClick(ListView l, View v, int position, long id) {
-        final String item = (String) l.getItemAtPosition(position);
+        final String item = (String) this.selecedList.get(Integer.valueOf(position));
         Log.d("OnClick", "item: "+ item);
         
         String error = "Error detected.";
