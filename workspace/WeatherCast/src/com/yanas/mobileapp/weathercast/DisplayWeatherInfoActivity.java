@@ -3,23 +3,19 @@ package com.yanas.mobileapp.weathercast;
 
 
 import java.util.List;
-import java.util.Vector;
 
 import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed;
 import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.DisplayData;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -122,7 +118,9 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
 	        DisplayWeatherInfoActivity.this.mPagerAdapter.notifyDataSetChanged();
 	    }
 	    
-	}
+	}  // AssembleWeatherAsync
+	
+	
 	
 	protected void onResume() {
 	    super.onResume();
