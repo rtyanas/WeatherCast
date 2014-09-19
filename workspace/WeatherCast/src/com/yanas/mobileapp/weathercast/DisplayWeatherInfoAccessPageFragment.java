@@ -34,6 +34,8 @@ import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.DisplayData;
 import com.yanas.utils.StringUtils;
 
 import android.app.Fragment;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -124,6 +126,10 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         }
     }
 
+    
+    /**
+     * 
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -204,6 +210,18 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         			Log.e("DisplayWeatherInfoAccessPageFragment", "Wind direction number parse error.");
         	}
         }
+
+        String cloudConfigStr = "Not Avail";
+        if(displayData.getCloudAmount() != null ) {
+            try {
+                cloudConfigStr = 
+                        getCloudConfigValue(Integer.parseInt(displayData.getCloudAmount().getValue()));
+                
+            } catch(NumberFormatException nfe) {
+                if(GlobalSettings.display_weatherInfo_access_pagefrag) 
+                    Log.e("DisplayWeatherInfoAccessPageFragment", "Wind direction number parse error.");
+            }
+        }
         String wDir = displayData.getWindDirection() == null ? "Direction Not Avail" :
         		"Direction "+displayData.getWindDirection().getValue() +" "+ 
                    	         displayData.getWindDirection().getUnits();
@@ -250,12 +268,33 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         int windDirId = rootView.getResources().getIdentifier(
         		"wind_dir_"+ compassDir.toLowerCase() +"_50", "drawable", "com.yanas.mobileapp.weathercast");
 
-
         if(windDirId != 0) {
 	        ((ImageView) rootView.findViewById(
 	        		R.id.compass_dir_image)).setImageResource(windDirId);
         }
 		
+        int cloudConfigId = rootView.getResources().getIdentifier(
+                "cloud_"+ cloudConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
+        Drawable[] layers = new Drawable[2];
+
+        ((ImageView) rootView.findViewById(R.id.weather_predominant)).setBackgroundResource(R.drawable.sun);
+
+        if(cloudConfigId != 0) {
+            ((ImageView) rootView.findViewById(
+                    R.id.weather_predominant)).setImageResource(cloudConfigId);
+        }
+        else {
+            ((ImageView) rootView.findViewById(
+                    R.id.weather_predominant)).setImageResource(R.drawable.cloud_noclouds);            
+        }
+        
+        layers[0] = rootView.getResources().getDrawable(cloudConfigId);
+        layers[1] = rootView.getResources().getDrawable(R.drawable.rain_light);
+        LayerDrawable layerDr = new LayerDrawable(layers); 
+        ((ImageView) rootView.findViewById(
+                R.id.weather_predominant)).setImageDrawable(layerDr);
+//        ((ImageView) rootView.findViewById(R.id.weather_predominant)).setImageResource(R.drawable.cloud_light);
+
         //stationData.toString().replaceFirst("Rockaway", "Yanas House") ); //  +"data source www.weather.gov") ;
 
         return rootView;
@@ -392,8 +431,44 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
     		
     	return false;	
     }
+
+    /**
+     * Pass percent of clouds, return the cloud configuration from no clouds to 
+     * partly to mostly to 100%
+     * @param cloudPerc
+     * @return
+     */
+    public String getCloudConfigValue(int cloudPerc) {
+        String cloudConfig = null;
+        int light = 10, med_light = 25, med = 40;
+        int med_heavy = 60, heavy_light = 72, heavy = 90; 
+                
+        if(cloudPerc < light) {
+            cloudConfig = "noclouds";
+        }
+        else if(cloudPerc >= light && cloudPerc < med_light ) {
+            cloudConfig = "light";
+        }
+        else if(cloudPerc >= med_light && cloudPerc < med ) {
+            cloudConfig = "med_light";
+        }
+        else if(cloudPerc >= med && cloudPerc < med_heavy ) {
+            cloudConfig = "med";
+        }
+        else if(cloudPerc >= med_heavy && cloudPerc < heavy_light ) {
+            cloudConfig = "med_heavy";
+        }
+        else if(cloudPerc >= heavy_light && cloudPerc < heavy ) {
+            cloudConfig = "heavy";
+        }
+        else if(cloudPerc >= heavy_light ) {
+            cloudConfig = "obscure";
+        }
+        
+        return cloudConfig;
+    }
     
-    
+
     /**
      * Returns the page number represented by this fragment object.
      */
