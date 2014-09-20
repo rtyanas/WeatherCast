@@ -163,9 +163,9 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
 		}
         
         // Set icon for sun or moon
-        int weatherIcon = R.drawable.sun_cloud;
+        int dayNightIcon = R.drawable.sun_cloud;
        	if(hour > 19  ||  hour <= 06 )
-            weatherIcon = R.drawable.moon_cloud;
+       	 dayNightIcon = R.drawable.moon_cloud;
         
         // Set the title view to show city and date/time
         ((TextView) rootView.findViewById(R.id.date_time)).setText(todaysDate); // + " "+ dateTime[0] +" ~ "+ dateTime[1].split("-")[0]);
@@ -211,17 +211,6 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         	}
         }
 
-        String cloudConfigStr = "Not Avail";
-        if(displayData.getCloudAmount() != null ) {
-            try {
-                cloudConfigStr = 
-                        getCloudConfigValue(Integer.parseInt(displayData.getCloudAmount().getValue()));
-                
-            } catch(NumberFormatException nfe) {
-                if(GlobalSettings.display_weatherInfo_access_pagefrag) 
-                    Log.e("DisplayWeatherInfoAccessPageFragment", "Wind direction number parse error.");
-            }
-        }
         String wDir = displayData.getWindDirection() == null ? "Direction Not Avail" :
         		"Direction "+displayData.getWindDirection().getValue() +" "+ 
                    	         displayData.getWindDirection().getUnits();
@@ -245,7 +234,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
     		" Cloud Cover ";
         ((TextView) rootView.findViewById(R.id.cloudAmount)).setText(cloudAmount );
     
-        ((ImageView) rootView.findViewById(R.id.weather_predominant_icon)).setImageResource(weatherIcon);        
+        ((ImageView) rootView.findViewById(R.id.weather_predominant_icon)).setImageResource(dayNightIcon);        
         		
 		String qual = displayData.getWeatherPredominant() == null ? "" : displayData.getWeatherPredominant().getQualifier();
 		qual = qual.equals("none") ? "" : qual;
@@ -273,29 +262,65 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
 	        		R.id.compass_dir_image)).setImageResource(windDirId);
         }
 		
-        int cloudConfigId = rootView.getResources().getIdentifier(
-                "cloud_"+ cloudConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
-        Drawable[] layers = new Drawable[2];
+        // Add - Sun/Moon/clouds/rain
 
-        ((ImageView) rootView.findViewById(R.id.weather_predominant)).setBackgroundResource(R.drawable.sun);
+        if(hour > 19  ||  hour <= 06 )
+            dayNightIcon = R.drawable.moon_full;
+        else
+            dayNightIcon = R.drawable.sun;
+        
+        ((ImageView) rootView.findViewById(R.id.weather_predominant)).setBackgroundResource(dayNightIcon);
 
-        if(cloudConfigId != 0) {
-            ((ImageView) rootView.findViewById(
-                    R.id.weather_predominant)).setImageResource(cloudConfigId);
-        }
-        else {
-            ((ImageView) rootView.findViewById(
-                    R.id.weather_predominant)).setImageResource(R.drawable.cloud_noclouds);            
+
+        String cloudConfigStr = "Not Avail";
+        if(displayData.getCloudAmount() != null ) {
+            try {
+                cloudConfigStr = 
+                        getCloudConfigValue(Integer.parseInt(displayData.getCloudAmount().getValue()));
+                
+            } catch(NumberFormatException nfe) {
+                if(GlobalSettings.display_weatherInfo_access_pagefrag) 
+                    Log.e("DisplayWeatherInfoAccessPageFragment", "Wind direction number parse error.");
+            }
         }
         
-        layers[0] = rootView.getResources().getDrawable(cloudConfigId);
-        layers[1] = rootView.getResources().getDrawable(R.drawable.rain_light);
+        String rainConfigStr = "Not Avail";
+        if(displayData.getPropPrecip12() != null ) {
+            try {
+                rainConfigStr = 
+                        getRainConfigValue(Integer.parseInt(displayData.getPropPrecip12().getValue()));
+                
+            } catch(NumberFormatException nfe) {
+                if(GlobalSettings.display_weatherInfo_access_pagefrag) 
+                    Log.e("DisplayWeatherInfoAccessPageFragment", "Wind direction number parse error.");
+            }
+        }
+        
+        int cloudConfigId = rootView.getResources().getIdentifier(
+                "cloud_"+ cloudConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
+        
+        int rainConfigId = rootView.getResources().getIdentifier(
+                "rain_"+ rainConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
+        
+        Drawable[] layers = new Drawable[2];  // Used to combine cloud and rain.
+
+        if(cloudConfigId != 0) {
+            layers[0] = rootView.getResources().getDrawable(cloudConfigId);
+        }
+        else {
+            layers[0] = rootView.getResources().getDrawable(R.drawable.cloud_noclouds);
+        }
+        
+        if(rainConfigId != 0) {
+            layers[1] = rootView.getResources().getDrawable(rainConfigId);
+        }
+        else {
+            layers[1] = rootView.getResources().getDrawable(R.drawable.cloud_noclouds);
+        }
+        
         LayerDrawable layerDr = new LayerDrawable(layers); 
         ((ImageView) rootView.findViewById(
                 R.id.weather_predominant)).setImageDrawable(layerDr);
-//        ((ImageView) rootView.findViewById(R.id.weather_predominant)).setImageResource(R.drawable.cloud_light);
-
-        //stationData.toString().replaceFirst("Rockaway", "Yanas House") ); //  +"data source www.weather.gov") ;
 
         return rootView;
     }
@@ -468,6 +493,21 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         return cloudConfig;
     }
     
+    public String getRainConfigValue(int probPrecip) {
+        String rainConfigRet = "";
+        int light = 15, med = 30, med_heavy = 60, heavy = 75;
+        
+        if(probPrecip > light && probPrecip < med)
+            rainConfigRet = "light";
+        else if(probPrecip >= med && probPrecip < med_heavy)
+            rainConfigRet = "med_light";
+        else if(probPrecip >= med_heavy && probPrecip < heavy)
+            rainConfigRet = "med_heavy";
+        else if(probPrecip >= heavy)
+            rainConfigRet = "heavy";
+        
+        return rainConfigRet;
+    }
 
     /**
      * Returns the page number represented by this fragment object.
