@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_IkyzoCNSEeSJNbuaH45gAQ" name="model">
+  <packagedElement xmi:type="uml:Activity" xmi:id="_IspIECNSEeSJNbuaH45gAQ" name="Activity1"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_vOzBwCvCEeSiPqVmluTklQ" name="DisplayWeatherInfoActivity">
+    <ownedComment xmi:type="uml:Comment" xmi:id="_zDv6ECvCEeSiPqVmluTklQ">
+      <body>DisplayWeatherInfoActivity</body>
+    </ownedComment>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Djj7cCvDEeSiPqVmluTklQ" name="assembleWeatherData" type="_3C2M4CvCEeSiPqVmluTklQ" association="_DjkigCvDEeSiPqVmluTklQ">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Djj7cSvDEeSiPqVmluTklQ" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Djj7civDEeSiPqVmluTklQ" value="1"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_3C2M4CvCEeSiPqVmluTklQ" name="AssembleWeatherData">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_amAjYCvDEeSiPqVmluTklQ" name="weatherData" type="_QsL-kCvDEeSiPqVmluTklQ" association="_amBKcCvDEeSiPqVmluTklQ">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_amAjYSvDEeSiPqVmluTklQ" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_amAjYivDEeSiPqVmluTklQ" value="1"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_5FezACvCEeSiPqVmluTklQ" name="WeatherDataParsed">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_FPU5sCvDEeSiPqVmluTklQ" name="assembleWeatherData" type="_3C2M4CvCEeSiPqVmluTklQ" association="_FPU5syvDEeSiPqVmluTklQ">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_FPU5sSvDEeSiPqVmluTklQ" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_FPU5sivDEeSiPqVmluTklQ" value="1"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_DjkigCvDEeSiPqVmluTklQ" name="displayWeatherInfoActivity_assembleWeatherData_1" memberEnd="_DjkigSvDEeSiPqVmluTklQ _Djj7cCvDEeSiPqVmluTklQ">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_DjkigSvDEeSiPqVmluTklQ" name="displayWeatherInfoActivity" type="_vOzBwCvCEeSiPqVmluTklQ" association="_DjkigCvDEeSiPqVmluTklQ">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_DjkigivDEeSiPqVmluTklQ" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_DjkigyvDEeSiPqVmluTklQ" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_FPU5syvDEeSiPqVmluTklQ" name="weatherDataParsed_assembleWeatherData_1" memberEnd="_FPU5tCvDEeSiPqVmluTklQ _FPU5sCvDEeSiPqVmluTklQ">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_FPU5tCvDEeSiPqVmluTklQ" name="weatherDataParsed" type="_5FezACvCEeSiPqVmluTklQ" association="_FPU5syvDEeSiPqVmluTklQ">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_FPU5tSvDEeSiPqVmluTklQ" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_FPU5tivDEeSiPqVmluTklQ" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_QsL-kCvDEeSiPqVmluTklQ" name="WeatherData">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_bHqe8CvDEeSiPqVmluTklQ" name="weatherDataParsed" type="_Za0ioCvDEeSiPqVmluTklQ" association="_bHrtECvDEeSiPqVmluTklQ">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bHqe8SvDEeSiPqVmluTklQ" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bHqe8ivDEeSiPqVmluTklQ" value="1"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Za0ioCvDEeSiPqVmluTklQ" name="WeatherDataParsed"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_amBKcCvDEeSiPqVmluTklQ" name="assembleWeatherData_weatherData_1" memberEnd="_amBKcSvDEeSiPqVmluTklQ _amAjYCvDEeSiPqVmluTklQ">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_amBKcSvDEeSiPqVmluTklQ" name="assembleWeatherData" type="_3C2M4CvCEeSiPqVmluTklQ" association="_amBKcCvDEeSiPqVmluTklQ">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_amBKcivDEeSiPqVmluTklQ" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_amBKcyvDEeSiPqVmluTklQ" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_bHrtECvDEeSiPqVmluTklQ" name="weatherData_weatherDataParsed_1" memberEnd="_bHrtESvDEeSiPqVmluTklQ _bHqe8CvDEeSiPqVmluTklQ">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_bHrtESvDEeSiPqVmluTklQ" name="weatherData" type="_QsL-kCvDEeSiPqVmluTklQ" association="_bHrtECvDEeSiPqVmluTklQ">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bHrtEivDEeSiPqVmluTklQ" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bHrtEyvDEeSiPqVmluTklQ" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+</uml:Model>
