@@ -24,5 +24,6 @@
     <string name="lon">Longitude</string>
     <string name="done">Done</string>
     <string name="delete_str">Delete</string>
+    <string name="ok">OK</string>
 
 </resources>
