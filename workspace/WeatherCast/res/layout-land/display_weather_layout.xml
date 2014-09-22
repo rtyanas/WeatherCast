@@ -106,44 +106,52 @@
         </LinearLayout>
     
         <!-- Wind --> 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/wind_icon"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" >
-    
-            <ImageView
-                android:id="@+id/wind_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/wind"
-                android:src="@drawable/app_icon" />
-    
-            <TextView
-                android:id="@+id/wind_sustained"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="none"
-                android:text="10 knts" />
-    
-            <TextView
-                android:id="@+id/wind_direction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:text="N" />
-    
-            <TextView
-                android:id="@+id/wind_gust"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:text="15 knt" />
-    
-        </LinearLayout>
+            android:contentDescription="@string/wind"
+            android:src="@drawable/app_icon" />
+
+        <TextView
+            android:id="@+id/wind_sustained"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="center_horizontal"
+            android:inputType="none"
+            android:text="10 knts" />
+
+        <TextView
+            android:id="@+id/compass_direction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="TextView" />
+
+        <ImageView
+            android:id="@+id/compass_dir_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:src="@drawable/wind_dir_compass_arrows" />
+
+        <TextView
+            android:id="@+id/wind_gust"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_weight="1"
+            android:ems="10"
+            android:text="15 knt" />
+
+    </LinearLayout>
     
         <!-- Precipitation -->
         <LinearLayout
@@ -175,63 +183,6 @@
     
         </LinearLayout>
         
-        <!-- Predominant Weather -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-    
-            <ImageView
-                android:id="@+id/weather_predominant_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/weather"
-                android:src="@drawable/sun_cloud" />
-    
-            <TextView
-                android:id="@+id/weather_predominant_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:gravity="center_horizontal"
-                android:inputType="none"
-                android:text="heavy, medium, light" />
-    
-            <TextView
-                android:id="@+id/weather_predominant_rain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="none" />
-    
-        </LinearLayout>
-    
-    </LinearLayout> 
-    <!-- Left Side End -->
-    
-    
-    <!-- Center -->
-     <View
-         android:id="@+id/center_line"
-         android:layout_height="match_parent"
-         android:layout_width="10dp"
-         android:background="@android:color/white" 
-         android:layout_centerHorizontal="true"
-         android:layout_margin="5dp" />
-      
-     <!--     android:visibility="invisible"  -->
-     
-     
-     <LinearLayout
-	        android:id="@+id/right_side"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="vertical" 
-	        android:layout_toRightOf="@id/center_line"
-	        android:layout_alignParentRight="true" >
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -264,20 +215,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
     
-            <TextView
-                android:id="@+id/compass_direction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
+        </LinearLayout>
+        
+    </LinearLayout> 
+    <!-- Left Side End -->
     
-            <ImageView
-                android:id="@+id/compass_dir_image"
+    
+    <!-- Center -->
+     <View
+         android:id="@+id/center_line"
+         android:layout_height="match_parent"
+         android:layout_width="10dp"
+         android:background="@android:color/white" 
+         android:layout_centerHorizontal="true"
+         android:layout_margin="5dp" />
+      
+     <!--     android:visibility="invisible"  -->
+     
+     <!-- Right -->
+     <LinearLayout
+	        android:id="@+id/right_side"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" 
+	        android:layout_toRightOf="@id/center_line"
+	        android:layout_alignParentRight="true" >
+
+    
+        <!-- Predominant Weather -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+    
+            <TextView
+                android:id="@+id/weather_predominant_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/wind_dir_compass_arrows" />
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:inputType="none"
+                android:text="heavy, medium, light" />
     
         </LinearLayout>
-    
+        
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
