@@ -244,10 +244,10 @@
                 android:id="@+id/weather_predominant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="50dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
                 android:contentDescription="@string/weather"
                 android:src="@drawable/sun_cloud" />
     
