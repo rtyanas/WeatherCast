@@ -176,6 +176,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
                         displayData.getState(), 
                         displayData.getZipcode()));
 
+        // Temperature
         ((TextView) rootView.findViewById(R.id.temp_hour)).setText(
         		displayData.getTemperature().getValue() +" "+ 
         		(displayData.getTemperature().getUnits().length() >= 1 ?
@@ -193,6 +194,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
 					displayData.getTempMin().getUnits() : "");
         ((TextView) rootView.findViewById(R.id.temp_min)).setText(tMin);
         		
+        // Wind
         String wSus = displayData.getWindSustained() == null ? "Wind Not Avail" :
         		"Wind "+displayData.getWindSustained().getValue() +" "+ 
                   	    displayData.getWindSustained().getUnits();
