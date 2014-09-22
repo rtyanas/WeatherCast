@@ -214,7 +214,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         String wDir = displayData.getWindDirection() == null ? "Direction Not Avail" :
         		"Direction "+displayData.getWindDirection().getValue() +" "+ 
                    	         displayData.getWindDirection().getUnits();
-        ((TextView) rootView.findViewById(R.id.wind_direction)).setText(wDir );
+        // ((TextView) rootView.findViewById(R.id.wind_direction)).setText(wDir );
         		
         String wGust = displayData.getWindGust() == null ? "Gust Not Avail" :
         		"Gust "+displayData.getWindGust().getValue() +" "+ 
@@ -234,12 +234,12 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
     		" Cloud Cover ";
         ((TextView) rootView.findViewById(R.id.cloudAmount)).setText(cloudAmount );
     
-        ((ImageView) rootView.findViewById(R.id.weather_predominant_icon)).setImageResource(dayNightIcon);        
+        // ((ImageView) rootView.findViewById(R.id.weather_predominant_icon)).setImageResource(dayNightIcon);        
         		
 		String qual = displayData.getWeatherPredominant() == null ? "" : displayData.getWeatherPredominant().getQualifier();
 		qual = qual.equals("none") ? "" : qual;
 		String wx =  displayData.getWeatherPredominant() == null ? "Wx Not Available" : 
-			"Wx "+displayData.getWeatherPredominant().getCoverage() +", "+ 
+			displayData.getWeatherPredominant().getCoverage() +", "+ 
 					displayData.getWeatherPredominant().getIntensity() +", "+
 					displayData.getWeatherPredominant().getWeather_type()  + (qual.equals("") ? "" : comma) + 
 					qual;
