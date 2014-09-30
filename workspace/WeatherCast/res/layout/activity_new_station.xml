@@ -1,3 +1,4 @@
+<!-- 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,69 +8,80 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".NewStationActivity" >
+ -->
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="128dp"
-        android:orientation="vertical" >
+     <LinearLayout
+         android:id="@+id/linearLayout1"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/city"
-            android:layout_width="188dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="@string/city" >
-
-            <requestFocus />
-        </EditText>
+         <EditText
+             android:id="@+id/city"
+             android:layout_width="188dp"
+             android:layout_height="wrap_content"
+             android:hint="@string/city"
+             android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/state"
-            android:layout_width="match_parent"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="@string/state" />
+            android:hint="@string/state"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/zip_code"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPostalAddress"
-            android:text="@string/zip_code" />
+            android:hint="@string/zip_code"
+            android:inputType="textPostalAddress|number" />
 
         <EditText
             android:id="@+id/latitude"
-            android:layout_width="144dp"
+            android:layout_width="152dp"
             android:layout_height="wrap_content"
-            android:inputType="numberSigned"
-            android:text="@string/lat" />
+            android:hint="@string/lat"
+            android:inputType="numberSigned" />
 
         <EditText
             android:id="@+id/longitude"
-            android:layout_width="match_parent"
+            android:layout_width="158dp"
             android:layout_height="wrap_content"
-            android:inputType="numberSigned"
-            android:text="@string/lon" />
+            android:hint="@string/lon"
+            android:inputType="numberSigned" />
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/linearLayout1"
         android:layout_below="@+id/linearLayout1"
         android:layout_marginRight="56dp"
-        android:layout_marginTop="32dp" >
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/done_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/done" />
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="@string/cancel" />
 
-</RelativeLayout>
+        </LinearLayout>
+
+</LinearLayout>
