@@ -238,14 +238,28 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
     
         // ((ImageView) rootView.findViewById(R.id.weather_predominant_icon)).setImageResource(dayNightIcon);        
         		
-		String qual = displayData.getWeatherPredominant() == null ? "" : displayData.getWeatherPredominant().getQualifier();
-		qual = qual.equals("none") ? "" : qual;
-		String wx =  displayData.getWeatherPredominant() == null ? "Wx Not Available" : 
-			displayData.getWeatherPredominant().getCoverage() +", "+ 
-					displayData.getWeatherPredominant().getIntensity() +", "+
-					displayData.getWeatherPredominant().getWeather_type()  + (qual.equals("") ? "" : comma) + 
-					qual;
-		
+        // Predicted predominant weather
+        
+        String wx = "Wx Not Available";
+        
+        if(displayData.getWeatherPredominant() != null) {
+            String qual = displayData.getWeatherPredominant() == null ? "" : displayData.getWeatherPredominant().getQualifier();
+            String intensity = displayData.getWeatherPredominant().getIntensity() == null ? "" : displayData.getWeatherPredominant().getIntensity();
+            String weatherType = displayData.getWeatherPredominant().getWeather_type() == null ? "" : displayData.getWeatherPredominant().getWeather_type();
+            String coverage = displayData.getWeatherPredominant().getCoverage() == null ? "" : displayData.getWeatherPredominant().getCoverage();
+            
+            qual = qual.equals("none") ? "" : qual;
+
+            if(intensity.equals("none")) {
+                wx = "Slight chance of "+ weatherType;
+            }            
+            else {
+                wx =  coverage +", "+ intensity +", "+
+                        weatherType  + (qual.equals("") ? "" : comma) + 
+                        qual;
+            }
+        }
+
         ((TextView) rootView.findViewById(R.id.weather_predominant_amount)).setText(wx);
         // .getCoverage() +","+ w.getIntensity() +","+ 
 	    // w.getWeather_type() +","+ w.getQualifier()
