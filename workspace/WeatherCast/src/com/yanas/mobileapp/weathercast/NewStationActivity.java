@@ -40,6 +40,20 @@ public class NewStationActivity extends Activity {
 				}
 					
 				} );	
+
+        ((Button)findViewById(R.id.cancel_button)).setOnClickListener( new OnClickListener() {
+            
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                setResult(Activity.RESULT_CANCELED, intent);
+                
+                if(GlobalSettings.new_station_activity) 
+                    Log.d("NewStationActivity", "onClick: "+ ((TextView)findViewById(R.id.zip_code)).getText().toString());
+                finish();
+            }
+                
+            } );    
 	}
 
 	@Override
