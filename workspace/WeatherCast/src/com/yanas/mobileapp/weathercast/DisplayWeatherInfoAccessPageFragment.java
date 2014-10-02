@@ -162,11 +162,6 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
 			e.printStackTrace();
 		}
         
-        // Set icon for sun or moon
-        int dayNightIcon = R.drawable.sun_cloud;
-       	if(hour > 19  ||  hour <= 06 )
-       	 dayNightIcon = R.drawable.moon_cloud;
-        
         // Set the title view to show city and date/time
         ((TextView) rootView.findViewById(R.id.date_time)).setText(todaysDate); // + " "+ dateTime[0] +" ~ "+ dateTime[1].split("-")[0]);
 
@@ -177,6 +172,25 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
                         displayData.getZipcode()));
 
         // Temperature
+        String temperatureIconStr = "Not Avail";
+        if(displayData.getTemperature() != null ) {
+            try {
+                temperatureIconStr = 
+                        getTemperatureValue(Integer.parseInt(displayData.getTemperature().getValue()) );      
+            } catch(NumberFormatException nfe) {
+                if(GlobalSettings.display_weatherInfo_access_pagefrag) 
+                    Log.e("DisplayWeatherInfoAccessPageFragment", "Temperature number parse error.");
+            }
+        }
+
+        int temperatureId = rootView.getResources().getIdentifier(
+                "temp_guage"+ temperatureIconStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
+
+        if(temperatureId != 0) {
+            ((ImageView) rootView.findViewById(
+                    R.id.temp_icon)).setImageResource(temperatureId);
+        }
+        
         ((TextView) rootView.findViewById(R.id.temp_hour)).setText(
         		displayData.getTemperature().getValue() +" "+ 
         		(displayData.getTemperature().getUnits().length() >= 1 ?
@@ -199,7 +213,6 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         		"Wind "+displayData.getWindSustained().getValue() +" "+ 
                   	    displayData.getWindSustained().getUnits();
         ((TextView) rootView.findViewById(R.id.wind_sustained)).setText( wSus );
-        		
 
         String compassDir = "Not Avail";
         if(displayData.getWindDirection() != null ) {
@@ -280,6 +293,8 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
 		
         // Add - Sun/Moon/clouds/rain
 
+        // Set icon for sun or moon
+        int dayNightIcon = R.drawable.sun_cloud;
         if(hour > 19  ||  hour <= 06 )
             dayNightIcon = R.drawable.moon_full;
         else
@@ -341,6 +356,31 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         return rootView;
     }
 
+    
+    private String getTemperatureValue(int temperature_in) {
+        String temperatureRet = "";
+        
+        if(temperature_in > 90) {
+            temperatureRet = "8";
+        } else if(temperature_in <= 90 && temperature_in > 80 ) {
+            temperatureRet = "7";
+        } else if(temperature_in <= 80 && temperature_in > 65 ) {
+            temperatureRet = "6";
+        } else if(temperature_in <= 65 && temperature_in > 55 ) {
+            temperatureRet = "5";
+        } else if(temperature_in <= 55 && temperature_in > 45 ) {
+            temperatureRet = "4";
+        } else if(temperature_in <= 45 && temperature_in > 35 ) {
+            temperatureRet = "3";
+        } else if(temperature_in <= 35 && temperature_in > 25 ) {
+            temperatureRet = "2";
+        } else if(temperature_in <= 25 ) {
+            temperatureRet = "1";
+        }
+
+        return temperatureRet;
+    }
+    
     
     private String estimatedSailingExperience(DisplayData displayData) {
     	StringBuffer sailingEx = new StringBuffer();
