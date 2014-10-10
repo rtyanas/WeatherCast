@@ -152,12 +152,15 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         String todaysDate = "Today's Date and Time";
         Integer hour = 0;
         String dayOfWeek = "Day of week";
+        
+        // This date used to calculate the day and date in header and for moon phase
+        Date dateOfData = new Date();
         try {
-			Date date = sdfInput.parse(displayData.getTemperature().getPeriod());
-			Log.d("DisplayWeatherInfoAccessPageFragmnt", "Date: "+ date);
-			todaysDate = sdfDisplay.format(date);
-			hour = Integer.parseInt(sdfSunCheck.format(date));
-			dayOfWeek = sdfDayOfWeek.format(date) +" "+ hour.toString() +":00";
+            dateOfData = sdfInput.parse(displayData.getTemperature().getPeriod());
+			Log.d("DisplayWeatherInfoAccessPageFragmnt", "Date: "+ dateOfData);
+			todaysDate = sdfDisplay.format(dateOfData);
+			hour = Integer.parseInt(sdfSunCheck.format(dateOfData));
+			dayOfWeek = sdfDayOfWeek.format(dateOfData) +" "+ hour.toString() +":00";
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -294,9 +297,11 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         // Add - Sun/Moon/clouds/rain
 
         // Set icon for sun or moon
-        int dayNightIcon = R.drawable.sun_cloud;
+
+        int dayNightIcon; // get Resource
+ 
         if(hour > 19  ||  hour <= 06 )
-            dayNightIcon = R.drawable.moon_full;
+            dayNightIcon = getCurrentMoonPhaseResource(dateOfData);
         else
             dayNightIcon = R.drawable.sun;
         
@@ -511,6 +516,92 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
     		return true;
     		
     	return false;	
+    }
+    
+    final long dayInMilli = (60000 * 60 * 24);
+    final double moonPhase = 29.5305888610;
+    
+    private int getCurrentMoonPhase(Date dateOfData_in) {
+        int phaseValue = 0; // new = 0 ... full = 8
+        // SimpleDateFormat sdfJan2014 = new SimpleDateFormat("yyyy MMM dd HH:mm:s.S"); 
+        Date Jan2014Date = new Date();
+
+        try {
+            SimpleDateFormat sdfJan2014 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ"); // 2014-10-10T08:00:00-04:00
+            Jan2014Date = sdfJan2014.parse("2014-01-01T11:14:00-04:00"); 
+            long daysDiff = (dateOfData_in.getTime() - Jan2014Date.getTime()) / dayInMilli;
+            Log.d("DisplayWeatherAccessPageFragment:getCurrentMoonPhase()",
+                    "days Diff: "+ daysDiff 
+                    +", phase pre number: "+ daysDiff % moonPhase );
+
+            switch( (int) (daysDiff % moonPhase)) {
+            case  0: phaseValue = 0; break; 
+            case  1: phaseValue = 0; break; 
+            case  2: phaseValue = 1; break; 
+            case  3: phaseValue = 1; break; 
+            case  4: phaseValue = 2; break; 
+            case  5: phaseValue = 2; break; 
+            case  6: phaseValue = 3; break; 
+            case  7: phaseValue = 3; break; 
+            case  8: phaseValue = 4; break; 
+            case  9: phaseValue = 4; break; 
+            case 10: phaseValue = 5; break; 
+            case 11: phaseValue = 5; break; 
+            case 12: phaseValue = 6; break; 
+            case 13: phaseValue = 7; break; 
+            case 14: phaseValue = 8; break; 
+            case 15: phaseValue = 8; break;
+            case 16: phaseValue = 8; break;
+            case 17: phaseValue = 9; break;
+            case 18: phaseValue = 9; break;
+            case 19: phaseValue = 10; break;
+            case 20: phaseValue = 10; break;
+            case 21: phaseValue = 11; break;
+            case 22: phaseValue = 11; break;
+            case 23: phaseValue = 12; break;
+            case 24: phaseValue = 13; break;
+            case 25: phaseValue = 13; break;
+            case 26: phaseValue = 14; break;
+            case 27: phaseValue = 14; break;
+            case 28: phaseValue = 15; break;
+            case 29: phaseValue = 15; break;
+            case 30: phaseValue = 15; break;
+            }
+        } catch (IllegalArgumentException e) {
+            Log.e("DisplayWeatherAccessPageFragment:getCurrentMoonPhase()", e.getMessage());
+        } catch (ParseException e) {
+            Log.e("DisplayWeatherAccessPageFragment:getCurrentMoonPhase()", e.getMessage());
+        }
+        
+        return phaseValue;
+    }
+    
+    
+    private int getCurrentMoonPhaseResource(Date date) {
+        int moonResource = R.drawable.moon08_full;
+
+        int phaseValue = getCurrentMoonPhase(date);
+        
+        switch(phaseValue) {
+        case 0:  moonResource = R.drawable.moon00_new; break;
+        case 1:  moonResource = R.drawable.moon01_1_8waxing; break;
+        case 2:  moonResource = R.drawable.moon02_1_4waxing; break;
+        case 3:  moonResource = R.drawable.moon03_3_8waxing; break;
+        case 4:  moonResource = R.drawable.moon04_1_2waxing; break;
+        case 5:  moonResource = R.drawable.moon05_5_8waxing; break;
+        case 6:  moonResource = R.drawable.moon06_3_4waxing; break;
+        case 7:  moonResource = R.drawable.moon07_7_8waxing; break;
+        case 8:  moonResource = R.drawable.moon08_full; break;
+        case 9:  moonResource = R.drawable.moon09_7_8; break;
+        case 10: moonResource = R.drawable.moon10_3_4; break;
+        case 11: moonResource = R.drawable.moon11_5_8; break;
+        case 12: moonResource = R.drawable.moon12_1_2; break;
+        case 13: moonResource = R.drawable.moon13_3_8; break;
+        case 14: moonResource = R.drawable.moon14_1_4; break;
+        case 15: moonResource = R.drawable.moon15_1_8; break;
+        }
+        
+        return moonResource;
     }
 
     /**
