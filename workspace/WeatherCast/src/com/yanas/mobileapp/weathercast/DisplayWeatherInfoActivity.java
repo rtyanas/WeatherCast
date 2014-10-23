@@ -21,6 +21,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 // 
 public class DisplayWeatherInfoActivity extends FragmentActivity {
@@ -63,6 +64,17 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
 		new AssembleWeatherAsync().execute(this);
 
 	}
+	
+	
+//	@Override
+//	public void onConfigurationChanged(Configuration newConfig) {
+//	    super.onConfigurationChanged(newConfig);
+//	    
+//        setContentView(R.layout.activity_display_weather_info);
+//
+//	    // Display the data onPostExecute
+//        DisplayWeatherInfoActivity.this.mPagerAdapter.notifyDataSetChanged();
+//	}
 	
 	
 	/**
