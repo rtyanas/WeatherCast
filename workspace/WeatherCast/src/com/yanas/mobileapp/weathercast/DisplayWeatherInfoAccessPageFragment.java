@@ -225,21 +225,19 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
             }
         }
 
-        String wSus = displayData.getWindSustained() == null ? "Wind Not Avail" :
-        		"Wind "+displayData.getWindSustained().getValue() +" "+ 
-                  	    displayData.getWindSustained().getUnits();
-        ((TextView) rootView.findViewById(R.id.wind_sustained)).setText( wSus );
-
         int windId = rootView.getResources().getIdentifier(
                 "sailing_wind"+ windIconStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
 
         if(windId != 0) {
             ((ImageView) rootView.findViewById(
                     R.id.wind_image)).setImageResource(windId);
-            ((ImageView) rootView.findViewById(
-                    R.id.wind_image)).setImageResource(windId);
         }
         
+        String wSus = displayData.getWindSustained() == null ? "Wind Not Avail" :
+        		"Wind "+displayData.getWindSustained().getValue() +" "+ 
+                  	    displayData.getWindSustained().getUnits();
+        ((TextView) rootView.findViewById(R.id.wind_sustained)).setText( wSus );
+
         String compassDir = "Not Avail";
         if(displayData.getWindDirection() != null ) {
         	try {
