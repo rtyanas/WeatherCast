@@ -192,6 +192,8 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         if(temperatureId != 0) {
             ((ImageView) rootView.findViewById(
                     R.id.temp_icon)).setImageResource(temperatureId);
+            ((ImageView) rootView.findViewById(
+                    R.id.temp_image)).setImageResource(temperatureId);
         }
         
         ((TextView) rootView.findViewById(R.id.temp_hour)).setText(
@@ -212,11 +214,32 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         ((TextView) rootView.findViewById(R.id.temp_min)).setText(tMin);
         		
         // Wind
+        String windIconStr = "Not Avail";
+        if(displayData.getWindSustained() != null ) {
+            try {
+                windIconStr = 
+                        getWindValue(Integer.parseInt(displayData.getWindSustained().getValue()) );      
+            } catch(NumberFormatException nfe) {
+                if(GlobalSettings.display_weatherInfo_access_pagefrag) 
+                    Log.e("DisplayWeatherInfoAccessPageFragment", "Wind number parse error.");
+            }
+        }
+
         String wSus = displayData.getWindSustained() == null ? "Wind Not Avail" :
         		"Wind "+displayData.getWindSustained().getValue() +" "+ 
                   	    displayData.getWindSustained().getUnits();
         ((TextView) rootView.findViewById(R.id.wind_sustained)).setText( wSus );
 
+        int windId = rootView.getResources().getIdentifier(
+                "sailing_wind"+ windIconStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
+
+        if(windId != 0) {
+            ((ImageView) rootView.findViewById(
+                    R.id.wind_image)).setImageResource(windId);
+            ((ImageView) rootView.findViewById(
+                    R.id.wind_image)).setImageResource(windId);
+        }
+        
         String compassDir = "Not Avail";
         if(displayData.getWindDirection() != null ) {
         	try {
@@ -246,7 +269,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
                    	   ;
         ((TextView) rootView.findViewById(R.id.pop)).setText(pop );
         
-        String cloudAmount = displayData.getPropPrecip12() == null ? "Cloud Coverage Not Available" :
+        String cloudAmount = displayData.getCloudAmount() == null ? "Cloud Coverage Not Available" :
     		displayData.getCloudAmount().getValue() +
     		displayData.getCloudAmount().getUnits() +
     		" Cloud Cover ";
@@ -256,7 +279,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         		
         // Predicted predominant weather
         
-        String wx = "Wx Not Available";
+        String wx = "";
         
         if(displayData.getWeatherPredominant() != null) {
             String qual = displayData.getWeatherPredominant() == null ? "" : displayData.getWeatherPredominant().getQualifier();
@@ -269,11 +292,31 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
             if(intensity.equals("none")) {
                 wx = "Slight chance of "+ weatherType;
             }            
-            else {
+            else if( ( ! "".equals(coverage) ) && ( ! "".equals(intensity) ) && 
+                    ( ! "".equals(weatherType) ) ) {
                 wx =  coverage +", "+ intensity +", "+
                         weatherType  + (qual.equals("") ? "" : comma) + 
                         qual;
+            } else if(displayData.getCloudAmount() != null  ) {
+                try { 
+                    int cloudAmountWx = Integer.parseInt(displayData.getCloudAmount().getValue());
+                    if(cloudAmountWx < 25)
+                        wx = "Clear";
+                } catch(NumberFormatException  nfe) {
+                    Log.e("DisplayWeatherInfoAccessPageFragment", "Clound Amount for Wx clear prediction number parse error.");
+                }                
             }
+        } else {
+            if(displayData.getCloudAmount() != null  ) {
+                try { 
+                    int cloudAmountWx = Integer.parseInt(displayData.getCloudAmount().getValue());
+                    if(cloudAmountWx < 25)
+                        wx = "Clear";
+                } catch(NumberFormatException  nfe) {
+                    Log.e("DisplayWeatherInfoAccessPageFragment", "Clound Amount for Wx clear prediction number parse error.");
+                }                
+            }
+
         }
 
         ((TextView) rootView.findViewById(R.id.weather_predominant_amount)).setText(wx);
@@ -384,6 +427,23 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         }
 
         return temperatureRet;
+    }
+    
+    
+    private String getWindValue(int windKts_in ) {
+        String windLevel = "";
+        
+        if(windKts_in < 3) {
+            windLevel = "1";
+        } else if(windKts_in >= 3 && windKts_in < 6 ) {
+            windLevel = "2";
+        } else if(windKts_in >= 6 && windKts_in < 15 ) {
+            windLevel = "3";
+        } else if(windKts_in >= 15 ) {
+            windLevel = "4";
+        }
+        
+        return windLevel;
     }
     
     
