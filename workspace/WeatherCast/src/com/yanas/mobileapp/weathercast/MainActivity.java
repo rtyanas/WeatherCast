@@ -351,64 +351,103 @@ public class MainActivity extends ListActivity
 		Log.d("MainActivity", "initStationData num Recs in DB: "+ numRows);
 
 		if(numRows <= 0) {
-			StationSelected ss = new StationSelected(this, CURRENT_LOCATION, "", "");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "Bedminster", "NJ", "07921");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "Detroit", "MI", "48201");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "Flemington", "NJ", "08822");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "Fair Haven", "NJ", "07704");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "Houston", "TX", "77001");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "Mantoloking", "NJ", "08738");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "Miami", "FL", "33101");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "Netcong", "NJ", "07857");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "New York", "NY", "10018");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "Perth Amboy", "NJ", "08861");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "Pittsburgh", "PA", "15122");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "Portland", "OR", "97086");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "Rock Hall", "MD", "21661");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "Rockaway", "NJ", "07866");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "San Diego", "CA", "92101");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "Sandy Hook", "NJ", "07732");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "Shrewsbury", "NJ", "07702");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-			ss = new StationSelected(this, "Toms River", "NJ", "08722");
-			cityZipDbData.createStation(ss.getCity(), ss.getState(), 
-					ss.getZipCode(), ss.getLatitude(), ss.getLongitude());
-
+	        class StationSingle {
+	            String city, state, zip;
+	            StationSingle(String c, String s, String z) { city = c; state = s; zip = z; }
+	        };
+	        
+	        List<StationSingle> stationList = new ArrayList<StationSingle>();
+	        stationList.add(new StationSingle(CURRENT_LOCATION, "", ""));
+	        stationList.add(new StationSingle("Akron", "OH", "44305"));
+            stationList.add(new StationSingle("Albuquerque", "NM", "87105"));
+            stationList.add(new StationSingle("Atlanta", "GA", "30310"));
+            stationList.add(new StationSingle("Austin", "TX", "78748"));
+            stationList.add(new StationSingle("Bangor", "ME", "04401"));
+            stationList.add(new StationSingle("Baton Rouge", "LA", "70808"));
+            stationList.add(new StationSingle("Bedminster", "NJ", "07921"));
+            stationList.add(new StationSingle("Belleville", "IL", "62221"));
+            stationList.add(new StationSingle("Billings", "MT", "58503"));
+            stationList.add(new StationSingle("Birmingham", "AL", "35223"));
+            stationList.add(new StationSingle("Bismarck", "ND", "58503"));
+            stationList.add(new StationSingle("Blacksburg", "VA", "24060"));
+            stationList.add(new StationSingle("Boston", "MA", "02119"));
+            stationList.add(new StationSingle("Buffalo", "NY", "14214"));
+            stationList.add(new StationSingle("Cleveland", "OH", "44113"));
+            stationList.add(new StationSingle("Charleston", "SC", "29412"));
+            stationList.add(new StationSingle("Chicago", "IL", "43209"));
+            stationList.add(new StationSingle("Columbia", "SC", "29205"));
+            stationList.add(new StationSingle("Columbus", "OH", "43209"));
+            stationList.add(new StationSingle("Dallas", "TX", "75241"));
+            stationList.add(new StationSingle("Denver", "CO", "80239"));
+            stationList.add(new StationSingle("Detroit", "MI", "48201"));
+            stationList.add(new StationSingle("Flemington", "NJ", "08822"));
+            stationList.add(new StationSingle("Fair Haven", "NJ", "07704"));
+            stationList.add(new StationSingle("Fort Myers", "FL", "33901"));
+            stationList.add(new StationSingle("Fort Wayne", "IN", "46809"));
+            stationList.add(new StationSingle("Houston", "TX", "77001"));
+            stationList.add(new StationSingle("Huntington", "WVX", "77001"));
+            stationList.add(new StationSingle("Idaho Falls", "ID", "83401"));
+            stationList.add(new StationSingle("Indianapolis", "IN", "46239"));
+            stationList.add(new StationSingle("Jackson", "MS", "39212"));
+            stationList.add(new StationSingle("Lincoln", "NE", "68516"));
+            stationList.add(new StationSingle("Little Rock", "AR", "72202"));
+            stationList.add(new StationSingle("Las Vegas", "NV", "89104"));
+            stationList.add(new StationSingle("Los Angeles", "CA", "90021"));
+            stationList.add(new StationSingle("Lousville", "KY", "40203"));
+            stationList.add(new StationSingle("Manchester", "NH", "03103"));
+            stationList.add(new StationSingle("Mantoloking", "NJ", "08738"));
+            stationList.add(new StationSingle("Memphis", "TN", "38106"));
+            stationList.add(new StationSingle("Miami", "FL", "33101"));
+            stationList.add(new StationSingle("Milwaukee", "WI", "53221"));
+            stationList.add(new StationSingle("Minneapolis", "MN", "55437"));
+            stationList.add(new StationSingle("Netcong", "NJ", "07857"));
+            stationList.add(new StationSingle("New Haven", "CT", "06513"));
+            stationList.add(new StationSingle("New Orleans", "LA", "70115"));
+            stationList.add(new StationSingle("Newport", "RI", "02840"));
+            stationList.add(new StationSingle("New York", "NY", "10018"));
+            stationList.add(new StationSingle("Oklahoma City", "OK", "73160"));
+            stationList.add(new StationSingle("Orlando", "FL", "32806"));
+            stationList.add(new StationSingle("Pensacola", "FL", "32502"));
+            stationList.add(new StationSingle("Perth Amboy", "NJ", "08861"));
+            stationList.add(new StationSingle("Philadelphia", "PA", "19107"));
+            stationList.add(new StationSingle("Phoenix", "AZ", "85040"));
+            stationList.add(new StationSingle("Pittsburgh", "PA", "15122"));
+            stationList.add(new StationSingle("Portland", "ME", "04102"));
+            stationList.add(new StationSingle("Portland", "OR", "97229"));
+            stationList.add(new StationSingle("Reno", "NV", "89506"));
+            stationList.add(new StationSingle("Roanoke", "VA", "21661"));
+            stationList.add(new StationSingle("Rock Hall", "MD", "21661"));
+            stationList.add(new StationSingle("Rochester", "NY", "14623"));
+            stationList.add(new StationSingle("Rockaway", "NJ", "07866"));
+            stationList.add(new StationSingle("Rutland", "VT", "05701"));
+            stationList.add(new StationSingle("Salt Lake City", "UT", "84111"));
+            stationList.add(new StationSingle("San Diego", "CA", "92101"));
+            stationList.add(new StationSingle("San Francisco", "CA", "94112"));
+            stationList.add(new StationSingle("San Jose", "CA", "95125"));
+            stationList.add(new StationSingle("Sandy Hook", "NJ", "07732"));
+            stationList.add(new StationSingle("Seattle", "WA", "98148"));
+            stationList.add(new StationSingle("Shrewsbury", "NJ", "07702"));
+            stationList.add(new StationSingle("Simi", "CA", "93065"));
+            stationList.add(new StationSingle("Sioux City", "IA", "51106"));
+            stationList.add(new StationSingle("Sioux Falls", "SD", "57104"));
+            stationList.add(new StationSingle("Spokane", "WA", "99217"));
+            stationList.add(new StationSingle("St Louis", "MO", "63106"));
+            stationList.add(new StationSingle("Surprise", "AZ", "85379"));
+            stationList.add(new StationSingle("Tampa", "FL", "33602"));
+            stationList.add(new StationSingle("Toms River", "NJ", "08722"));
+            stationList.add(new StationSingle("Tucson", "AZ", "85713"));
+            stationList.add(new StationSingle("Virginia Beach", "VA", "23462"));
+            stationList.add(new StationSingle("Wilmington", "DE", "19803"));
+            stationList.add(new StationSingle("Washington", "DC", "20001"));
+            stationList.add(new StationSingle("Watertown", "SD", "57201"));
+            stationList.add(new StationSingle("Wichita", "KS", "67217"));
+            stationList.add(new StationSingle("Yellowstone National Park", "WY", "82190"));
+	        
+	        for(StationSingle sist : stationList) 
+	        {
+	            cityZipDbData.createStation(sist.city, sist.state, sist.zip, "", "");            
+	        }
+	        
 			Log.d("MainActivity", "initStationData num New Recs in DB: "+ numRows);
 		}
 
