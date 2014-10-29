@@ -406,22 +406,22 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
     private String getTemperatureValue(int temperature_in) {
         String temperatureRet = "";
         
-        if(temperature_in > 90) {
-            temperatureRet = "8";
-        } else if(temperature_in <= 90 && temperature_in > 80 ) {
-            temperatureRet = "7";
-        } else if(temperature_in <= 80 && temperature_in > 65 ) {
-            temperatureRet = "6";
-        } else if(temperature_in <= 65 && temperature_in > 55 ) {
-            temperatureRet = "5";
-        } else if(temperature_in <= 55 && temperature_in > 45 ) {
-            temperatureRet = "4";
-        } else if(temperature_in <= 45 && temperature_in > 35 ) {
-            temperatureRet = "3";
+        if(temperature_in > 92) {
+            temperatureRet = "8";  // Explosion
+        } else if(temperature_in <= 92 && temperature_in > 85 ) {
+            temperatureRet = "7";  // Yellow center
+        } else if(temperature_in <= 85 && temperature_in > 78 ) {
+            temperatureRet = "6";  // Orange center
+        } else if(temperature_in <= 78 && temperature_in > 65 ) {
+            temperatureRet = "5";  // Red / orange
+        } else if(temperature_in <= 65 && temperature_in > 50 ) {
+            temperatureRet = "4";  // Orange
+        } else if(temperature_in <= 50 && temperature_in > 35 ) {
+            temperatureRet = "3";  // Light Orange
         } else if(temperature_in <= 35 && temperature_in > 25 ) {
-            temperatureRet = "2";
+            temperatureRet = "2";  // Blue
         } else if(temperature_in <= 25 ) {
-            temperatureRet = "1";
+            temperatureRet = "1";  // Snow flake
         }
 
         return temperatureRet;
