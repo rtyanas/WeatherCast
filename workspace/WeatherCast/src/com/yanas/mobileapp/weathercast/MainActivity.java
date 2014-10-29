@@ -385,7 +385,7 @@ public class MainActivity extends ListActivity
             stationList.add(new StationSingle("Fort Myers", "FL", "33901"));
             stationList.add(new StationSingle("Fort Wayne", "IN", "46809"));
             stationList.add(new StationSingle("Houston", "TX", "77001"));
-            stationList.add(new StationSingle("Huntington", "WVX", "77001"));
+            stationList.add(new StationSingle("Huntington", "WV", "77001"));
             stationList.add(new StationSingle("Idaho Falls", "ID", "83401"));
             stationList.add(new StationSingle("Indianapolis", "IN", "46239"));
             stationList.add(new StationSingle("Jackson", "MS", "39212"));
@@ -420,7 +420,7 @@ public class MainActivity extends ListActivity
             stationList.add(new StationSingle("Rochester", "NY", "14623"));
             stationList.add(new StationSingle("Rockaway", "NJ", "07866"));
             stationList.add(new StationSingle("Rutland", "VT", "05701"));
-            stationList.add(new StationSingle("Salt Lake City", "UT", "84111"));
+            stationList.add(new StationSingle("Salt Lake City", "UT", "84112"));
             stationList.add(new StationSingle("San Diego", "CA", "92101"));
             stationList.add(new StationSingle("San Francisco", "CA", "94112"));
             stationList.add(new StationSingle("San Jose", "CA", "95125"));
