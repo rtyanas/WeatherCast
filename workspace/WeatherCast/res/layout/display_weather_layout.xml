@@ -6,54 +6,6 @@
     android:background="#c9def6"
     android:padding="10dp" >
 
-    <!--  Top -->
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" 
-        android:padding="1dp">
-
-        <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" 
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp" 
-                android:paddingBottom="1dp">
-            
-	        <TextView
-	            android:id="@+id/city_zip"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="City, State"
-	            android:layout_alignParentLeft="true"
-	            android:textSize="@dimen/activity_vertical_margin"
-	            android:textStyle="italic" />
-	        
-            <TextView
-                android:id="@+id/date_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="Jan 1"
-                android:textSize="@dimen/activity_vertical_margin"
-                android:textStyle="italic" />
-            
-	        	    </RelativeLayout>
-
-        <TextView
-            android:id="@+id/day_of_week"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="DyofWkHr"
-            android:textSize="@dimen/activity_vertical_margin"
-            android:textStyle="bold"
-            android:typeface="monospace" />
-
-    </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -151,8 +103,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="12dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingTop="5dp" >
 
         <ImageView
             android:id="@+id/pop_icon"
@@ -168,6 +120,7 @@
             android:ems="10"
             android:gravity="center_horizontal"
             android:inputType="none"
+            android:paddingTop="12dp"
             android:text="10" />
 
         <TextView
@@ -175,6 +128,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:paddingTop="12dp"
             android:text="TextView" />
 
     </LinearLayout>
@@ -201,10 +155,67 @@
 
         <TextView
             android:id="@+id/sailingExperience"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:hint="@string/howIsSailingExperience"
             android:minLines="2" />
+
+    </LinearLayout>
+
+    
+    <!-- Center -->
+    <View
+        android:id="@+id/separate_sailing_exp"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@android:color/white" />
+    
+    <!--  Date - Time -->
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:padding="1dp">
+
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" 
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp" 
+                android:paddingBottom="1dp">
+            
+            <TextView
+                android:id="@+id/city_zip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="City, State"
+                android:layout_alignParentLeft="true"
+                android:textSize="@dimen/activity_vertical_margin"
+                android:textStyle="italic" />
+            
+            <TextView
+                android:id="@+id/date_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Jan 1"
+                android:textSize="@dimen/activity_vertical_margin"
+                android:textStyle="italic" />
+            
+                    </RelativeLayout>
+
+        <TextView
+            android:id="@+id/day_of_week"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="DyofWkHr"
+            android:textSize="@dimen/activity_vertical_margin"
+            android:textStyle="bold"
+            android:typeface="monospace" />
 
     </LinearLayout>
 
@@ -212,7 +223,7 @@
     <View
         android:id="@+id/separate_sailing_exp"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="5dp"
         android:background="@android:color/white" />
     
     <!-- Bottom -->
