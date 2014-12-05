@@ -233,20 +233,24 @@ public class WeatherDataParsed implements Serializable {
 			dd.state = statnDt.getState();
 			dd.zipcode = statnDt.getZipcode();
 
+// Will be uing the period of the first temp even though 
+// data like probPrecip is prior to temp period  
 			// Set the period on temperature here to
 			// the smallest period in this display
-			dd.temperature = statnDt.getTemperature(0).copy();  // CHange the period in the copy not original
-			dd.tempMin = statnDt.getTemperatureMin(0);
-			dd.tempMax = statnDt.getTemperatureMax(0);
-			dd.windSustained = statnDt.getWindSustained(0);
-			dd.windDirection = statnDt.getWindSustainedDirection(0);
-			dd.windGust = statnDt.getWindGust(0);
-			dd.windDirection = statnDt.getWindSustainedDirection(0);
-			dd.propPrecip12 = statnDt.getprobOfPrecip12(0);
-			dd.cloudAmount = statnDt.getCloudAmount(0);
-			dd.temperature.setPeriod(statnDt.getprobOfPrecip12(0).getPeriod()); // change period
-			dd.weatherPredominant = statnDt.getWeather(0);
-			displayL.add(dd);
+//			dd.temperature = statnDt.getTemperature(0).copy();  // CHange the period in the copy not original
+//			dd.tempMin = statnDt.getTemperatureMin(0);
+//			dd.tempMax = statnDt.getTemperatureMax(0);
+//			dd.windSustained = statnDt.getWindSustained(0);
+//			dd.windDirection = statnDt.getWindSustainedDirection(0);
+//			dd.windGust = statnDt.getWindGust(0);
+//			dd.windDirection = statnDt.getWindSustainedDirection(0);
+//			dd.propPrecip12 = statnDt.getprobOfPrecip12(0);
+//			dd.cloudAmount = statnDt.getCloudAmount(0);
+//			
+//			dd.temperature.setPeriod(statnDt.getprobOfPrecip12(0).getPeriod()); // change period
+//			
+//			dd.weatherPredominant = statnDt.getWeather(0);
+//			displayL.add(dd);
 
 			for(WeatherDataValue wtemp : statnDt.getTemperature()) {
 				dd = new DisplayData();
