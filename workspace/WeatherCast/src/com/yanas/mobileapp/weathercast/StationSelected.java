@@ -55,6 +55,9 @@ public class StationSelected {
 				zipCode = "";
 			}
 		}
+		else {
+		    city = "";
+		}
 		
 		return canGetLocation;
 	}
