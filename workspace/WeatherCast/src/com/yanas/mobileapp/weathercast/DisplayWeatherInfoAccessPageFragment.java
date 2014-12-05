@@ -295,26 +295,13 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
                 wx =  coverage +", "+ intensity +", "+
                         weatherType  + (qual.equals("") ? "" : comma) + 
                         qual;
-            } else if(displayData.getCloudAmount() != null  ) {
-                try { 
-                    int cloudAmountWx = Integer.parseInt(displayData.getCloudAmount().getValue());
-                    if(cloudAmountWx < 25)
-                        wx = "Clear";
-                } catch(NumberFormatException  nfe) {
-                    Log.e("DisplayWeatherInfoAccessPageFragment", "Clound Amount for Wx clear prediction number parse error.");
-                }                
+            } else if(checkIfClear()  ) {
+                wx = "Clear";
             }
         } else {
-            if(displayData.getCloudAmount() != null  ) {
-                try { 
-                    int cloudAmountWx = Integer.parseInt(displayData.getCloudAmount().getValue());
-                    if(cloudAmountWx < 25)
-                        wx = "Clear";
-                } catch(NumberFormatException  nfe) {
-                    Log.e("DisplayWeatherInfoAccessPageFragment", "Clound Amount for Wx clear prediction number parse error.");
-                }                
+            if(checkIfClear()  ) {
+                wx = "Clear";
             }
-
         }
 
         ((TextView) rootView.findViewById(R.id.weather_predominant_amount)).setText(wx);
@@ -338,7 +325,6 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         // Add - Sun/Moon/clouds/rain
 
         // Set icon for sun or moon
-
         int dayNightIcon; // get Resource
  
         if(hour > 19  ||  hour <= 06 )
@@ -348,7 +334,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         
         ((ImageView) rootView.findViewById(R.id.weather_predominant)).setBackgroundResource(dayNightIcon);
 
-
+        // Cloud amount; how many clouds
         String cloudConfigStr = "Not Avail";
         if(displayData.getCloudAmount() != null ) {
             try {
@@ -361,6 +347,10 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
             }
         }
         
+        int cloudConfigId = rootView.getResources().getIdentifier(
+                "cloud_"+ cloudConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
+
+        // Precipitation amount; amount of rain or snow
         String rainConfigStr = "Not Avail";
         if(displayData.getPropPrecip12() != null ) {
             try {
@@ -373,11 +363,18 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
             }
         }
         
-        int cloudConfigId = rootView.getResources().getIdentifier(
-                "cloud_"+ cloudConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
-        
-        int rainConfigId = rootView.getResources().getIdentifier(
-                "rain_"+ rainConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
+        int rainConfigId = 0;
+
+        if( displayData.getWeatherPredominant() != null  &&  displayData.getWeatherPredominant().getWeather_type() != null  ) {            
+            if( displayData.getWeatherPredominant().getWeather_type().contains("rain") ) {
+                 rainConfigId = rootView.getResources().getIdentifier(
+                         "rain_"+ rainConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");            
+             } else if( displayData.getWeatherPredominant().getWeather_type().contains("snow") ) {
+                 rainConfigId = rootView.getResources().getIdentifier(
+                         "snow_"+ rainConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
+             }
+        }
+            
         
         Drawable[] layers = new Drawable[2];  // Used to combine cloud and rain.
 
@@ -402,6 +399,22 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         return rootView;
     }
 
+
+    private boolean checkIfClear() {
+        boolean isClear = false;
+        if(displayData.getCloudAmount() != null  ) {
+            try { 
+                int cloudAmountWx = Integer.parseInt(displayData.getCloudAmount().getValue());
+                if(cloudAmountWx < 25)
+                    isClear = true;
+            } catch(NumberFormatException  nfe) {
+                Log.e("DisplayWeatherInfoAccessPageFragment.checkIfClear", "Clound Amount for Wx clear prediction number parse error.");
+            }                
+        }
+
+        return isClear;
+    }
+    
     
     private String getTemperatureValue(int temperature_in) {
         String temperatureRet = "";
