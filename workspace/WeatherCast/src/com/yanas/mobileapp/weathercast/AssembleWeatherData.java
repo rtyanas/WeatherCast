@@ -127,20 +127,21 @@ public class AssembleWeatherData {
 		
 		final int ONE_HOUR = 60 * 60 * 1000; // in milliseconds.
 		final long ONE_DAY = ONE_HOUR * 24;
+        long NUMBER_OF_DAYS = ONE_DAY * 5;
 		
 		if(useZipcode) {
 			weatherReq.setTheMeteorological(
 					// South Amboy 08879 //  Long Branch
 					zipcode,
 					ft.format(nowDate)+"00", 
-					ft.format(nowDate.getTime() + ONE_DAY * 3  /* add one hour */)+"00");			
+					ft.format(nowDate.getTime() + NUMBER_OF_DAYS  /* add one hour */)+"00");			
 		}
 		else {  // use lat/lon
 			weatherReq.setTheMeteorological(
 					// "40.4867", "-74.2790", // South Amboy  // "40.2954", "-73.9899",  Long Branch
 					latitude, longitude,
 					ft.format(nowDate)+"00", 
-					ft.format(nowDate.getTime() + ONE_DAY * 3  /* add one hour */)+"00");
+					ft.format(nowDate.getTime() + NUMBER_OF_DAYS  /* add one hour */)+"00");
 		}
 		WeatherDataParsed wdp = weatherData.getObservedPropertyMeteorological(
 				weatherReq, 
