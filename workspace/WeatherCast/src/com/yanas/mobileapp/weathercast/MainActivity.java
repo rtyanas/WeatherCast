@@ -116,6 +116,11 @@ public class MainActivity extends ListActivity
 				// Reset to get current location
 				sd = new StationSelected(this, CURRENT_LOCATION, "", "");
 				first = false;
+				
+				// If the city is ot found then 
+				// do not update the first entry to the current city
+				if("".equals( sd.getCity() ) )
+				    continue;
 			}
 			
 			station = StringUtils.createStationRow(
@@ -374,7 +379,9 @@ public class MainActivity extends ListActivity
             stationList.add(new StationSingle("Buffalo", "NY", "14214"));
             stationList.add(new StationSingle("Cleveland", "OH", "44113"));
             stationList.add(new StationSingle("Charleston", "SC", "29412"));
+            stationList.add(new StationSingle("Chattanooga", "TN", "37408"));
             stationList.add(new StationSingle("Chicago", "IL", "43209"));
+            stationList.add(new StationSingle("Cincinnati", "OH", "45202"));
             stationList.add(new StationSingle("Columbia", "SC", "29205"));
             stationList.add(new StationSingle("Columbus", "OH", "43209"));
             stationList.add(new StationSingle("Dallas", "TX", "75241"));
@@ -384,6 +391,7 @@ public class MainActivity extends ListActivity
             stationList.add(new StationSingle("Fair Haven", "NJ", "07704"));
             stationList.add(new StationSingle("Fort Myers", "FL", "33901"));
             stationList.add(new StationSingle("Fort Wayne", "IN", "46809"));
+            stationList.add(new StationSingle("Harrisburg", "PA", "17103"));
             stationList.add(new StationSingle("Houston", "TX", "77001"));
             stationList.add(new StationSingle("Huntington", "WV", "77001"));
             stationList.add(new StationSingle("Idaho Falls", "ID", "83401"));
