@@ -16,20 +16,11 @@
 
 package com.yanas.mobileapp.weathercast;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.StreamCorruptedException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
-import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed;
 import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.DisplayData;
 import com.yanas.utils.StringUtils;
 
@@ -72,20 +63,9 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         DisplayWeatherInfoAccessPageFragment fragment = new DisplayWeatherInfoAccessPageFragment();
         Bundle args = new Bundle();
         
-     // Serialize data object to a byte array
-        ByteArrayOutputStream bos = new ByteArrayOutputStream() ;
-        ObjectOutputStream out;
-		try {
-			out = new ObjectOutputStream(bos);
-			out.writeObject(dataSelected_in);
-	        out.close();
-	        args.putByteArray(STATIONDATA_DATETIME_ARG, bos.toByteArray());
-	        fragment.setArguments(args);
-		} catch (IOException e) {
-			Log.e("DisplayWeatherInfoAccessPageFragment", "create, "+ e.getMessage());
-			e.printStackTrace();
-		}
-        
+        args.putSerializable(STATIONDATA_DATETIME_ARG, dataSelected_in);
+        fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -98,32 +78,11 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         byte stationBA[] = null;
         
         if(getArguments() != null) {  // Get station data
-        	stationBA = getArguments().getByteArray(STATIONDATA_DATETIME_ARG);
+            displayData = (DisplayData) getArguments().getSerializable(STATIONDATA_DATETIME_ARG);
         }
         else {
         	Log.e("DisplayWeatherInfoAccessPageFragment", "getArguments() is null");
-        }
-        
-        if(stationBA != null) { // Translate from Serial back to StationData
-	        ByteArrayInputStream bin =  new ByteArrayInputStream (stationBA);
-	        
-	        try {
-				ObjectInputStream in = new ObjectInputStream(bin);
-				displayData = (DisplayData)in.readObject();
-			} catch (ClassNotFoundException e) {
-		        Log.e("DisplayWeatherInfoAccessPageFragment", e.getMessage());
-			} catch (StreamCorruptedException e) {
-		        Log.e("DisplayWeatherInfoAccessPageFragment", e.getMessage());
-			} catch (IOException e) {
-		        Log.e("DisplayWeatherInfoAccessPageFragment", e.getMessage());
-			}
-	        
-	        Log.d("DisplayWeatherInfoAccessPageFragment", displayData.toString());
-	        // stationData = getArguments().g.getStringArray(ARG_TEMP);
-        }
-        else {
-        	Log.e("DisplayWeatherInfoAccessPageFragment", "onCreate: stationBA is null");
-        }
+        }   
     }
 
     
@@ -132,14 +91,11 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-    	// bDisplayData dd = createTestDisplayData();
-        // Inflate the layout containing a title and body text.
+                                                Bundle savedInstanceState) {
+
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.display_weather_layout, container, false);
 
-        String comma = ", ";
-        
         // 2013-10-24T08:00:00-04:00
         SimpleDateFormat sdfInput = new SimpleDateFormat( // input parsing
         		"yyyy-MM-dd'T'HH:mm:ssZ", Locale.US);
@@ -278,6 +234,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         // Predicted predominant weather
         
         String wx = "";
+        String comma = ", ";
         
         if(displayData.getWeatherPredominant() != null) {
             String qual = displayData.getWeatherPredominant() == null ? "" : displayData.getWeatherPredominant().getQualifier();
