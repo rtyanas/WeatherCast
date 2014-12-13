@@ -390,8 +390,10 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
             temperatureRet = "3";  // Light Orange
         } else if(temperature_in <= 35 && temperature_in > 25 ) {
             temperatureRet = "2";  // Blue
-        } else if(temperature_in <= 25 ) {
+        } else if(temperature_in <= 25 && temperature_in > 15 ) {
             temperatureRet = "1";  // Snow flake
+        } else if(temperature_in <= 15 ) {
+            temperatureRet = "0";  // Frozen Thermometer
         }
 
         return temperatureRet;
