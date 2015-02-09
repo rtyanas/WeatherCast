@@ -103,10 +103,13 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         		"MMM d", Locale.US);
         SimpleDateFormat sdfSunCheck = new SimpleDateFormat( // output GUI
         		"HH", Locale.US);
+        SimpleDateFormat sdfMonth = new SimpleDateFormat( // output GUI
+                "MM", Locale.US);
         SimpleDateFormat sdfDayOfWeek = new SimpleDateFormat( // output GUI
         		"E", Locale.US);
         String todaysDate = "Today's Date and Time";
-        Integer hour = 0;
+        Integer hour  = 0;
+        Integer month = 0;
         String dayOfWeek = "Day of week";
         
         // This date used to calculate the day and date in header and for moon phase
@@ -115,7 +118,8 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
             dateOfData = sdfInput.parse(displayData.getTemperature().getPeriod());
 			Log.d("DisplayWeatherInfoAccessPageFragmnt", "Date: "+ dateOfData);
 			todaysDate = sdfDisplay.format(dateOfData);
-			hour = Integer.parseInt(sdfSunCheck.format(dateOfData));
+			hour  = Integer.parseInt(sdfSunCheck.format(dateOfData));
+            month = Integer.parseInt(sdfMonth.format(dateOfData));
 			dayOfWeek = sdfDayOfWeek.format(dateOfData) +" "+ hour.toString() +":00";
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -284,7 +288,8 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         // Set icon for sun or moon
         int dayNightIcon; // get Resource
  
-        if(hour > 19  ||  hour <= 06 )
+        // Find sunrise - sunset times
+        if( isMoonRise(month, hour) )
             dayNightIcon = getCurrentMoonPhaseResource(dateOfData);
         else
             dayNightIcon = R.drawable.sun;
@@ -323,12 +328,15 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         int rainConfigId = 0;
 
         if( displayData.getWeatherPredominant() != null  &&  displayData.getWeatherPredominant().getWeather_type() != null  ) {            
-            if( displayData.getWeatherPredominant().getWeather_type().contains("rain") ) {
+            if( displayData.getWeatherPredominant().getWeather_type().contains("freezing") ) {
                  rainConfigId = rootView.getResources().getIdentifier(
-                         "rain_"+ rainConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");            
+                         "icey_"+ rainConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast"); 
              } else if( displayData.getWeatherPredominant().getWeather_type().contains("snow") ) {
                  rainConfigId = rootView.getResources().getIdentifier(
                          "snow_"+ rainConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
+             } else if( displayData.getWeatherPredominant().getWeather_type().contains("rain") ) {
+                     rainConfigId = rootView.getResources().getIdentifier(
+                             "rain_"+ rainConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast"); 
              }
         }
             
@@ -370,6 +378,62 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         }
 
         return isClear;
+    }
+    
+    
+    /**
+     * Return if it is night depending on the month
+     * Month     Sunset   Sunrise
+     * January   17pm      7am
+     * February  18pm      7am 
+     * March     19pm      7am
+     * April     20pm      6am
+     * May       20pm      6am
+     * June      21pm      5am
+     * July      20pm      6am
+     * August    20pm      6am
+     * September 19pm      7am
+     * October   18pm      7am
+     * November  17pm      7am
+     * December  17pm      7am
+     * 
+     * @param hour
+     * @return
+     */
+    private boolean isMoonRise(int month, int hour) {
+        boolean isNight = false;
+
+        Log.d("isMoonRise", "Month: "+ month +", hour: "+ hour);
+        
+        if(month == 1)
+            isNight = (hour > 17 || hour <= 7);
+        else if(month == 2)
+            isNight = (hour > 18 || hour <= 7);
+        else if(month == 3)
+            isNight = (hour > 19 || hour <= 7);
+        else if(month == 4)
+            isNight = (hour > 20 || hour <= 6);
+        else if(month == 5)
+            isNight = (hour > 20 || hour <= 6);
+        else if(month == 6)
+            isNight = (hour > 21 || hour <= 5);
+        else if(month == 7)
+            isNight = (hour > 20 || hour <= 6);
+        else if(month == 8)
+            isNight = (hour > 20 || hour <= 6);
+        else if(month == 9)
+            isNight = (hour > 19 || hour <= 7);
+        else if(month == 10)
+            isNight = (hour > 18 || hour <= 7);
+        else if(month == 11)
+            isNight = (hour > 17 || hour <= 7);
+        else if(month == 12)
+            isNight = (hour > 17 || hour <= 7);
+        else
+            isNight = (hour > 19 || hour <= 7);  // Default to March / September
+
+            
+        return isNight;
     }
     
     
