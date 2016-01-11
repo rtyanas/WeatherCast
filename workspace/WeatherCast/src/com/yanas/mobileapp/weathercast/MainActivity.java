@@ -216,15 +216,10 @@ public class MainActivity extends ListActivity
         String stationData[] = item.split(",");
         int ZIPCODE = 2;
         if(stationData.length >= 3) {
-            boolean isZip = true, isInternet = true;
-            if( (isZip = "".equals(stationData[ZIPCODE]) ) ) {
-                isZipCodeOK = false;
-                
-                if( ! isZip)
-                    error = "Sorry, zip code is required.";
-                
+            if( ("".equals(stationData[ZIPCODE]) ) ) {
+                isZipCodeOK = false;                
+                error = "Sorry, zip code is required.";
                 Log.e("MainActivity", "Zipcode invalid");
-                
             }
         }
         else if(stationData.length < 3) {
