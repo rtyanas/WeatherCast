@@ -2,4 +2,6 @@ workspace/.metadata
 workspace/WeatherCast/bin
 *.class
 *.log
+*.ap_
+classes.dex
 Thumbs.db
