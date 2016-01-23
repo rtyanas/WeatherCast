@@ -54,7 +54,8 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
      * The fragment's page number, which is set to the argument value for {@link #ARG_PAGE}.
      */
     private int mPageNumber;
-	DisplayData displayData;
+	WeatherDataControl weatherControl;
+    DisplayData displayData;
 
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
@@ -79,10 +80,10 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         
         if(getArguments() != null) {  // Get station data
             displayData = (DisplayData) getArguments().getSerializable(STATIONDATA_DATETIME_ARG);
-        }
-        else {
+            weatherControl = new WeatherDataControl(displayData);
+        } else {
         	Log.e("DisplayWeatherInfoAccessPageFragment", "getArguments() is null");
-        }   
+        }
     }
 
     
@@ -114,40 +115,31 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         
         // This date used to calculate the day and date in header and for moon phase
         Date dateOfData = new Date();
-        try {
-            dateOfData = sdfInput.parse(displayData.getTemperature().getPeriod());
-			Log.d("DisplayWeatherInfoAccessPageFragmnt", "Date: "+ dateOfData);
-			todaysDate = sdfDisplay.format(dateOfData);
-			hour  = Integer.parseInt(sdfSunCheck.format(dateOfData));
+        dateOfData = weatherControl.getDateOfData();
+        if(dateOfData != null) {
+            Log.d("DisplayWeatherInfoAccessPageFragmnt", "Date: "+ dateOfData);
+            todaysDate = sdfDisplay.format(dateOfData);
+            hour  = Integer.parseInt(sdfSunCheck.format(dateOfData));
             month = Integer.parseInt(sdfMonth.format(dateOfData));
-			dayOfWeek = sdfDayOfWeek.format(dateOfData) +" "+ hour.toString() +":00";
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+            dayOfWeek = sdfDayOfWeek.format(dateOfData) +" "+ hour.toString() +":00";
+        }
+        else {
+            return null;
+        }
         
         // Set the title view to show city and date/time
         ((TextView) rootView.findViewById(R.id.date_time)).setText(todaysDate); // + " "+ dateTime[0] +" ~ "+ dateTime[1].split("-")[0]);
 
         // Set the title view to show city and date/time
         ((TextView) rootView.findViewById(R.id.city_zip)).setText(
-                StringUtils.createStationRow(displayData.getCity(), 
-                        displayData.getState(), 
-                        displayData.getZipcode()));
+                StringUtils.createStationRow(weatherControl.getCity(), 
+                        weatherControl.getState(), 
+                        weatherControl.getZipcode()));
 
         // Temperature
-        String temperatureIconStr = "Not Avail";
-        if(displayData.getTemperature() != null ) {
-            try {
-                temperatureIconStr = 
-                        getTemperatureValue(Integer.parseInt(displayData.getTemperature().getValue()) );      
-            } catch(NumberFormatException nfe) {
-                if(GlobalSettings.display_weatherInfo_access_pagefrag) 
-                    Log.e("DisplayWeatherInfoAccessPageFragment", "Temperature number parse error.");
-            }
-        }
-
         int temperatureId = rootView.getResources().getIdentifier(
-                "temp_guage"+ temperatureIconStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
+                "temp_guage"+ weatherControl.getTemperatureIconLevel().toLowerCase(), 
+                "drawable", "com.yanas.mobileapp.weathercast");
 
         if(temperatureId != 0) {
             ((ImageView) rootView.findViewById(
@@ -156,189 +148,86 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
                     R.id.temp_image)).setImageResource(temperatureId);
         }
         
-        ((TextView) rootView.findViewById(R.id.temp_hour)).setText(
-        		displayData.getTemperature().getValue() +" "+ 
-        		(displayData.getTemperature().getUnits().length() >= 1 ?
-        				displayData.getTemperature().getUnits() : "") );
+        ((TextView) rootView.findViewById(R.id.temp_hour)).setText( weatherControl.getTemperature() );
         		
-        String tMax = displayData.getTempMax() == null ? "Max Not Avail" :
-        	"Max "+displayData.getTempMax().getValue() +" "+ 
-         		   (displayData.getTempMax().getUnits().length() >= 1 ?
-         				  displayData.getTempMax().getUnits() : "");
-        ((TextView) rootView.findViewById(R.id.temp_max)).setText(tMax);
+        ((TextView) rootView.findViewById(R.id.temp_max)).setText(weatherControl.getTemperatureMax());
         		
-		String tMin = displayData.getTempMin() == null ? "Min Not Avail" :
-			"Min "+displayData.getTempMin().getValue() +" "+ 
-			(displayData.getTempMin().getUnits().length() >= 1 ?
-					displayData.getTempMin().getUnits() : "");
-        ((TextView) rootView.findViewById(R.id.temp_min)).setText(tMin);
-        		
+        ((TextView) rootView.findViewById(R.id.temp_min)).setText(weatherControl.getTemperatureMin());
+
         // Wind
-        String windIconStr = "Not Avail";
-        if(displayData.getWindSustained() != null ) {
-            try {
-                windIconStr = 
-                        getWindValue(Integer.parseInt(displayData.getWindSustained().getValue()) );      
-            } catch(NumberFormatException nfe) {
-                if(GlobalSettings.display_weatherInfo_access_pagefrag) 
-                    Log.e("DisplayWeatherInfoAccessPageFragment", "Wind number parse error.");
-            }
-        }
+        ((TextView) rootView.findViewById(R.id.wind_sustained)).setText( weatherControl.getWindSustained() );
 
         int windId = rootView.getResources().getIdentifier(
-                "sailing_wind"+ windIconStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
+                "sailing_wind"+ weatherControl.getWindIconLevel().toLowerCase(), 
+                "drawable", "com.yanas.mobileapp.weathercast");
 
         if(windId != 0) {
             ((ImageView) rootView.findViewById(
                     R.id.wind_image)).setImageResource(windId);
         }
         
-        String wSus = displayData.getWindSustained() == null ? "Wind Not Avail" :
-        		"Wind "+displayData.getWindSustained().getValue() +" "+ 
-                  	    displayData.getWindSustained().getUnits();
-        ((TextView) rootView.findViewById(R.id.wind_sustained)).setText( wSus );
+        int windDirId = rootView.getResources().getIdentifier(
+                "wind_dir_"+ weatherControl.getCompassDir().toLowerCase() +"_50", 
+                "drawable", "com.yanas.mobileapp.weathercast");
 
-        String compassDir = "Not Avail";
-        if(displayData.getWindDirection() != null ) {
-        	try {
-        		compassDir = 
-        				getRoseValue(Integer.parseInt(displayData.getWindDirection().getValue()));
-        		
-        	} catch(NumberFormatException nfe) {
-        		if(GlobalSettings.display_weatherInfo_access_pagefrag) 
-        			Log.e("DisplayWeatherInfoAccessPageFragment", "Wind direction number parse error.");
-        	}
+        if(windDirId != 0) {
+            ((ImageView) rootView.findViewById(
+                    R.id.compass_dir_image)).setImageResource(windDirId);
         }
-
-        String wDir = displayData.getWindDirection() == null ? "Direction Not Avail" :
-        		"Direction "+displayData.getWindDirection().getValue() +" "+ 
-                   	         displayData.getWindDirection().getUnits();
-        // ((TextView) rootView.findViewById(R.id.wind_direction)).setText(wDir );
-        		
-        String wGust = displayData.getWindGust() == null ? "Gust Not Avail" :
-        		"Gust "+displayData.getWindGust().getValue() +" "+ 
-                   	    displayData.getWindGust().getUnits();
-        ((TextView) rootView.findViewById(R.id.wind_gust)).setText( wGust );
-        		
-        String pop = displayData.getPropPrecip12() == null ? "POP Not Available" :
-        		displayData.getPropPrecip12().getValue() +
-        		displayData.getPropPrecip12().getUnits() +
-        		" Precip" 
-                   	   ;
-        ((TextView) rootView.findViewById(R.id.pop)).setText(pop );
         
-        String cloudAmount = displayData.getCloudAmount() == null ? "Cloud Coverage Not Available" :
-    		displayData.getCloudAmount().getValue() +
-    		displayData.getCloudAmount().getUnits() +
-    		" Cloud Cover ";
-        ((TextView) rootView.findViewById(R.id.cloudAmount)).setText(cloudAmount );
-    
-        // ((ImageView) rootView.findViewById(R.id.weather_predominant_icon)).setImageResource(dayNightIcon);        
+
+        ((TextView) rootView.findViewById(R.id.compass_direction)).setText( weatherControl.getCompassDir() );
+
+        ((TextView) rootView.findViewById(R.id.wind_gust)).setText( weatherControl.getWindGust() );
+
+        // ((TextView) rootView.findViewById(R.id.wind_direction)).setText(weatherControl.getWindDir() );
         		
+        ((TextView) rootView.findViewById(R.id.pop)).setText(weatherControl.getPop() );
+        
+        ((TextView) rootView.findViewById(R.id.cloudAmount)).setText(weatherControl.getCloudAmount() );
+    
         // Predicted predominant weather
         
-        String wx = "";
-        String comma = ", ";
-        
-        if(displayData.getWeatherPredominant() != null) {
-            String qual = displayData.getWeatherPredominant() == null ? "" : displayData.getWeatherPredominant().getQualifier();
-            String intensity = displayData.getWeatherPredominant().getIntensity() == null ? "" : displayData.getWeatherPredominant().getIntensity();
-            String weatherType = displayData.getWeatherPredominant().getWeather_type() == null ? "" : displayData.getWeatherPredominant().getWeather_type();
-            String coverage = displayData.getWeatherPredominant().getCoverage() == null ? "" : displayData.getWeatherPredominant().getCoverage();
-            
-            qual = qual.equals("none") ? "" : qual;
-
-            if(intensity.equals("none")) {
-                wx = "Slight chance of "+ weatherType;
-            }            
-            else if( ( ! "".equals(coverage) ) && ( ! "".equals(intensity) ) && 
-                    ( ! "".equals(weatherType) ) ) {
-                wx =  coverage +", "+ intensity +", "+
-                        weatherType  + (qual.equals("") ? "" : comma) + 
-                        qual;
-            } else if(checkIfClear()  ) {
-                wx = "Clear";
-            }
-        } else {
-            if(checkIfClear()  ) {
-                wx = "Clear";
-            }
-        }
-
-        ((TextView) rootView.findViewById(R.id.weather_predominant_amount)).setText(wx);
+        ((TextView) rootView.findViewById(R.id.weather_predominant_amount)).setText(weatherControl.getPredominantWx());
         // .getCoverage() +","+ w.getIntensity() +","+ 
 	    // w.getWeather_type() +","+ w.getQualifier()
         		
-        ((TextView) rootView.findViewById(R.id.sailingExperience)).setText( estimatedSailingExperience(displayData) );
+        ((TextView) rootView.findViewById(R.id.sailingExperience)).setText( weatherControl.estimatedSailingExperience() );
 
         ((TextView) rootView.findViewById(R.id.day_of_week)).setText( dayOfWeek );
         
-        ((TextView) rootView.findViewById(R.id.compass_direction)).setText( compassDir );
-
-        int windDirId = rootView.getResources().getIdentifier(
-        		"wind_dir_"+ compassDir.toLowerCase() +"_50", "drawable", "com.yanas.mobileapp.weathercast");
-
-        if(windDirId != 0) {
-	        ((ImageView) rootView.findViewById(
-	        		R.id.compass_dir_image)).setImageResource(windDirId);
-        }
-		
         // Add - Sun/Moon/clouds/rain
 
         // Set icon for sun or moon
         int dayNightIcon; // get Resource
  
         // Find sunrise - sunset times
-        if( isMoonRise(month, hour) )
-            dayNightIcon = getCurrentMoonPhaseResource(dateOfData);
+        if( weatherControl.isMoonRising() )
+            dayNightIcon = weatherControl.getCurrentMoonPhaseResource();
         else
             dayNightIcon = R.drawable.sun;
         
         ((ImageView) rootView.findViewById(R.id.weather_predominant)).setBackgroundResource(dayNightIcon);
 
         // Cloud amount; how many clouds
-        String cloudConfigStr = "Not Avail";
-        if(displayData.getCloudAmount() != null ) {
-            try {
-                cloudConfigStr = 
-                        getCloudConfigValue(Integer.parseInt(displayData.getCloudAmount().getValue()));
-                
-            } catch(NumberFormatException nfe) {
-                if(GlobalSettings.display_weatherInfo_access_pagefrag) 
-                    Log.e("DisplayWeatherInfoAccessPageFragment", "Wind direction number parse error.");
-            }
-        }
-        
         int cloudConfigId = rootView.getResources().getIdentifier(
-                "cloud_"+ cloudConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
+                "cloud_"+ weatherControl.getCloudLevel().toLowerCase(), 
+                "drawable", "com.yanas.mobileapp.weathercast");
 
         // Precipitation amount; amount of rain or snow
-        String rainConfigStr = "Not Avail";
-        if(displayData.getPropPrecip12() != null ) {
-            try {
-                rainConfigStr = 
-                        getRainConfigValue(Integer.parseInt(displayData.getPropPrecip12().getValue()));
-                
-            } catch(NumberFormatException nfe) {
-                if(GlobalSettings.display_weatherInfo_access_pagefrag) 
-                    Log.e("DisplayWeatherInfoAccessPageFragment", "Wind direction number parse error.");
-            }
-        }
         
         int rainConfigId = 0;
 
-        if( displayData.getWeatherPredominant() != null  &&  displayData.getWeatherPredominant().getWeather_type() != null  ) {            
-            if( displayData.getWeatherPredominant().getWeather_type().contains("freezing") ) {
+        if( weatherControl.getPredominantWxType().contains("freezing") ) {
+             rainConfigId = rootView.getResources().getIdentifier(
+                     "icey_"+ weatherControl.getRainSnowIceLevel().toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast"); 
+         } else if( weatherControl.getPredominantWxType().contains("snow") ) {
+             rainConfigId = rootView.getResources().getIdentifier(
+                     "snow_"+ weatherControl.getRainSnowIceLevel().toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
+         } else if( weatherControl.getPredominantWxType().contains("rain") ) {
                  rainConfigId = rootView.getResources().getIdentifier(
-                         "icey_"+ rainConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast"); 
-             } else if( displayData.getWeatherPredominant().getWeather_type().contains("snow") ) {
-                 rainConfigId = rootView.getResources().getIdentifier(
-                         "snow_"+ rainConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
-             } else if( displayData.getWeatherPredominant().getWeather_type().contains("rain") ) {
-                     rainConfigId = rootView.getResources().getIdentifier(
-                             "rain_"+ rainConfigStr.toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast"); 
-             }
-        }
+                     "rain_"+ weatherControl.getRainSnowIceLevel().toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast"); 
+         }
             
         
         Drawable[] layers = new Drawable[2];  // Used to combine cloud and rain.
@@ -381,375 +270,9 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
     }
     
     
-    /**
-     * Return if it is night depending on the month
-     * Month     Sunset   Sunrise
-     * January   17pm      7am
-     * February  18pm      7am 
-     * March     19pm      7am
-     * April     20pm      6am
-     * May       20pm      6am
-     * June      21pm      5am
-     * July      20pm      6am
-     * August    20pm      6am
-     * September 19pm      7am
-     * October   18pm      7am
-     * November  17pm      7am
-     * December  17pm      7am
-     * 
-     * @param hour
-     * @return
-     */
-    private boolean isMoonRise(int month, int hour) {
-        boolean isNight = false;
-
-        Log.d("isMoonRise", "Month: "+ month +", hour: "+ hour);
-        
-        if(month == 1)
-            isNight = (hour > 17 || hour <= 7);
-        else if(month == 2)
-            isNight = (hour > 18 || hour <= 7);
-        else if(month == 3)
-            isNight = (hour > 19 || hour <= 7);
-        else if(month == 4)
-            isNight = (hour > 20 || hour <= 6);
-        else if(month == 5)
-            isNight = (hour > 20 || hour <= 6);
-        else if(month == 6)
-            isNight = (hour > 21 || hour <= 5);
-        else if(month == 7)
-            isNight = (hour > 20 || hour <= 6);
-        else if(month == 8)
-            isNight = (hour > 20 || hour <= 6);
-        else if(month == 9)
-            isNight = (hour > 19 || hour <= 7);
-        else if(month == 10)
-            isNight = (hour > 18 || hour <= 7);
-        else if(month == 11)
-            isNight = (hour > 17 || hour <= 7);
-        else if(month == 12)
-            isNight = (hour > 17 || hour <= 7);
-        else
-            isNight = (hour > 19 || hour <= 7);  // Default to March / September
-
-            
-        return isNight;
-    }
-    
-    
-    private String getTemperatureValue(int temperature_in) {
-        String temperatureRet = "";
-        
-        if(temperature_in > 92) {
-            temperatureRet = "8";  // Explosion
-        } else if(temperature_in <= 92 && temperature_in > 85 ) {
-            temperatureRet = "7";  // Yellow center
-        } else if(temperature_in <= 85 && temperature_in > 78 ) {
-            temperatureRet = "6";  // Orange center
-        } else if(temperature_in <= 78 && temperature_in > 65 ) {
-            temperatureRet = "5";  // Red / orange
-        } else if(temperature_in <= 65 && temperature_in > 50 ) {
-            temperatureRet = "4";  // Orange
-        } else if(temperature_in <= 50 && temperature_in > 35 ) {
-            temperatureRet = "3";  // Light Orange
-        } else if(temperature_in <= 35 && temperature_in > 25 ) {
-            temperatureRet = "2";  // Blue
-        } else if(temperature_in <= 25 && temperature_in > 15 ) {
-            temperatureRet = "1";  // Snow flake
-        } else if(temperature_in <= 15 ) {
-            temperatureRet = "0";  // Frozen Thermometer
-        }
-
-        return temperatureRet;
-    }
-    
-    
-    private String getWindValue(int windKts_in ) {
-        String windLevel = "";
-        
-        if(windKts_in < 3) {
-            windLevel = "1";
-        } else if(windKts_in >= 3 && windKts_in < 6 ) {
-            windLevel = "2";
-        } else if(windKts_in >= 6 && windKts_in < 15 ) {
-            windLevel = "3";
-        } else if(windKts_in >= 15 ) {
-            windLevel = "4";
-        }
-        
-        return windLevel;
-    }
-    
-    
-    private String estimatedSailingExperience(DisplayData displayData) {
-    	StringBuffer sailingEx = new StringBuffer();
-    	int wSus = -1;
-    	int wGust = -1;
-    	int temp = -100;
-    	int pop = -1;
-    	
-    	try {wSus = displayData.getWindSustained() != null ? Integer.parseInt(displayData.getWindSustained().getValue() ) : -1; }
-    	catch (NumberFormatException nfe) {};
-    	try {wGust = displayData.getWindGust() != null ? Integer.parseInt(displayData.getWindGust().getValue() ) : -1 ; }
-    	catch (NumberFormatException nfe) {};
-    	try {temp = displayData.getTemperature() != null ? Integer.parseInt(displayData.getTemperature().getValue() ) : -100; }
-    	catch (NumberFormatException nfe) {};
-    	try {pop = displayData.getPropPrecip12() != null ? Integer.parseInt(displayData.getPropPrecip12().getValue() ) : -1; }
-    	catch (NumberFormatException nfe) {};
-    	
-    	if(wSus < 0 )
-    		sailingEx.append("No wind info ");
-    	else if(wSus >= 0 && wSus < 8 )
-    		sailingEx.append("Light winds ");
-    	else if(wSus >= 8 && wSus < 18 )
-    		sailingEx.append("Good winds ");
-    	else if(wSus >= 18 && wSus < 20 )
-    		sailingEx.append("Strong winds ");
-    	else if(wSus >= 20 && wSus < 25 )
-    		sailingEx.append("Very strong winds - ** Reef ** ");
-    	else if(wSus >= 25)
-    		sailingEx.append("Big storm! - ** motor home ** ");
-    	
-    	if(wGust < 0)
-    		sailingEx.append("No gust info ");
-    	if(wGust >= 0 && wGust < 8 )
-    		sailingEx.append("Light gusts ");
-    	else if(wGust >= 8 && wGust < 18)
-    		sailingEx.append("Medium gusts ");
-    	else if(wGust >= 18 && wGust < 20)
-    		sailingEx.append("Strong gusts ");
-    	else if(wGust >= 20 && wGust < 25)
-    		sailingEx.append("Very strong gusts ");
-    	else if(wGust >= 25 )
-    		sailingEx.append("Definetely reef - gusts ");
-    	
-    	if(temp < -99)
-    		sailingEx.append("Temps not available ");
-    	else if(temp < 50 )
-    		sailingEx.append("Get a parka ");
-    	else if(temp >= 50 && temp < 65 )
-    		sailingEx.append("Temperature is cold ");
-    	else if(temp >= 65 && temp < 72 )
-    		sailingEx.append("Temperature is chilly ");
-    	else if(temp >= 72  && temp < 85 )
-    		sailingEx.append("Temperature is nice ");
-    	else if(temp >= 85  && temp < 90 )
-    		sailingEx.append("Temperature is warm ");
-    	else if(temp >= 90  )
-    		sailingEx.append("Temperature is hot, look for wind ");
-    	
-    	if(pop < 0)
-    		sailingEx.append("Prop precip not available ");
-    	else if(pop < 10 )
-    		sailingEx.append("No rain ");
-    	else if(pop >= 10 && pop < 30 )
-    		sailingEx.append("Maybe some rain ");
-    	else if(pop >= 30 && pop < 50 )
-    		sailingEx.append("Might rain ");
-    	else if(pop >= 50  && pop < 75 )
-    		sailingEx.append("Good chance of rain ");
-    	else if(pop >= 75 )
-    		sailingEx.append("Looks like rain! ");
-    	
-    	return sailingEx.toString();
-    }
-    
-    
-    public String getRoseValue(int direction) {
-    	String roseVal = "Not Avail";
-    	int N = 360, NNE = 22,  NE = 45,  ENE = 67;
-    	int E = 90,  ESE = 111, SE = 135, SSE = 157;
-    	int S = 180, SSW = 202, SW = 225, WSW = 247;
-    	int W = 270, WNW = 292, NW = 315, NNW = 337;
-    	int variance = 11;
-
-    	
-    	if( direction <= variance )
-    		roseVal = "N";
-    	else if(inRange(direction, N, variance) )
-    		roseVal = "N";
-    	else if(inRange(direction, NNE, variance) )
-    		roseVal = "NNE";
-    	else if(inRange(direction, NE, variance) )
-    		roseVal = "NE";
-    	else if(inRange(direction, ENE, variance) )
-    		roseVal = "ENE";
-    	else if(inRange(direction, E, variance) )
-    		roseVal = "E";
-    	else if(inRange(direction, ESE, variance) )
-    		roseVal = "ESE";
-    	else if(inRange(direction, SE, variance) )
-    		roseVal = "SE";
-    	else if(inRange(direction, SSE, variance) )
-    		roseVal = "SSE";
-    	else if(inRange(direction, S, variance) )
-    		roseVal = "S";
-    	else if(inRange(direction, SSW, variance) )
-    		roseVal = "SSW";
-    	else if(inRange(direction, SW, variance) )
-    		roseVal = "SW";
-    	else if(inRange(direction, WSW, variance) )
-    		roseVal = "WSW";
-    	else if(inRange(direction, W, variance) )
-    		roseVal = "W";
-    	else if(inRange(direction, WNW, variance) )
-    		roseVal = "WNW";
-    	else if(inRange(direction, NW, variance) )
-    		roseVal = "NW";
-    	else if(inRange(direction, NNW, variance) )
-    		roseVal = "NNW";
-    	else
-    		roseVal = "NESW";
-    	
-    	return roseVal;
-    }
-    
-    
-    public boolean inRange(int direction_in, int compassDir, int variance) {
-    	if( direction_in >= (compassDir - variance)  &&   direction_in <= (compassDir + variance))
-    		return true;
-    		
-    	return false;	
-    }
-    
     final long dayInMilli = (60000 * 60 * 24);
     final double moonPhase = 29.5305888610;
     
-    private int getCurrentMoonPhase(Date dateOfData_in) {
-        int phaseValue = 0; // new = 0 ... full = 8
-        // SimpleDateFormat sdfJan2014 = new SimpleDateFormat("yyyy MMM dd HH:mm:s.S"); 
-        Date Jan2014Date = new Date();
-
-        try {
-            SimpleDateFormat sdfJan2014 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ"); // 2014-10-10T08:00:00-04:00
-            Jan2014Date = sdfJan2014.parse("2014-01-01T11:14:00-04:00"); 
-            long daysDiff = (dateOfData_in.getTime() - Jan2014Date.getTime()) / dayInMilli;
-            Log.d("DisplayWeatherAccessPageFragment:getCurrentMoonPhase()",
-                    "days Diff: "+ daysDiff 
-                    +", phase pre number: "+ daysDiff % moonPhase );
-
-            switch( (int) (daysDiff % moonPhase)) {
-            case  0: phaseValue = 0; break; 
-            case  1: phaseValue = 0; break; 
-            case  2: phaseValue = 1; break; 
-            case  3: phaseValue = 1; break; 
-            case  4: phaseValue = 2; break; 
-            case  5: phaseValue = 2; break; 
-            case  6: phaseValue = 3; break; 
-            case  7: phaseValue = 3; break; 
-            case  8: phaseValue = 4; break; 
-            case  9: phaseValue = 4; break; 
-            case 10: phaseValue = 5; break; 
-            case 11: phaseValue = 5; break; 
-            case 12: phaseValue = 6; break; 
-            case 13: phaseValue = 7; break; 
-            case 14: phaseValue = 8; break; 
-            case 15: phaseValue = 8; break;
-            case 16: phaseValue = 8; break;
-            case 17: phaseValue = 9; break;
-            case 18: phaseValue = 9; break;
-            case 19: phaseValue = 10; break;
-            case 20: phaseValue = 10; break;
-            case 21: phaseValue = 11; break;
-            case 22: phaseValue = 11; break;
-            case 23: phaseValue = 12; break;
-            case 24: phaseValue = 13; break;
-            case 25: phaseValue = 13; break;
-            case 26: phaseValue = 14; break;
-            case 27: phaseValue = 14; break;
-            case 28: phaseValue = 15; break;
-            case 29: phaseValue = 15; break;
-            case 30: phaseValue = 15; break;
-            }
-        } catch (IllegalArgumentException e) {
-            Log.e("DisplayWeatherAccessPageFragment:getCurrentMoonPhase()", e.getMessage());
-        } catch (ParseException e) {
-            Log.e("DisplayWeatherAccessPageFragment:getCurrentMoonPhase()", e.getMessage());
-        }
-        
-        return phaseValue;
-    }
-    
-    
-    private int getCurrentMoonPhaseResource(Date date) {
-        int moonResource = R.drawable.moon08_full;
-
-        int phaseValue = getCurrentMoonPhase(date);
-        
-        switch(phaseValue) {
-        case 0:  moonResource = R.drawable.moon00_new; break;
-        case 1:  moonResource = R.drawable.moon01_1_8waxing; break;
-        case 2:  moonResource = R.drawable.moon02_1_4waxing; break;
-        case 3:  moonResource = R.drawable.moon03_3_8waxing; break;
-        case 4:  moonResource = R.drawable.moon04_1_2waxing; break;
-        case 5:  moonResource = R.drawable.moon05_5_8waxing; break;
-        case 6:  moonResource = R.drawable.moon06_3_4waxing; break;
-        case 7:  moonResource = R.drawable.moon07_7_8waxing; break;
-        case 8:  moonResource = R.drawable.moon08_full; break;
-        case 9:  moonResource = R.drawable.moon09_7_8; break;
-        case 10: moonResource = R.drawable.moon10_3_4; break;
-        case 11: moonResource = R.drawable.moon11_5_8; break;
-        case 12: moonResource = R.drawable.moon12_1_2; break;
-        case 13: moonResource = R.drawable.moon13_3_8; break;
-        case 14: moonResource = R.drawable.moon14_1_4; break;
-        case 15: moonResource = R.drawable.moon15_1_8; break;
-        }
-        
-        return moonResource;
-    }
-
-    /**
-     * Pass percent of clouds, return the cloud configuration from no clouds to 
-     * partly to mostly to 100%
-     * @param cloudPerc
-     * @return
-     */
-    public String getCloudConfigValue(int cloudPerc) {
-        String cloudConfig = null;
-        int light = 10, med_light = 25, med = 40;
-        int med_heavy = 60, heavy_light = 72, heavy = 90; 
-                
-        if(cloudPerc < light) {
-            cloudConfig = "noclouds";
-        }
-        else if(cloudPerc >= light && cloudPerc < med_light ) {
-            cloudConfig = "light";
-        }
-        else if(cloudPerc >= med_light && cloudPerc < med ) {
-            cloudConfig = "med_light";
-        }
-        else if(cloudPerc >= med && cloudPerc < med_heavy ) {
-            cloudConfig = "med";
-        }
-        else if(cloudPerc >= med_heavy && cloudPerc < heavy_light ) {
-            cloudConfig = "med_heavy";
-        }
-        else if(cloudPerc >= heavy_light && cloudPerc < heavy ) {
-            cloudConfig = "heavy";
-        }
-        else if(cloudPerc >= heavy_light ) {
-            cloudConfig = "obscure";
-        }
-        
-        return cloudConfig;
-    }
-    
-    public String getRainConfigValue(int probPrecip) {
-        String rainConfigRet = "";
-        int light = 15, med = 30, med_heavy = 60, heavy = 75;
-        
-        if(probPrecip > light && probPrecip < med)
-            rainConfigRet = "light";
-        else if(probPrecip >= med && probPrecip < med_heavy)
-            rainConfigRet = "med_light";
-        else if(probPrecip >= med_heavy && probPrecip < heavy)
-            rainConfigRet = "med_heavy";
-        else if(probPrecip >= heavy)
-            rainConfigRet = "heavy";
-        
-        return rainConfigRet;
-    }
-
     /**
      * Returns the page number represented by this fragment object.
      */
