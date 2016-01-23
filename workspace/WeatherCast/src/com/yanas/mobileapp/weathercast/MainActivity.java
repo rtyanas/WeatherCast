@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
+import com.yanas.mobileapp.weathercast.SettingsWeather.PanelSelectionEnum;
 import com.yanas.mobileapp.weathercast.datastore.CityListDbData;
 import com.yanas.mobileapp.weathercast.datastore.CityListDbHelper;
 import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed;
@@ -62,6 +63,7 @@ public class MainActivity extends ListActivity
 	
 	protected Object mActionMode;
 	public int selectedItem = -1;
+	public static SettingsWeather settings;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,8 @@ public class MainActivity extends ListActivity
 		setContentView(R.layout.activity_station_list);
 
 //		setupActionBar();
+		
+		settings = new SettingsWeather();
 		
 		cityZipDbData = new CityListDbData(this);
 		cityZipDbData.open();
@@ -94,8 +98,6 @@ public class MainActivity extends ListActivity
         		view.setSelected(true);
         		return true;
         	}
-
-
         });
         
 	}
@@ -164,6 +166,7 @@ public class MainActivity extends ListActivity
 			//
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
+		
 		case R.id.action_settings:
 			if(GlobalSettings.main_activity) Log.d("MainActivity", "onOptionsItemSelected, settings menu option selected");
 			Intent intent = new Intent(this, NewStationActivity.class);
@@ -171,6 +174,16 @@ public class MainActivity extends ListActivity
 
 			break;
 
+		case R.id.action_days_per_screen_1:
+            if(GlobalSettings.main_activity) Log.d("MainActivity", "onOptionsItemSelected, display one day per screen");
+            settings.setPanelSelect(PanelSelectionEnum.SINGLE_PANE);
+            break;
+			
+        case R.id.action_days_per_screen_4:
+            if(GlobalSettings.main_activity) Log.d("MainActivity", "onOptionsItemSelected, display four day per screen");
+            settings.setPanelSelect(PanelSelectionEnum.QUAD_PANE_ONLY_GRAPHICS);
+            break;
+            
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -324,14 +337,27 @@ public class MainActivity extends ListActivity
                 showValidateAlert(titleError, "Internet is not available.");
             }
             else {
-                // showValidateAlert("Weather Debug", "Internet is available. " + station_in);
-                Intent intent = new Intent(MainActivity.this, DisplayWeatherInfoActivity.class);
-                intent.putExtra(LOCATION_ID, station_in);
-                startActivity(intent);                            
+                Intent intent = null;
+
+                switch (MainActivity.settings.getPanelSelect() ) {
+                    case SINGLE_PANE :
+                        // showValidateAlert("Weather Debug", "Internet is available. Case Single Pane" + station_in);
+                        intent = new Intent(MainActivity.this, DisplayWeatherInfoActivity.class);
+                        
+                        intent.putExtra(LOCATION_ID, station_in);
+                        startActivity(intent);                            
+                        break;
+                        
+                    case QUAD_PANE_ONLY_GRAPHICS:
+                    
+                    case QUAD_PANE_ONLY_NUMBERS:
+                        showValidateAlert("Qad Days Feature Coming", "Please be patient.");
+                }
+                
             }
         }
         
-    }
+    } // ValidateInternetRunDisplayAsync
     
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
