@@ -26,5 +26,7 @@
     <string name="cancel">Cancel</string>
     <string name="delete_str">Delete</string>
     <string name="ok">OK</string>
-
+    <string name="action_days_per_screen">Days Per Screen</string>
+    <string name="action_days_per_screen_1">One Day Per Screen</string>
+    <string name="action_days_per_screen_4">Four Days Per Screen</string>
 </resources>
