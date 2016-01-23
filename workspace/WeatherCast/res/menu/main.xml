@@ -5,5 +5,18 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_settings"/>
-
+    <item android:id="@+id/action_days_per_screen"
+          android:title="@string/action_days_per_screen"
+          android:showAsAction="never" >
+          <menu>
+  
+            <item android:id="@+id/action_days_per_screen_1"
+                  android:title="@string/action_days_per_screen_1"
+                  android:showAsAction="never" />
+            <item android:id="@+id/action_days_per_screen_4"
+                  android:title="@string/action_days_per_screen_4"
+                  android:showAsAction="never" />
+            </menu>
+    </item>
+    
 </menu>
