@@ -49,12 +49,11 @@ public class WeatherData {
 	
 	
     WeatherDataParsed wdp = null;
-    DisplayWeatherInfoActivity dwThis;
 
-    public WeatherData(DisplayWeatherInfoActivity dwThis_in) {
-    	dwThis = dwThis_in;
+    public WeatherData() {
     }
     
+
 	/**
 	 * 
 	 * @param weatherReq

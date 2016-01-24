@@ -102,7 +102,10 @@ public final class R {
     }
     public static final class id {
         public static final int LabelSailingExp=0x7f080021;
-        public static final int action_search=0x7f080031;
+        public static final int action_days_per_screen=0x7f080031;
+        public static final int action_days_per_screen_1=0x7f080032;
+        public static final int action_days_per_screen_4=0x7f080033;
+        public static final int action_search=0x7f080034;
         public static final int action_settings=0x7f080030;
         public static final int article_fragment=0x7f080003;
         public static final int btncancel=0x7f08002c;
@@ -116,7 +119,7 @@ public final class R {
         public static final int compass_direction=0x7f08001b;
         public static final int date_time=0x7f080011;
         public static final int day_of_week=0x7f080012;
-        public static final int delete=0x7f080032;
+        public static final int delete=0x7f080035;
         public static final int done_button=0x7f08000e;
         public static final int headlines_fragment=0x7f080002;
         public static final int icon=0x7f08002e;
@@ -164,8 +167,9 @@ public final class R {
         public static final int display_weather_layout_backup_remove_when_not_needed=0x7f030007;
         public static final int display_weather_layout_horizontal=0x7f030008;
         public static final int display_weather_layout_vertical=0x7f030009;
-        public static final int progressdialog=0x7f03000a;
-        public static final int rowlayout=0x7f03000b;
+        public static final int display_weather_quad_graphic_layout=0x7f03000a;
+        public static final int progressdialog=0x7f03000b;
+        public static final int rowlayout=0x7f03000c;
     }
     public static final class menu {
         public static final int display_message=0x7f070000;
@@ -176,6 +180,9 @@ public final class R {
         public static final int station_list=0x7f070005;
     }
     public static final class string {
+        public static final int action_days_per_screen=0x7f050019;
+        public static final int action_days_per_screen_1=0x7f05001a;
+        public static final int action_days_per_screen_4=0x7f05001b;
         public static final int action_search=0x7f050006;
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;

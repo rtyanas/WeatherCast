@@ -60,7 +60,7 @@ public class AssembleWeatherData {
 	 * Get the data 
 	 * @return
 	 */
-	public WeatherDataParsed retrieveWeather(DisplayWeatherInfoActivity dwThis) {
+	public WeatherDataParsed retrieveWeather() {
 		int sizeRandom = 10;
 		
 		/* hard code station for Testing */
@@ -86,7 +86,7 @@ public class AssembleWeatherData {
 				station, "air_temperature", 
 				ftGmt.format(nowDate)+"00", ftGmt.format(nowDate)+"00");
 
-		WeatherData weatherData = new WeatherData(dwThis );
+		WeatherData weatherData = new WeatherData( );
 //		String temperature = weatherData.getObservedPropertyTide(weatherReq);
 //				
 //		if(pNums.matcher(temperature).find() )

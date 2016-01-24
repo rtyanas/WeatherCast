@@ -106,8 +106,7 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
 	    {
 	        AssembleWeatherData assembleWeatherData = new AssembleWeatherData(
 	                DisplayWeatherInfoActivity.this.location);
-	        WeatherDataParsed wdp = assembleWeatherData.retrieveWeather(
-	                DisplayWeatherInfoActivity.this);
+	        WeatherDataParsed wdp = assembleWeatherData.retrieveWeather();
 	        
 	        return wdp;
 	    }
