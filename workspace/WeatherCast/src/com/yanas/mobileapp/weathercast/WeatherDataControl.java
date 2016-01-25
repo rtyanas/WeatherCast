@@ -62,10 +62,18 @@ public class WeatherDataControl  {
             "E", Locale.US);
 
     String todaysDate = "Today's Date and Time";
+    public String getTodaysDate() {
+        return todaysDate;
+    }
+
     Integer hour  = 0;
     Integer month = 0;
     String dayOfWeek = "Day of week";
     
+    public String getDayOfWeek() {
+        return dayOfWeek;
+    }
+
     // This date used to calculate the day and date in header and for moon phase
     Date dateOfData = new Date();
     /**

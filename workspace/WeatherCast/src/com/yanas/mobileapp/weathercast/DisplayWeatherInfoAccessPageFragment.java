@@ -55,7 +55,6 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
      */
     private int mPageNumber;
 	WeatherDataControl weatherControl;
-    DisplayData displayData;
 
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
@@ -79,7 +78,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         byte stationBA[] = null;
         
         if(getArguments() != null) {  // Get station data
-            displayData = (DisplayData) getArguments().getSerializable(STATIONDATA_DATETIME_ARG);
+            DisplayData displayData = (DisplayData) getArguments().getSerializable(STATIONDATA_DATETIME_ARG);
             weatherControl = new WeatherDataControl(displayData);
         } else {
         	Log.e("DisplayWeatherInfoAccessPageFragment", "getArguments() is null");
@@ -97,38 +96,13 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.display_weather_layout, container, false);
 
-        // 2013-10-24T08:00:00-04:00
-        SimpleDateFormat sdfInput = new SimpleDateFormat( // input parsing
-        		"yyyy-MM-dd'T'HH:mm:ssZ", Locale.US);
-        SimpleDateFormat sdfDisplay = new SimpleDateFormat( // output GUI
-        		"MMM d", Locale.US);
-        SimpleDateFormat sdfSunCheck = new SimpleDateFormat( // output GUI
-        		"HH", Locale.US);
-        SimpleDateFormat sdfMonth = new SimpleDateFormat( // output GUI
-                "MM", Locale.US);
-        SimpleDateFormat sdfDayOfWeek = new SimpleDateFormat( // output GUI
-        		"E", Locale.US);
-        String todaysDate = "Today's Date and Time";
-        Integer hour  = 0;
-        Integer month = 0;
-        String dayOfWeek = "Day of week";
         
-        // This date used to calculate the day and date in header and for moon phase
-        Date dateOfData = new Date();
-        dateOfData = weatherControl.getDateOfData();
-        if(dateOfData != null) {
-            Log.d("DisplayWeatherInfoAccessPageFragmnt", "Date: "+ dateOfData);
-            todaysDate = sdfDisplay.format(dateOfData);
-            hour  = Integer.parseInt(sdfSunCheck.format(dateOfData));
-            month = Integer.parseInt(sdfMonth.format(dateOfData));
-            dayOfWeek = sdfDayOfWeek.format(dateOfData) +" "+ hour.toString() +":00";
-        }
-        else {
+        if(weatherControl.getDateOfData() == null) {
             return null;
         }
         
         // Set the title view to show city and date/time
-        ((TextView) rootView.findViewById(R.id.date_time)).setText(todaysDate); // + " "+ dateTime[0] +" ~ "+ dateTime[1].split("-")[0]);
+        ((TextView) rootView.findViewById(R.id.date_time)).setText(weatherControl.getTodaysDate()); // + " "+ dateTime[0] +" ~ "+ dateTime[1].split("-")[0]);
 
         // Set the title view to show city and date/time
         ((TextView) rootView.findViewById(R.id.city_zip)).setText(
@@ -194,7 +168,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         		
         ((TextView) rootView.findViewById(R.id.sailingExperience)).setText( weatherControl.estimatedSailingExperience() );
 
-        ((TextView) rootView.findViewById(R.id.day_of_week)).setText( dayOfWeek );
+        ((TextView) rootView.findViewById(R.id.day_of_week)).setText( weatherControl.getDayOfWeek() );
         
         // Add - Sun/Moon/clouds/rain
 
@@ -254,25 +228,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
     }
 
 
-    private boolean checkIfClear() {
-        boolean isClear = false;
-        if(displayData.getCloudAmount() != null  ) {
-            try { 
-                int cloudAmountWx = Integer.parseInt(displayData.getCloudAmount().getValue());
-                if(cloudAmountWx < 25)
-                    isClear = true;
-            } catch(NumberFormatException  nfe) {
-                Log.e("DisplayWeatherInfoAccessPageFragment.checkIfClear", "Clound Amount for Wx clear prediction number parse error.");
-            }                
-        }
 
-        return isClear;
-    }
-    
-    
-    final long dayInMilli = (60000 * 60 * 24);
-    final double moonPhase = 29.5305888610;
-    
     /**
      * Returns the page number represented by this fragment object.
      */
@@ -280,23 +236,5 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         return mPageNumber;
     }
 
-    /**
-    public DisplayData createTestDisplayData() {
-    	
-    	WeatherDataParsed wdp = new WeatherDataParsed();
-    	DisplayData dd = wdp.new DisplayData();
-    	
-    	dd.setDateTime("20121104:T2200");
-    	dd.setPropPrecip12("10");
-    	dd.setTemperature("50");
-    	dd.setTempMax("60");
-    	dd.setTempMin("30");
-    	dd.setWeatherPredominant("light rain showers");
-    	dd.setWindDirection("270");
-    	dd.setWindGust("12");
-    	dd.setWindSustained("9");
-    	
-    	return dd;
-    }
-    **/
+
 }

@@ -188,7 +188,7 @@ public class DisplayWeatherInfoQuadNumbersActivity extends FragmentActivity {
         @Override
         public Fragment getItem(int position) {
         	DisplayData dd = ddL.get(position);
-            return DisplayWeatherInfoAccessPageFragment.create(dd);
+            return DisplayWeatherInfoQNAccessPageFragment.create(dd);
         }
 
         @Override
