@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    
+		    <TextView 
+		        android:id="@+id/cityZip"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center_horizontal"
+		        android:gravity="top"
+		        android:ems="10" 
+		        />
+		
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1" >
+
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+            android:orientation="vertical"
+	        android:layout_weight="1"
+	        android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp" 
+            android:paddingBottom="1dp">
+	        
+        
+		    <TextView
+		        android:id="@+id/dayOfWeek1"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true"
+		        android:gravity="top"
+		        android:ems="10" >
+		    </TextView>
+		    
+            <TextView
+                android:id="@+id/popAndTemp1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="top"
+                android:ems="10" >
+            </TextView>
+            
+            <LinearLayout
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/wind1"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+            android:layout_weight="1"
+                android:ems="10" >        
+            </TextView>
+            
+	        <ImageView
+	            android:id="@+id/compass_dir_image1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+	            android:src="@drawable/wind_dir_compass_arrows" />
+
+	        </LinearLayout>
+            
+            <TextView
+                android:id="@+id/gust1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="top"
+                android:ems="10" >        
+            </TextView>
+            
+		    <LinearLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content" >
+		
+		        <TextView
+		            android:id="@+id/sailingExperience1"
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+		            android:hint="@string/howIsSailingExperience"
+		            android:minLines="2" />		
+		    </LinearLayout>
+
+            </LinearLayout>
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp" 
+            android:paddingBottom="1dp">
+        
+            <TextView
+                android:id="@+id/dayOfWeek2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="top"
+                android:ems="10" >
+            </TextView>
+            
+            <TextView
+                android:id="@+id/popAndTemp2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="top"
+                android:ems="10" >
+            </TextView>
+            
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/wind2"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+            android:layout_weight="1"
+                android:ems="10" >        
+            </TextView>
+            
+            <ImageView
+                android:id="@+id/compass_dir_image2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+            android:layout_weight=".5"
+                android:src="@drawable/wind_dir_compass_arrows" />
+
+            </LinearLayout>
+            
+            <TextView
+                android:id="@+id/gust2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="top"
+                android:ems="10" >        
+            </TextView>
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+        
+                <TextView
+                    android:id="@+id/sailingExperience2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/howIsSailingExperience"
+                    android:minLines="2" />     
+            </LinearLayout>
+
+            
+		    </LinearLayout>
+		    
+    </LinearLayout>
+		    
+		    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1" >
+
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp" 
+            android:paddingBottom="1dp">
+        
+            <TextView
+                android:id="@+id/dayOfWeek3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="top"
+                android:ems="10" >
+            </TextView>
+            
+            <TextView
+                android:id="@+id/popAndTemp3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="top"
+                android:ems="10" >
+            </TextView>
+            
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/wind3"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+            android:layout_weight="1"
+                android:ems="10" >        
+            </TextView>
+            
+            <ImageView
+                android:id="@+id/compass_dir_image3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+            android:layout_weight=".5"
+                android:src="@drawable/wind_dir_compass_arrows" />
+
+            </LinearLayout>
+            
+            <TextView
+                android:id="@+id/gust3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="top"
+                android:ems="10" >        
+            </TextView>
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+        
+                <TextView
+                    android:id="@+id/sailingExperience3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/howIsSailingExperience"
+                    android:minLines="2" />     
+            </LinearLayout>
+
+            
+       </LinearLayout>
+		    		
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp" 
+            android:paddingBottom="1dp">
+		    
+            <TextView
+                android:id="@+id/dayOfWeek4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="top"
+                android:ems="10" >
+            </TextView>
+            
+            <TextView
+                android:id="@+id/popAndTemp4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="top"
+                android:ems="10" >
+            </TextView>
+            
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/wind4"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+            android:layout_weight="1"
+                android:ems="10" >        
+            </TextView>
+            
+            <ImageView
+                android:id="@+id/compass_dir_image4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+            android:layout_weight=".5"
+                android:src="@drawable/wind_dir_compass_arrows" />
+
+            </LinearLayout>
+            
+            <TextView
+                android:id="@+id/gust4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="top"
+                android:ems="10" >        
+            </TextView>
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+        
+                <TextView
+                    android:id="@+id/sailingExperience4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/howIsSailingExperience"
+                    android:minLines="2" />     
+            </LinearLayout>
+
+            
+       </LinearLayout>
+		    
+    </LinearLayout>
+        
+</LinearLayout>
