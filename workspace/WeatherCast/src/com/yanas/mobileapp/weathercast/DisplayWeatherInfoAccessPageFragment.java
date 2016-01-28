@@ -98,7 +98,18 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
 
         
         if(weatherControl.getDateOfData() == null) {
-            return null;
+            // Set the title view to show city and date/time
+            ((ImageView) rootView.findViewById(
+                    R.id.temp_icon)).setImageResource(0);
+            ((ImageView) rootView.findViewById(
+                    R.id.temp_image)).setImageResource(0);
+            
+            ((TextView) rootView.findViewById(R.id.temp_hour)).setText( "All Data" );
+                    
+            ((TextView) rootView.findViewById(R.id.temp_max)).setText("");
+                    
+            ((TextView) rootView.findViewById(R.id.temp_min)).setText("Unavailable");
+            return rootView;
         }
         
         // Set the title view to show city and date/time
