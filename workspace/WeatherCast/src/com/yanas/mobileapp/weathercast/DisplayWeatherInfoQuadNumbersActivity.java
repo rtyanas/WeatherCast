@@ -2,6 +2,7 @@ package com.yanas.mobileapp.weathercast;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed;
@@ -187,13 +188,18 @@ public class DisplayWeatherInfoQuadNumbersActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-        	DisplayData dd = ddL.get(position);
-            return DisplayWeatherInfoQNAccessPageFragment.create(dd);
+            int endDd = (position + 1) * 4;
+            int startDd = endDd >= 4 ? endDd - 4 : 0;
+            ArrayList<DisplayData> ddSubL = new ArrayList<DisplayData>();
+            for(int i = startDd; i < endDd && i < ddL.size(); i++) {
+                ddSubL.add( ddL.get(i) );
+            }
+            return DisplayWeatherInfoAccessQNPageFragment.create(ddSubL);
         }
 
         @Override
         public int getCount() {
-            return stringSize;
+            return (int) Math.ceil( stringSize / 4);
         }
     }
 
