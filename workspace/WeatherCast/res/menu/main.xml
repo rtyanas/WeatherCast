@@ -13,8 +13,11 @@
             <item android:id="@+id/action_days_per_screen_1"
                   android:title="@string/action_days_per_screen_1"
                   android:showAsAction="never" />
-            <item android:id="@+id/action_days_per_screen_4"
-                  android:title="@string/action_days_per_screen_4"
+            <item android:id="@+id/action_days_per_screen_graphic_4"
+                  android:title="@string/action_days_per_screen_graphic_4"
+                  android:showAsAction="never" />
+            <item android:id="@+id/action_days_per_screen_number_4"
+                  android:title="@string/action_days_per_screen_number_4"
                   android:showAsAction="never" />
             </menu>
     </item>

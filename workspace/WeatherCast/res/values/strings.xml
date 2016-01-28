@@ -28,5 +28,6 @@
     <string name="ok">OK</string>
     <string name="action_days_per_screen">Days Per Screen</string>
     <string name="action_days_per_screen_1">One Day Per Screen</string>
-    <string name="action_days_per_screen_4">Four Days Per Screen</string>
+    <string name="action_days_per_screen_graphic_4">Four Days Per Screen (Graphics)</string>
+    <string name="action_days_per_screen_number_4">Four Days Per Screen (Numeric)</string>
 </resources>
