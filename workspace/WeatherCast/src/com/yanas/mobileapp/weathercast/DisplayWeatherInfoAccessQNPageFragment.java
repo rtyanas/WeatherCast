@@ -102,121 +102,45 @@ public class DisplayWeatherInfoAccessQNPageFragment extends Fragment {
                 .inflate(R.layout.display_weather_qn_layout, container, false);
 
         // Set quad position one
-        
-        ((TextView) rootView.findViewById(R.id.cityZip)).setText(StringUtils.createStationRow(weatherControl.get(0).getCity(), 
+        if(weatherControl != null && weatherControl.get(0) != null && 
+                weatherControl.get(0).getDateOfData() != null)
+       
+            ((TextView) rootView.findViewById(R.id.cityZip)).setText(StringUtils.createStationRow(weatherControl.get(0).getCity(), 
                 weatherControl.get(0).getState(), 
-                weatherControl.get(0).getZipcode()));
+                weatherControl.get(0).getZipcode())
+                +" - "+ weatherControl.get(0).getTodaysDate());
+        else
+            ((TextView) rootView.findViewById(R.id.cityZip)).setText("Data Not Available");
+            
         
         int qdLoc = 0;
         
-        if(weatherControl.size() >= 1) {
-            int dayOfWeek1 = getResources().getIdentifier(
-                    "dayOfWeek"+ 1, "id", rootView.getContext().getPackageName());
-            ((TextView) rootView.findViewById(dayOfWeek1)).setText(
-                this.weatherControl.get(qdLoc).getDayOfWeek() );  
-//            ((TextView) rootView.findViewById(R.id.dayOfWeek1)).setText(
-//                    this.weatherControl.get(qdLoc).getDayOfWeek() );  
-            ((TextView) rootView.findViewById(R.id.popAndTemp1)).setText(
-                this.weatherControl.get(qdLoc).getTemperature() +" : "+
-                weatherControl.get(qdLoc).getPop() );
-            ((TextView) rootView.findViewById(R.id.wind1)).setText(
-                weatherControl.get(qdLoc).getWindSustained()
-                );
-            int windDirId = rootView.getResources().getIdentifier(
-                    "wind_dir_"+ weatherControl.get(qdLoc).getCompassDir().toLowerCase() +"_50", 
-                    "drawable", "com.yanas.mobileapp.weathercast");
-
-            if(windDirId != 0) {
-                ((ImageView) rootView.findViewById(
-                        R.id.compass_dir_image1)).setImageResource(windDirId);
-            }
-            ((TextView) rootView.findViewById(R.id.gust1)).setText(
-                       weatherControl.get(qdLoc).getWindGust()
-                    );
-            ((TextView) rootView.findViewById(R.id.sailingExperience1)).
-                setText( weatherControl.get(qdLoc).getPredominantWx() );
-            
+        // Set quad position one
+        int position = 1;
+        if(weatherControl.size() >= position) {
+            setFieldsBySection(rootView, position, position - 1);
         }
         
         // Set quad position two
-        qdLoc = 1;
-        if(weatherControl.size() >= 2) {
-            ((TextView) rootView.findViewById(R.id.dayOfWeek2)).setText(
-                    this.weatherControl.get(qdLoc).getDayOfWeek() );  
-                ((TextView) rootView.findViewById(R.id.popAndTemp2)).setText(
-                    this.weatherControl.get(qdLoc).getTemperature() +" : "+
-                    weatherControl.get(qdLoc).getPop() );
-                ((TextView) rootView.findViewById(R.id.wind2)).setText(
-                        weatherControl.get(qdLoc).getWindSustained()
-                        ); 
-                int windDirId = rootView.getResources().getIdentifier(
-                        "wind_dir_"+ weatherControl.get(qdLoc).getCompassDir().toLowerCase() +"_50", 
-                        "drawable", "com.yanas.mobileapp.weathercast");
-
-                if(windDirId != 0) {
-                    ((ImageView) rootView.findViewById(
-                            R.id.compass_dir_image2)).setImageResource(windDirId);
-                }
-                ((TextView) rootView.findViewById(R.id.gust2)).setText(
-                           weatherControl.get(qdLoc).getWindGust()
-                        );
-                ((TextView) rootView.findViewById(R.id.sailingExperience2)).
-                setText( weatherControl.get(qdLoc).getPredominantWx() );
+        position = 2;
+        if(weatherControl.size() >= position) {
+            setFieldsBySection(rootView, position, position - 1);
         }
+        
         
         // Set quad position three
-        qdLoc = 2;
-        if(weatherControl.size() >= 3) {
-            ((TextView) rootView.findViewById(R.id.dayOfWeek3)).setText(
-                    this.weatherControl.get(qdLoc).getDayOfWeek() );  
-                ((TextView) rootView.findViewById(R.id.popAndTemp3)).setText(
-                    this.weatherControl.get(qdLoc).getTemperature() +" : "+
-                    weatherControl.get(qdLoc).getPop() );
-                ((TextView) rootView.findViewById(R.id.wind3)).setText(
-                        weatherControl.get(qdLoc).getWindSustained()
-                        ); // + " "+ dateTime[0] +" ~ "+ dateTime[1].split("-")[0]);
-                int windDirId = rootView.getResources().getIdentifier(
-                        "wind_dir_"+ weatherControl.get(qdLoc).getCompassDir().toLowerCase() +"_50", 
-                        "drawable", "com.yanas.mobileapp.weathercast");
-
-                if(windDirId != 0) {
-                    ((ImageView) rootView.findViewById(
-                            R.id.compass_dir_image3)).setImageResource(windDirId);
-                }
-                ((TextView) rootView.findViewById(R.id.gust3)).setText(
-                           weatherControl.get(qdLoc).getWindGust()
-                        );
-                ((TextView) rootView.findViewById(R.id.sailingExperience3)).
-                setText( weatherControl.get(qdLoc).getPredominantWx() );
+        position = 3;
+        if(weatherControl.size() >= position) {
+            setFieldsBySection(rootView, position, position - 1);
         }
+        
         
         // Set quad position four
-        qdLoc = 3;
-        if(weatherControl.size() >= 4) {
-            ((TextView) rootView.findViewById(R.id.dayOfWeek4)).setText(
-                    this.weatherControl.get(qdLoc).getDayOfWeek() );  
-                ((TextView) rootView.findViewById(R.id.popAndTemp4)).setText(
-                    this.weatherControl.get(qdLoc).getTemperature() +" : "+
-                    weatherControl.get(qdLoc).getPop() );
-                ((TextView) rootView.findViewById(R.id.wind4)).setText(
-                        weatherControl.get(qdLoc).getWindSustained()
-                        );
-                int windDirId = rootView.getResources().getIdentifier(
-                        "wind_dir_"+ weatherControl.get(qdLoc).getCompassDir().toLowerCase() +"_50", 
-                        "drawable", "com.yanas.mobileapp.weathercast");
-
-                if(windDirId != 0) {
-                    ((ImageView) rootView.findViewById(
-                            R.id.compass_dir_image4)).setImageResource(windDirId);
-                }
-                ((TextView) rootView.findViewById(R.id.gust4)).setText(
-                           weatherControl.get(qdLoc).getWindGust()
-                        );
-                ((TextView) rootView.findViewById(R.id.sailingExperience4)).
-                setText( weatherControl.get(qdLoc).getPredominantWx() );
+        position = 4;
+        if(weatherControl.size() >= position) {
+            setFieldsBySection(rootView, position, position - 1);
         }
         
-
         return rootView;
     }
 
@@ -230,4 +154,44 @@ public class DisplayWeatherInfoAccessQNPageFragment extends Fragment {
     }
 
 
+    private boolean setFieldsBySection(ViewGroup viewG, int fldSect, int index) {
+        
+        int dayOfWeek = getResources().getIdentifier(
+                "dayOfWeek"+ fldSect, "id", viewG.getContext().getPackageName());
+        int popAndTemp = getResources().getIdentifier(
+                "popAndTemp"+ fldSect, "id", viewG.getContext().getPackageName());
+        int wind = getResources().getIdentifier(
+                "wind"+ fldSect, "id", viewG.getContext().getPackageName());
+        int windDir = getResources().getIdentifier(
+                "compass_dir_image"+ fldSect, "id", viewG.getContext().getPackageName());
+        int gust = getResources().getIdentifier(
+                "gust"+ fldSect, "id", viewG.getContext().getPackageName());
+        int predominant = getResources().getIdentifier(
+                "sailingExperience"+ fldSect, "id", viewG.getContext().getPackageName());
+
+        ((TextView) viewG.findViewById(dayOfWeek)).setText(
+            this.weatherControl.get(index).getDayOfWeek() );  
+        ((TextView) viewG.findViewById(popAndTemp)).setText(
+            this.weatherControl.get(index).getTemperature() +" : "+
+            weatherControl.get(index).getPop() );
+        ((TextView) viewG.findViewById(wind)).setText(
+            weatherControl.get(index).getWindSustained()
+            );
+        int windDirId = viewG.getResources().getIdentifier(
+                "wind_dir_"+ weatherControl.get(index).getCompassDir().toLowerCase() +"_50", 
+                "drawable", "com.yanas.mobileapp.weathercast");
+
+        if(windDirId != 0) {
+            ((ImageView) viewG.findViewById(windDir)).
+                    setImageResource(windDirId);
+        }
+        ((TextView) viewG.findViewById(gust)).setText(
+                   weatherControl.get(index).getWindGust()
+                );
+        ((TextView) viewG.findViewById(predominant)).
+            setText( weatherControl.get(index).getPredominantWx() );
+        
+        return true;
+
+    }
 }
