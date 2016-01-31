@@ -43,6 +43,19 @@
                 android:value="com.yanas.mobileapp.weathercast" />
         </activity>
         <activity
+            android:name="com.yanas.mobileapp.weathercast.DisplayWeatherInfoQuadNumbersActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.yanas.mobileapp.weathercast.StationListActivity"
+             >
+            
+            <!--  android:configChanges="orientation|keyboardHidden|screenSize"  -->
+            
+            <!-- android:parentActivityName="com.yanas.mobileapp.weathercast.StationListActivity" -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.yanas.mobileapp.weathercast" />
+        </activity>
+        <activity
             android:name="com.yanas.mobileapp.weathercast.StationListActivity"
             android:label="@string/title_activity_station_list" >
             <meta-data
