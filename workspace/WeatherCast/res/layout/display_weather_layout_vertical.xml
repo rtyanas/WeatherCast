@@ -143,9 +143,9 @@
             android:id="@+id/LabelSailingExp"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:contentDescription="@string/howIsSailingExperience"
+            android:contentDescription="@string/weatherForecast"
             android:gravity="center_vertical"
-            android:text="@string/howIsSailingExperience"
+            android:text="@string/weatherForecast"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -159,7 +159,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/howIsSailingExperience"
+            android:hint="@string/weatherForecast"
             android:minLines="2" />
 
     </LinearLayout>
