@@ -1,5 +1,6 @@
 workspace/.metadata
-workspace/WeatherCast/bin
+workspace/WeatherCast/bin/
+workspace/WeatherCast/bin/classes/
 *.class
 *.log
 *.ap_
