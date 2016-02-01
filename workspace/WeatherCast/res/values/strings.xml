@@ -15,6 +15,7 @@
     <string name="pop">Probability of precipitation</string>
     <string name="weather">Weather - amount : type</string>
     <string name="howIsSailingExperience">How will your sailing experience be?</string>
+    <string name="weatherForecast">Weather forecast not available for this day.</string>
     <string name="day_of_week">Day of week</string>
     <string name="title_activity_new_station">NewStationActivity</string>
     <string name="city">City</string>
