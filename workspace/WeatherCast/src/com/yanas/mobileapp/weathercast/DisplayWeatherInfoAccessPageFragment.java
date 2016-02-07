@@ -182,56 +182,8 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         ((TextView) rootView.findViewById(R.id.day_of_week)).setText( weatherControl.getDayOfWeek() );
         
         // Add - Sun/Moon/clouds/rain
-
-        // Set icon for sun or moon
-        int dayNightIcon; // get Resource
- 
-        // Find sunrise - sunset times
-        if( weatherControl.isMoonRising() )
-            dayNightIcon = weatherControl.getCurrentMoonPhaseResource();
-        else
-            dayNightIcon = R.drawable.sun;
         
-        ((ImageView) rootView.findViewById(R.id.weather_predominant)).setBackgroundResource(dayNightIcon);
-
-        // Cloud amount; how many clouds
-        int cloudConfigId = rootView.getResources().getIdentifier(
-                "cloud_"+ weatherControl.getCloudLevel().toLowerCase(), 
-                "drawable", "com.yanas.mobileapp.weathercast");
-
-        // Precipitation amount; amount of rain or snow
-        
-        int rainConfigId = 0;
-
-        if( weatherControl.getPredominantWxType().contains("freezing") ) {
-             rainConfigId = rootView.getResources().getIdentifier(
-                     "icey_"+ weatherControl.getRainSnowIceLevel().toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast"); 
-         } else if( weatherControl.getPredominantWxType().contains("snow") ) {
-             rainConfigId = rootView.getResources().getIdentifier(
-                     "snow_"+ weatherControl.getRainSnowIceLevel().toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
-         } else if( weatherControl.getPredominantWxType().contains("rain") ) {
-                 rainConfigId = rootView.getResources().getIdentifier(
-                     "rain_"+ weatherControl.getRainSnowIceLevel().toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast"); 
-         }
-            
-        
-        Drawable[] layers = new Drawable[2];  // Used to combine cloud and rain.
-
-        if(cloudConfigId != 0) {
-            layers[0] = rootView.getResources().getDrawable(cloudConfigId);
-        }
-        else {
-            layers[0] = rootView.getResources().getDrawable(R.drawable.cloud_noclouds);
-        }
-        
-        if(rainConfigId != 0) {
-            layers[1] = rootView.getResources().getDrawable(rainConfigId);
-        }
-        else {
-            layers[1] = rootView.getResources().getDrawable(R.drawable.cloud_noclouds);
-        }
-        
-        LayerDrawable layerDr = new LayerDrawable(layers); 
+        LayerDrawable layerDr = new LayerDrawable(getGraphicWeather(rootView, weatherControl, R.id.weather_predominant)); 
         ((ImageView) rootView.findViewById(
                 R.id.weather_predominant)).setImageDrawable(layerDr);
 
@@ -239,6 +191,58 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
     }
 
 
+    static public Drawable[] getGraphicWeather(ViewGroup viewG, WeatherDataControl weatherC, int predResource) {
+        // Set icon for sun or moon
+        int dayNightIcon; // get Resource
+ 
+        // Find sunrise - sunset times
+        if( weatherC.isMoonRising() )
+            dayNightIcon = weatherC.getCurrentMoonPhaseResource();
+        else
+            dayNightIcon = R.drawable.sun;
+        
+        ((ImageView) viewG.findViewById(predResource)).setBackgroundResource(dayNightIcon);
+
+        // Cloud amount; how many clouds
+        int cloudConfigId = viewG.getResources().getIdentifier(
+                "cloud_"+ weatherC.getCloudLevel().toLowerCase(), 
+                "drawable", "com.yanas.mobileapp.weathercast");
+
+        // Precipitation amount; amount of rain or snow
+        
+        int rainConfigId = 0;
+
+        if( weatherC.getPredominantWxType().contains("freezing") ) {
+             rainConfigId = viewG.getResources().getIdentifier(
+                     "icey_"+ weatherC.getRainSnowIceLevel().toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast"); 
+         } else if( weatherC.getPredominantWxType().contains("snow") ) {
+             rainConfigId = viewG.getResources().getIdentifier(
+                     "snow_"+ weatherC.getRainSnowIceLevel().toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
+         } else if( weatherC.getPredominantWxType().contains("rain") ) {
+                 rainConfigId = viewG.getResources().getIdentifier(
+                     "rain_"+ weatherC.getRainSnowIceLevel().toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast"); 
+         }
+            
+        
+        Drawable[] layers = new Drawable[2];  // Used to combine cloud and rain.
+
+        if(cloudConfigId != 0) {
+            layers[0] = viewG.getResources().getDrawable(cloudConfigId);
+        }
+        else {
+            layers[0] = viewG.getResources().getDrawable(R.drawable.cloud_noclouds);
+        }
+        
+        if(rainConfigId != 0) {
+            layers[1] = viewG.getResources().getDrawable(rainConfigId);
+        }
+        else {
+            layers[1] = viewG.getResources().getDrawable(R.drawable.cloud_noclouds);
+        }
+        
+        return layers;
+
+    }
 
     /**
      * Returns the page number represented by this fragment object.
