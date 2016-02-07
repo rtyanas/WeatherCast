@@ -10,7 +10,7 @@ public class SettingsWeather {
 
     public SettingsWeather() {
         
-        panelSelect = PanelSelectionEnum.QUAD_PANE_ONLY_NUMBERS ;
+        panelSelect = PanelSelectionEnum.QUAD_PANE_ONLY_GRAPHICS ;
         
     }
 

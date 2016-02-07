@@ -354,13 +354,15 @@ public class MainActivity extends ListActivity
                         break;
                         
                     case QUAD_PANE_ONLY_GRAPHICS:
-                        showValidateAlert("Quad Days (Graphics) Feature Coming", "Please be patient.");
+                        // showValidateAlert("Quad Days (Graphics) Feature Coming", "Please be patient.");
+                        intent = new Intent(MainActivity.this, DisplayWeatherInfoQuadGraphicsActivity.class);
+                        
+                        intent.putExtra(LOCATION_ID, station_in);
+                        startActivity(intent);                            
                         
                         break;
                     
                     case QUAD_PANE_ONLY_NUMBERS:
-                        // showValidateAlert("Quad Days (Numbers) Feature Coming", "Please be patient.");
-                        // showValidateAlert("Weather Debug", "Internet is available. Case Single Pane" + station_in);
                         intent = new Intent(MainActivity.this, DisplayWeatherInfoQuadNumbersActivity.class);
                         
                         intent.putExtra(LOCATION_ID, station_in);
