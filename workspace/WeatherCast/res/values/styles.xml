@@ -19,7 +19,7 @@
 
     
     <style name="TitleText" >
-        <item name="android:textColor">@color/bluedark6</item>
+        <item name="android:textColor">@color/darkgreen</item>
         <item name="android:textSize">20sp</item>
         <item name="android:background">@drawable/titleborder</item>
         <item name="android:paddingTop">10dp</item>
@@ -40,7 +40,7 @@
     </style>
 
     <style name="TemperatureText" >
-        <item name="android:textColor">@color/orangered</item>
+        <item name="android:textColor">@color/crimson</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold </item>
         <item name="android:background">@color/blueBackground</item>

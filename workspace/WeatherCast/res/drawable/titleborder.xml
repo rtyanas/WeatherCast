@@ -11,7 +11,7 @@
     <!-- view border color and width -->
     <stroke
         android:width="3dp"
-        android:color="@color/darkslateblue" >
+        android:color="@color/darkolivegreen" >
     </stroke>
 
     <!-- The radius makes the corners rounded -->
