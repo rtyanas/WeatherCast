@@ -101,7 +101,7 @@ public class DisplayWeatherInfoAccessQNPageFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.display_weather_qn_layout, container, false);
 
-        // Set quad position one
+        // Set Header: city and zip
         if(weatherControl != null && weatherControl.get(0) != null && 
                 weatherControl.get(0).getDateOfData() != null)
        
@@ -156,6 +156,10 @@ public class DisplayWeatherInfoAccessQNPageFragment extends Fragment {
 
     private boolean setFieldsBySection(ViewGroup viewG, int fldSect, int index) {
         
+        if(weatherControl == null || weatherControl.get(index) == null) {
+            return false;
+        }
+        
         int dayOfWeek = getResources().getIdentifier(
                 "dayOfWeek"+ fldSect, "id", viewG.getContext().getPackageName());
         int popAndTemp = getResources().getIdentifier(
@@ -170,10 +174,10 @@ public class DisplayWeatherInfoAccessQNPageFragment extends Fragment {
                 "sailingExperience"+ fldSect, "id", viewG.getContext().getPackageName());
 
         ((TextView) viewG.findViewById(dayOfWeek)).setText(
-            this.weatherControl.get(index).getDayOfWeek() );  
+            this.weatherControl.get(index).getDayOfWeekAmPm() );  
         ((TextView) viewG.findViewById(popAndTemp)).setText(
-            this.weatherControl.get(index).getTemperature() +" : "+
-            weatherControl.get(index).getPop() );
+            this.weatherControl.get(index).getTemperature() +" ("+
+            weatherControl.get(index).getCloudAmount(" Clouds)") );
         ((TextView) viewG.findViewById(wind)).setText(
             weatherControl.get(index).getWindSustained()
             );
