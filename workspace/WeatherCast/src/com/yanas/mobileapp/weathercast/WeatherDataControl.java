@@ -60,6 +60,8 @@ public class WeatherDataControl  {
             "MM", Locale.US);
     SimpleDateFormat sdfDayOfWeek = new SimpleDateFormat( // output GUI
             "E", Locale.US);
+    SimpleDateFormat sdfDayOfWeekAmPm = new SimpleDateFormat( // output GUI
+            "E h a", Locale.US);
 
     String todaysDate = "Today's Date and Time";
     public String getTodaysDate() {
@@ -69,11 +71,8 @@ public class WeatherDataControl  {
     Integer hour  = 0;
     Integer month = 0;
     String dayOfWeek = "Day of week";
+    String dayOfWeekAmPm = "Day of week";
     
-    public String getDayOfWeek() {
-        return dayOfWeek;
-    }
-
     // This date used to calculate the day and date in header and for moon phase
     Date dateOfData = new Date();
     /**
@@ -88,6 +87,7 @@ public class WeatherDataControl  {
             hour  = Integer.parseInt(sdfSunCheck.format(dateOfData));
             month = Integer.parseInt(sdfMonth.format(dateOfData));
             dayOfWeek = sdfDayOfWeek.format(dateOfData) +" "+ hour.toString() +":00";
+            dayOfWeekAmPm = sdfDayOfWeekAmPm.format(dateOfData) ;
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -103,6 +103,13 @@ public class WeatherDataControl  {
         return dateOfD;
     }
     
+    public String getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public String getDayOfWeekAmPm() {
+        return dayOfWeekAmPm;
+    }
     
     public String getCity() {
         return displayData.getCity(); 
@@ -247,6 +254,16 @@ public class WeatherDataControl  {
             cloudAmount = displayData.getCloudAmount().getValue() +
                     displayData.getCloudAmount().getUnits() +
                     " Cloud Cover ";
+        }
+        return cloudAmount;
+    }
+    
+    public String getCloudAmount(String description) {
+        String cloudAmount = "Cloud Coverage Not Available";
+        if(displayData.getCloudAmount() != null) {
+            cloudAmount = displayData.getCloudAmount().getValue() +
+                    displayData.getCloudAmount().getUnits() +
+                    description;
         }
         return cloudAmount;
     }
