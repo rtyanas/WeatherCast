@@ -10,6 +10,7 @@ import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.DisplayData;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v13.app.FragmentStatePagerAdapter;
@@ -31,6 +32,7 @@ public class DisplayWeatherInfoQuadGraphicsActivity extends FragmentActivity {
     int stringSize;
     List<DisplayData> ddL = null;
     String location;
+    SettingsWeather.PanelSelectionEnum displayStyle;
 
     /**
      * The pager adapter, which provides the pages to the view pager widget.
@@ -60,7 +62,11 @@ public class DisplayWeatherInfoQuadGraphicsActivity extends FragmentActivity {
         });
 
 		Intent intent = getIntent();
-		location = intent.getStringExtra(StationListActivity.LOCATION_ID);
+        location = intent.getStringExtra(StationListActivity.LOCATION_ID);
+		displayStyle = (SettingsWeather.PanelSelectionEnum)intent.getSerializableExtra(MainActivity.DISPLAY_STYLE_ID);
+		
+		Log.d("DisplayWeatherInfoQuadGraphicsActivity", "Display Style: "+ displayStyle);
+
 		
 		new AssembleWeatherAsync().execute(this);
 
@@ -190,11 +196,26 @@ public class DisplayWeatherInfoQuadGraphicsActivity extends FragmentActivity {
         public Fragment getItem(int position) {
             int endDd = (position + 1) * 4;
             int startDd = endDd >= 4 ? endDd - 4 : 0;
+            Fragment returnFrag = null;
             ArrayList<DisplayData> ddSubL = new ArrayList<DisplayData>();
             for(int i = startDd; i < endDd && i < ddL.size(); i++) {
                 ddSubL.add( ddL.get(i) );
             }
-            return DisplayWeatherInfoAccessQGPageFragment.create(ddSubL);
+            switch (displayStyle ) {
+            case SINGLE_PANE:
+            case QUAD_PANE_ONLY_NUMBERS:
+                break;
+            case QUAD_PANE_ONLY_GRAPHICS :
+//                returnFrag = DisplayWeatherInfoAccessQGPageFragment.create(ddSubL);
+                return DisplayWeatherInfoAccessQGPageFragment.create(ddSubL);
+//                break;
+            case QUAD_PANE_ONLY_MIN_GRAPHICS :
+//                returnFrag = DisplayWeatherInfoAccessQGPageFragment.create(ddSubL);
+                return DisplayWeatherInfoAccessMinQGPageFragment.create(ddSubL);
+//                break;
+            }
+//            return returnFrag;
+          return DisplayWeatherInfoAccessQGPageFragment.create(ddSubL);
         }
 
         @Override
