@@ -50,6 +50,7 @@ public class MainActivity extends ListActivity
     HashMap<Integer, String> selecedList = new HashMap<Integer, String>();
     
 	public final static String LOCATION_ID = "com.yanas.mobileapp.weathercast.CURRENT_LOCATION";
+    public final static String DISPLAY_STYLE_ID = "com.yanas.mobileapp.weathercast.DISPLAY_STYLE";
 
 	public final static String CURRENT_LOCATION = "XX_Current_Location_YY";
 	
@@ -185,8 +186,13 @@ public class MainActivity extends ListActivity
             break;
             
         case R.id.action_days_per_screen_graphic_4:
-//            if(GlobalSettings.main_activity) Log.d("MainActivity", "onOptionsItemSelected, display four day per screen");
+            if(GlobalSettings.main_activity) Log.d("MainActivity", "onOptionsItemSelected, display graphic four day per screen");
             settings.setPanelSelect(PanelSelectionEnum.QUAD_PANE_ONLY_GRAPHICS);
+            break;
+            
+        case R.id.action_days_per_screen_min_graphic_4:
+            if(GlobalSettings.main_activity) Log.d("MainActivity", "onOptionsItemSelected, display minimum graphic four day per screen");
+            settings.setPanelSelect(PanelSelectionEnum.QUAD_PANE_ONLY_MIN_GRAPHICS);
             break;
             
 		}
@@ -358,6 +364,17 @@ public class MainActivity extends ListActivity
                         intent = new Intent(MainActivity.this, DisplayWeatherInfoQuadGraphicsActivity.class);
                         
                         intent.putExtra(LOCATION_ID, station_in);
+                        intent.putExtra(DISPLAY_STYLE_ID, MainActivity.settings.getPanelSelect());
+                        startActivity(intent);                            
+                        
+                        break;
+                    
+                    case QUAD_PANE_ONLY_MIN_GRAPHICS:
+                        // showValidateAlert("Quad Days (Graphics) Feature Coming", "Please be patient.");
+                        intent = new Intent(MainActivity.this, DisplayWeatherInfoQuadGraphicsActivity.class);
+                        
+                        intent.putExtra(LOCATION_ID, station_in);
+                        intent.putExtra(DISPLAY_STYLE_ID, MainActivity.settings.getPanelSelect());
                         startActivity(intent);                            
                         
                         break;
