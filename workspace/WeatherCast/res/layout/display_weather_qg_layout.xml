@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                style="@style/RegularText" 
+                style="@style/TemperatureTextQG" 
                 android:paddingTop="10dp" >        
             </TextView>
             
@@ -154,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                style="@style/RegularText" 
+                style="@style/TemperatureTextQG" 
                 android:paddingTop="10dp" >        
             </TextView>
             
@@ -253,7 +253,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                style="@style/RegularText" 
+                style="@style/TemperatureTextQG" 
                 android:paddingTop="10dp" >        
             </TextView>
             
@@ -344,7 +344,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                style="@style/RegularText" 
+                style="@style/TemperatureTextQG" 
                 android:paddingTop="10dp" >        
             </TextView>
             
