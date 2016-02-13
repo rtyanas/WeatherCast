@@ -28,7 +28,7 @@
     
     <style name="RegularText" >
         <item name="android:textColor">@android:color/black</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">17sp</item>
         <item name="android:textStyle">bold</item>
     </style>
     
@@ -40,8 +40,15 @@
     </style>
 
     <style name="TemperatureText" >
-        <item name="android:textColor">@color/crimson</item>
+        <item name="android:textColor">@color/bluedark6</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold </item>
+        <item name="android:background">@color/blueBackground</item>
+    </style>
+    
+    <style name="TemperatureTextQG" >
+        <item name="android:textColor">@color/bluedark6</item>
+        <item name="android:textSize">22sp</item>
         <item name="android:textStyle">bold </item>
         <item name="android:background">@color/blueBackground</item>
     </style>
