@@ -19,8 +19,9 @@
 
     
     <style name="TitleText" >
-        <item name="android:textColor">@color/darkgreen</item>
+        <item name="android:textColor">@color/darkgoldenrod</item>
         <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold </item>
         <item name="android:background">@drawable/titleborder</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
@@ -28,6 +29,12 @@
     
     <style name="RegularText" >
         <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="PopText" >
+        <item name="android:textColor">@color/bluedark6</item>
         <item name="android:textSize">17sp</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -40,7 +47,7 @@
     </style>
 
     <style name="TemperatureText" >
-        <item name="android:textColor">@color/bluedark6</item>
+        <item name="android:textColor">@color/darkgoldenrod</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold </item>
         <item name="android:background">@color/blueBackground</item>
