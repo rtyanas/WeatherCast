@@ -200,12 +200,40 @@ public class WeatherDataControl  {
     }
 
 
+    public String getWindSustainedMph() {
+        String wSus = "Wind Not Avail";
+        int mph = 0;
+                
+        if(displayData.getWindSustained() != null) {
+            if("kts".equalsIgnoreCase(displayData.getWindSustained().getUnits()) ) {
+                mph = (int) Math.ceil(Integer.parseInt(displayData.getWindSustained().getValue()  ) * 0.621371  );
+            }
+                    
+            wSus = "Wind "+ mph +" MPH";
+        }
+        return wSus;
+    }
+
+
     public String getWindGust() {
         String wGust = "Gust Not Avail";
         
         if(displayData.getWindGust() != null) {
             wGust = "Gust "+displayData.getWindGust().getValue() +" "+ 
                     displayData.getWindGust().getUnits();
+        }
+        return wGust;
+    }
+
+    public String getWindGustMph() {
+        String wGust = "Gust Not Avail";
+        int mph = 0;
+        
+        if(displayData.getWindGust() != null) {
+            if("kts".equalsIgnoreCase(displayData.getWindGust().getUnits()) ) {
+                mph = (int) Math.ceil(Integer.parseInt(displayData.getWindGust().getValue()  ) * 0.621371  );
+            }
+            wGust = "Gust "+mph +" MPH";
         }
         return wGust;
     }
