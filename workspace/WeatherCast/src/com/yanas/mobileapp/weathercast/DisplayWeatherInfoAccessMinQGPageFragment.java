@@ -163,19 +163,12 @@ public class DisplayWeatherInfoAccessMinQGPageFragment extends Fragment {
         
         int dayOfWeek = getResources().getIdentifier(
                 "dayOfWeek"+ fldSect, "id", viewG.getContext().getPackageName());
-        int tempIcon = getResources().getIdentifier(
-                "temp_icon"+ fldSect, "id", viewG.getContext().getPackageName());
         int tempNum = getResources().getIdentifier(
                 "temp_num"+ fldSect, "id", viewG.getContext().getPackageName());
         int windImg = getResources().getIdentifier(
                 "wind_image"+ fldSect, "id", viewG.getContext().getPackageName());
-        int windDir = getResources().getIdentifier(
-                "compass_dir_image"+ fldSect, "id", viewG.getContext().getPackageName());
         int predominant = getResources().getIdentifier(
                 "weather_predominant"+ fldSect, "id", viewG.getContext().getPackageName());
-        int temperatureId = viewG.getResources().getIdentifier(
-                "temp_guage"+ weatherControl.get(index).getTemperatureIconLevel().toLowerCase(), 
-                "drawable", "com.yanas.mobileapp.weathercast");
 
         // Temperature
         ((TextView) viewG.findViewById(dayOfWeek)).setText(
