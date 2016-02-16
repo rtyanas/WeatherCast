@@ -32,7 +32,7 @@
             android:orientation="vertical"
 	        android:layout_weight="52"
             android:paddingRight="10dp"
-            android:paddingTop="10dp" >
+            android:paddingTop="15dp" >
 	        
         
 		    <TextView
@@ -41,6 +41,7 @@
 		        android:layout_height="wrap_content"
 		        android:layout_alignParentLeft="true"
 		        android:gravity="top"
+		        android:layout_marginBottom="5dp"
                 style="@style/DateTimeText" >
 		    </TextView>
 		    
@@ -98,7 +99,7 @@
 		            android:layout_weight="1"
 		            android:hint="@string/weatherForecast"
 		            android:minLines="2"
-                    style="@style/RegularText"  />		
+                    style="@style/PopText"  />		
 		    </LinearLayout>
 
             </LinearLayout>
@@ -108,7 +109,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="48"
-            android:paddingTop="10dp" >
+            android:paddingTop="15dp" >
         
             <TextView
                 android:id="@+id/dayOfWeek2"
@@ -117,6 +118,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10" 
+                android:layout_marginBottom="5dp"
                 style="@style/DateTimeText">
             </TextView>
             
@@ -174,7 +176,7 @@
                     android:layout_weight="1"
                     android:hint="@string/weatherForecast"
                     android:minLines="2"
-                    style="@style/RegularText"  />     
+                    style="@style/PopText"  />     
             </LinearLayout>
 
             
@@ -205,6 +207,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10" 
+                android:layout_marginBottom="5dp"
                 style="@style/DateTimeText">
             </TextView>
             
@@ -262,7 +265,7 @@
                     android:layout_weight="1"
                     android:hint="@string/weatherForecast"
                     android:minLines="2"
-                    style="@style/RegularText"  />     
+                    style="@style/PopText"  />     
             </LinearLayout>
 
             
@@ -283,6 +286,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10" 
+                android:layout_marginBottom="5dp"
                 style="@style/DateTimeText">
             </TextView>
             
@@ -340,7 +344,7 @@
                     android:layout_weight="1"
                     android:hint="@string/weatherForecast"
                     android:minLines="2"
-                    style="@style/RegularText"  />     
+                    style="@style/PopText"  />     
             </LinearLayout>
 
             
