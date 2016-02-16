@@ -27,10 +27,10 @@
 
 	    <!-- Day one -->
 	    <LinearLayout 
-	        android:layout_width="match_parent"
+	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
             android:orientation="vertical"
-	        android:layout_weight="1"
+	        android:layout_weight="52"
             android:paddingRight="10dp"
             android:paddingTop="10dp" >
 	        
@@ -61,18 +61,18 @@
             
             <TextView
                 android:id="@+id/wind1"
-                android:layout_width="0.0dip"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:ems="10"
                 style="@style/RegularText"  >        
             </TextView>
             
 	        <ImageView
 	            android:id="@+id/compass_dir_image1"
-	            android:layout_width="wrap_content"
+	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
-                android:layout_weight=".5"
+                android:layout_weight="1"
 	            android:src="@drawable/wind_dir_compass_arrows" />
 
 	        </LinearLayout>
@@ -104,10 +104,10 @@
             </LinearLayout>
         <!-- Day two -->
         <LinearLayout 
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="1"
+            android:layout_weight="48"
             android:paddingTop="10dp" >
         
             <TextView
@@ -137,18 +137,18 @@
             
             <TextView
                 android:id="@+id/wind2"
-                android:layout_width="0.0dip"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:ems="10" 
                 style="@style/RegularText" >
             </TextView>
             
             <ImageView
                 android:id="@+id/compass_dir_image2"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".5"
+                android:layout_weight="1"
                 android:src="@drawable/wind_dir_compass_arrows" />
 
             </LinearLayout>
@@ -194,7 +194,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="1"
+            android:layout_weight="52"
             android:paddingRight="10dp"
             android:paddingTop="10dp" >
         
@@ -225,18 +225,18 @@
             
             <TextView
                 android:id="@+id/wind3"
-                android:layout_width="0.0dip"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:ems="10"
                 style="@style/RegularText"  >        
             </TextView>
             
             <ImageView
                 android:id="@+id/compass_dir_image3"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-            android:layout_weight=".5"
+            android:layout_weight="1"
                 android:src="@drawable/wind_dir_compass_arrows" />
 
             </LinearLayout>
@@ -273,7 +273,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="1"
+            android:layout_weight="48"
             android:paddingTop="10dp">
 		    
             <TextView
@@ -303,18 +303,18 @@
             
             <TextView
                 android:id="@+id/wind4"
-                android:layout_width="0.0dip"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:ems="10"
                 style="@style/RegularText"  >        
             </TextView>
             
             <ImageView
                 android:id="@+id/compass_dir_image4"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".5"
+                android:layout_weight="1"
                 android:src="@drawable/wind_dir_compass_arrows" />
 
             </LinearLayout>
