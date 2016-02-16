@@ -177,9 +177,9 @@ public class DisplayWeatherInfoAccessQNPageFragment extends Fragment {
             this.weatherControl.get(index).getDayOfWeekAmPm() );  
         ((TextView) viewG.findViewById(popAndTemp)).setText(
             this.weatherControl.get(index).getTemperature() +" ("+
-            weatherControl.get(index).getCloudAmount(" Clouds)") );
+            weatherControl.get(index).getCloudAmount(" CLD)") );
         ((TextView) viewG.findViewById(wind)).setText(
-            weatherControl.get(index).getWindSustained()
+            weatherControl.get(index).getWindSustainedMph()
             );
         int windDirId = viewG.getResources().getIdentifier(
                 "wind_dir_"+ weatherControl.get(index).getCompassDir().toLowerCase() +"_50", 
@@ -190,7 +190,7 @@ public class DisplayWeatherInfoAccessQNPageFragment extends Fragment {
                     setImageResource(windDirId);
         }
         ((TextView) viewG.findViewById(gust)).setText(
-                   weatherControl.get(index).getWindGust()
+                   weatherControl.get(index).getWindGustMph()
                 );
         ((TextView) viewG.findViewById(predominant)).
             setText( weatherControl.get(index).getPredominantWx() );
