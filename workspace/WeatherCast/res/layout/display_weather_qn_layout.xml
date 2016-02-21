@@ -18,7 +18,7 @@
 		        android:ems="12"
 		        style="@style/TitleText"
 		        />
-	<!-- Dat 1 and 2 -->
+	<!-- Day 1 and 2 -->
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,13 +52,14 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/TemperatureText" >
+                style="@style/InternalPaddingNum.TemperatureAndDescText" >
             </TextView>
             
             <LinearLayout
 			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
-			        android:orientation="horizontal" >
+			        android:orientation="horizontal"
+			        style="@style/InternalPaddingNum" >
             
             <TextView
                 android:id="@+id/wind1"
@@ -85,7 +86,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10" 
-                style="@style/RegularText" >        
+                style="@style/InternalPaddingNum.RegularText" >        
             </TextView>
             
 		    <LinearLayout
@@ -99,7 +100,7 @@
 		            android:layout_weight="1"
 		            android:hint="@string/weatherForecast"
 		            android:minLines="2"
-                    style="@style/PopText"  />		
+                    style="@style/InternalPaddingNum.PopText"  />		
 		    </LinearLayout>
 
             </LinearLayout>
@@ -129,13 +130,14 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/TemperatureText" >
+                style="@style/InternalPaddingNum.TemperatureAndDescText" >
             </TextView>
             
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                    style="@style/InternalPaddingNum" >
             
             <TextView
                 android:id="@+id/wind2"
@@ -162,7 +164,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10" 
-                style="@style/RegularText" >        
+                style="@style/InternalPaddingNum.RegularText" >        
             </TextView>
             
             <LinearLayout
@@ -176,7 +178,7 @@
                     android:layout_weight="1"
                     android:hint="@string/weatherForecast"
                     android:minLines="2"
-                    style="@style/PopText"  />     
+                    style="@style/InternalPaddingNum.PopText"  />     
             </LinearLayout>
 
             
@@ -218,13 +220,14 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/TemperatureText" >
+                style="@style/InternalPaddingNum.TemperatureAndDescText" >
             </TextView>
             
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                    style="@style/InternalPaddingNum" >
             
             <TextView
                 android:id="@+id/wind3"
@@ -251,7 +254,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/RegularText"  >        
+                style="@style/InternalPaddingNum.RegularText"  >        
             </TextView>
             
             <LinearLayout
@@ -265,7 +268,7 @@
                     android:layout_weight="1"
                     android:hint="@string/weatherForecast"
                     android:minLines="2"
-                    style="@style/PopText"  />     
+                    style="@style/InternalPaddingNum.PopText"  />     
             </LinearLayout>
 
             
@@ -297,13 +300,14 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/TemperatureText" >
+                style="@style/InternalPaddingNum.TemperatureAndDescText" >
             </TextView>
             
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                    style="@style/InternalPaddingNum" >
             
             <TextView
                 android:id="@+id/wind4"
@@ -330,7 +334,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/RegularText"  >        
+                style="@style/InternalPaddingNum.RegularText"  >        
             </TextView>
             
             <LinearLayout
@@ -344,7 +348,7 @@
                     android:layout_weight="1"
                     android:hint="@string/weatherForecast"
                     android:minLines="2"
-                    style="@style/PopText"  />     
+                    style="@style/InternalPaddingNum.PopText"  />     
             </LinearLayout>
 
             

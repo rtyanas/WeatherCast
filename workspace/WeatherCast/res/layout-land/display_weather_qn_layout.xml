@@ -53,7 +53,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/TemperatureText" >
+                style="@style/InternalPaddingNum.TemperatureAndDescText" >
             </TextView>
             
             <!-- Wind and Gust layout horizontal -->
@@ -67,7 +67,8 @@
 					        android:layout_width="match_parent"
 					        android:layout_height="wrap_content"
 					        android:orientation="horizontal"
-                            android:layout_weight=".5"  >
+                            android:layout_weight=".5"
+                            style="@style/InternalPaddingNum"  >
 		            
 		            <TextView
 		                android:id="@+id/wind1"
@@ -94,7 +95,7 @@
 		                android:layout_alignParentLeft="true"
 		                android:gravity="top"
 		                android:layout_weight="1" 
-		                style="@style/RegularText" >        
+		                style="@style/InternalPaddingNum.RegularText" >        
 		            </TextView>
             </LinearLayout>            
 		    <LinearLayout
@@ -108,7 +109,7 @@
 		            android:layout_weight="1"
 		            android:hint="@string/weatherForecast"
 		            android:minLines="2"
-                    style="@style/RegularText"  />		
+                    style="@style/InternalPaddingNum.PopText"  />		
 		    </LinearLayout>
 
             </LinearLayout>
@@ -138,7 +139,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/TemperatureText" >
+                style="@style/InternalPaddingNum.TemperatureAndDescText" >
             </TextView>
             
             <!-- Wind and Gust layout horizontal -->
@@ -152,7 +153,8 @@
 	                    android:layout_width="match_parent"
 	                    android:layout_height="wrap_content"
 	                    android:orientation="horizontal"
-	                    android:layout_weight=".5" >
+	                    android:layout_weight=".5"
+	                    style="@style/InternalPaddingNum" >
 	            
 		            <TextView
 		                android:id="@+id/wind2"
@@ -179,7 +181,7 @@
 		                android:layout_alignParentLeft="true"
 		                android:gravity="top"
                         android:layout_weight="1"
-		                style="@style/RegularText" >        
+		                style="@style/InternalPaddingNum.RegularText" >        
 		            </TextView>
             </LinearLayout>            
             <LinearLayout
@@ -193,7 +195,7 @@
                     android:layout_weight="1"
                     android:hint="@string/weatherForecast"
                     android:minLines="2"
-                    style="@style/RegularText"  />     
+                    style="@style/InternalPaddingNum.PopText"  />     
             </LinearLayout>
 
             
@@ -234,7 +236,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/TemperatureText" >
+                style="@style/InternalPaddingNum.TemperatureAndDescText" >
             </TextView>
             
             <!-- Wind and Gust layout horizontal -->
@@ -248,7 +250,8 @@
 		                    android:layout_width="match_parent"
 		                    android:layout_height="wrap_content"
 		                    android:orientation="horizontal" 
-		                    android:layout_weight=".5">
+		                    android:layout_weight=".5"
+		                    style="@style/InternalPaddingNum">
 		            
 		            <TextView
 		                android:id="@+id/wind3"
@@ -274,7 +277,7 @@
 		                android:layout_height="wrap_content"
 		                android:layout_alignParentLeft="true"
 		                android:gravity="top"
-		                style="@style/RegularText"  
+		                style="@style/InternalPaddingNum.RegularText"  
 		                android:layout_weight="1">        
 		            </TextView>
             </LinearLayout>            
@@ -289,7 +292,7 @@
                     android:layout_weight="1"
                     android:hint="@string/weatherForecast"
                     android:minLines="2"
-                    style="@style/RegularText"  />     
+                    style="@style/InternalPaddingNum.PopText"  />     
             </LinearLayout>
 
             
@@ -320,7 +323,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/TemperatureText" >
+                style="@style/InternalPaddingNum.TemperatureAndDescText" >
             </TextView>
             
             <!-- Wind and Gust layout horizontal -->
@@ -334,7 +337,8 @@
 		                    android:layout_width="match_parent"
 		                    android:layout_height="wrap_content"
 		                    android:orientation="horizontal"
-		                    android:layout_weight=".5" >
+		                    android:layout_weight=".5"
+		                    style="@style/InternalPaddingNum" >
 		            
 				            <TextView
 				                android:id="@+id/wind4"
@@ -360,7 +364,7 @@
 				                android:layout_height="wrap_content"
 				                android:layout_alignParentLeft="true"
 				                android:gravity="top"
-				                style="@style/RegularText"  
+				                style="@style/InternalPaddingNum.RegularText"  
 				                android:layout_weight="1">        
 				            </TextView>
             </LinearLayout>            
@@ -375,7 +379,7 @@
                     android:layout_weight="1"
                     android:hint="@string/weatherForecast"
                     android:minLines="2"
-                    style="@style/RegularText"  />     
+                    style="@style/InternalPaddingNum.PopText"  />     
             </LinearLayout>
 
             
