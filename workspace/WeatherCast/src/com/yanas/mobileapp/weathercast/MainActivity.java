@@ -9,6 +9,7 @@ import java.util.Vector;
 import com.yanas.mobileapp.weathercast.SettingsWeather.PanelSelectionEnum;
 import com.yanas.mobileapp.weathercast.datastore.CityListDbData;
 import com.yanas.mobileapp.weathercast.datastore.CityListDbHelper;
+import com.yanas.mobileapp.weathercast.datastore.UserSettingsDbData;
 import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed;
 import com.yanas.utils.StringUtils;
 
@@ -64,6 +65,8 @@ public class MainActivity extends ListActivity
 	
 	protected Object mActionMode;
 	public int selectedItem = -1;
+	
+	private UserSettingsDbData userSettingsDbData;
 	public static SettingsWeather settings;
 
 	@Override
@@ -73,7 +76,10 @@ public class MainActivity extends ListActivity
 
 //		setupActionBar();
 		
-		settings = new SettingsWeather();
+		userSettingsDbData = new UserSettingsDbData(this);
+		userSettingsDbData.open();
+		settings = new SettingsWeather(userSettingsDbData);
+		settings.getSettingsWeather();
 		
 		cityZipDbData = new CityListDbData(this);
 		cityZipDbData.open();
@@ -195,6 +201,9 @@ public class MainActivity extends ListActivity
             settings.setPanelSelect(PanelSelectionEnum.QUAD_PANE_ONLY_MIN_GRAPHICS);
             break;
             
+		}
+		if(settings.saveSettingsWeather() <= 0) {
+		    Log.e("onOptionsItemSelected", "saveSettingsWeather unsuccessful");
 		}
 		return super.onOptionsItemSelected(item);
 	}
