@@ -226,7 +226,7 @@ public class WeatherDataControl  {
     }
 
     public String getWindGustMph() {
-        String wGust = "Gust Not Avail";
+        String wGust = "Gst Not Avl";
         int mph = 0;
         
         if(displayData.getWindGust() != null) {
