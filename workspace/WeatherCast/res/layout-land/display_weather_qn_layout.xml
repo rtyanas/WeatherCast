@@ -53,7 +53,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/InternalPaddingNum.TemperatureAndDescText" >
+                style="@style/TemperatureAndDescText" >
             </TextView>
             
             <!-- Wind and Gust layout horizontal -->
@@ -67,14 +67,14 @@
 					        android:layout_width="match_parent"
 					        android:layout_height="wrap_content"
 					        android:orientation="horizontal"
-                            android:layout_weight=".5"
-                            style="@style/InternalPaddingNum"  >
+                            android:layout_weight="3"
+                            style="@style/InternalPaddingNumLandscape"  >
 		            
 		            <TextView
 		                android:id="@+id/wind1"
 		                android:layout_width="0.0dip"
 		                android:layout_height="wrap_content"
-		                android:layout_weight="1"
+		                android:layout_weight="3"
 		                android:ems="10"
 		                style="@style/RegularText"  >        
 		            </TextView>
@@ -83,7 +83,7 @@
 			            android:id="@+id/compass_dir_image1"
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
-		                android:layout_weight=".5"
+		                android:layout_weight="1"
 			            android:src="@drawable/wind_dir_compass_arrows" />
 		
 			        </LinearLayout>
@@ -94,8 +94,8 @@
 		                android:layout_height="wrap_content"
 		                android:layout_alignParentLeft="true"
 		                android:gravity="top"
-		                android:layout_weight="1" 
-		                style="@style/InternalPaddingNum.RegularText" >        
+		                android:layout_weight="4" 
+		                style="@style/RegularText" >        
 		            </TextView>
             </LinearLayout>            
 		    <LinearLayout
@@ -109,7 +109,7 @@
 		            android:layout_weight="1"
 		            android:hint="@string/weatherForecast"
 		            android:minLines="2"
-                    style="@style/InternalPaddingNum.PopText"  />		
+                    style="@style/PopText"  />		
 		    </LinearLayout>
 
             </LinearLayout>
@@ -139,7 +139,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/InternalPaddingNum.TemperatureAndDescText" >
+                style="@style/TemperatureAndDescText" >
             </TextView>
             
             <!-- Wind and Gust layout horizontal -->
@@ -153,14 +153,14 @@
 	                    android:layout_width="match_parent"
 	                    android:layout_height="wrap_content"
 	                    android:orientation="horizontal"
-	                    android:layout_weight=".5"
-	                    style="@style/InternalPaddingNum" >
+	                    android:layout_weight="3"
+	                    style="@style/InternalPaddingNumLandscape" >
 	            
 		            <TextView
 		                android:id="@+id/wind2"
 		                android:layout_width="0.0dip"
 		                android:layout_height="wrap_content"
-		                android:layout_weight="1"
+		                android:layout_weight="3"
 		                android:ems="10" 
 		                style="@style/RegularText" >
 		            </TextView>
@@ -169,7 +169,7 @@
 		                android:id="@+id/compass_dir_image2"
 		                android:layout_width="wrap_content"
 		                android:layout_height="wrap_content"
-		                android:layout_weight=".5"
+		                android:layout_weight="1"
 		                android:src="@drawable/wind_dir_compass_arrows" />
 		
 		            </LinearLayout>
@@ -180,8 +180,8 @@
 		                android:layout_height="wrap_content"
 		                android:layout_alignParentLeft="true"
 		                android:gravity="top"
-                        android:layout_weight="1"
-		                style="@style/InternalPaddingNum.RegularText" >        
+                        android:layout_weight="4"
+		                style="@style/RegularText" >        
 		            </TextView>
             </LinearLayout>            
             <LinearLayout
@@ -195,7 +195,7 @@
                     android:layout_weight="1"
                     android:hint="@string/weatherForecast"
                     android:minLines="2"
-                    style="@style/InternalPaddingNum.PopText"  />     
+                    style="@style/PopText"  />     
             </LinearLayout>
 
             
@@ -236,7 +236,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/InternalPaddingNum.TemperatureAndDescText" >
+                style="@style/TemperatureAndDescText" >
             </TextView>
             
             <!-- Wind and Gust layout horizontal -->
@@ -250,14 +250,14 @@
 		                    android:layout_width="match_parent"
 		                    android:layout_height="wrap_content"
 		                    android:orientation="horizontal" 
-		                    android:layout_weight=".5"
-		                    style="@style/InternalPaddingNum">
+		                    android:layout_weight="3"
+		                    style="@style/InternalPaddingNumLandscape">
 		            
 		            <TextView
 		                android:id="@+id/wind3"
 		                android:layout_width="0.0dip"
 		                android:layout_height="wrap_content"
-		                android:layout_weight="1"
+		                android:layout_weight="3"
 		                android:ems="10"
 		                style="@style/RegularText"  >        
 		            </TextView>
@@ -266,7 +266,7 @@
 		                android:id="@+id/compass_dir_image3"
 		                android:layout_width="wrap_content"
 		                android:layout_height="wrap_content"
-		            android:layout_weight=".5"
+		            android:layout_weight="1"
 		                android:src="@drawable/wind_dir_compass_arrows" />
 		
 		            </LinearLayout>
@@ -277,8 +277,8 @@
 		                android:layout_height="wrap_content"
 		                android:layout_alignParentLeft="true"
 		                android:gravity="top"
-		                style="@style/InternalPaddingNum.RegularText"  
-		                android:layout_weight="1">        
+		                style="@style/RegularText"  
+		                android:layout_weight="4">        
 		            </TextView>
             </LinearLayout>            
             <LinearLayout
@@ -292,7 +292,7 @@
                     android:layout_weight="1"
                     android:hint="@string/weatherForecast"
                     android:minLines="2"
-                    style="@style/InternalPaddingNum.PopText"  />     
+                    style="@style/PopText"  />     
             </LinearLayout>
 
             
@@ -323,7 +323,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/InternalPaddingNum.TemperatureAndDescText" >
+                style="@style/TemperatureAndDescText" >
             </TextView>
             
             <!-- Wind and Gust layout horizontal -->
@@ -337,14 +337,14 @@
 		                    android:layout_width="match_parent"
 		                    android:layout_height="wrap_content"
 		                    android:orientation="horizontal"
-		                    android:layout_weight=".5"
-		                    style="@style/InternalPaddingNum" >
+		                    android:layout_weight="3"
+		                    style="@style/InternalPaddingNumLandscape" >
 		            
 				            <TextView
 				                android:id="@+id/wind4"
 				                android:layout_width="0.0dip"
 				                android:layout_height="wrap_content"
-				                android:layout_weight="1"
+				                android:layout_weight="3"
 				                android:ems="10"
 				                style="@style/RegularText"  >        
 				            </TextView>
@@ -353,7 +353,7 @@
 				                android:id="@+id/compass_dir_image4"
 				                android:layout_width="wrap_content"
 				                android:layout_height="wrap_content"
-				                android:layout_weight=".5"
+				                android:layout_weight="1"
 				                android:src="@drawable/wind_dir_compass_arrows" />
 				
 				            </LinearLayout>
@@ -364,8 +364,8 @@
 				                android:layout_height="wrap_content"
 				                android:layout_alignParentLeft="true"
 				                android:gravity="top"
-				                style="@style/InternalPaddingNum.RegularText"  
-				                android:layout_weight="1">        
+				                style="@style/RegularText"  
+				                android:layout_weight="4">        
 				            </TextView>
             </LinearLayout>            
             <LinearLayout
@@ -379,7 +379,7 @@
                     android:layout_weight="1"
                     android:hint="@string/weatherForecast"
                     android:minLines="2"
-                    style="@style/InternalPaddingNum.PopText"  />     
+                    style="@style/PopText"  />     
             </LinearLayout>
 
             
