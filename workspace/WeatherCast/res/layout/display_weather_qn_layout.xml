@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -52,7 +51,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/InternalPaddingNum.TemperatureAndDescText" >
+                style="@style/TemperatureAndDescText.InternalPaddingNum" >
             </TextView>
             
             <LinearLayout
@@ -67,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:ems="10"
-                style="@style/RegularText"  >        
+                style="@style/RegularText.InternalPaddingNum"  >        
             </TextView>
             
 	        <ImageView
@@ -86,9 +85,9 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10" 
-                style="@style/InternalPaddingNum.RegularText" >        
+                style="@style/RegularText.InternalPaddingNum" >        
             </TextView>
-            
+           
 		    <LinearLayout
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content" >
@@ -100,7 +99,7 @@
 		            android:layout_weight="1"
 		            android:hint="@string/weatherForecast"
 		            android:minLines="2"
-                    style="@style/InternalPaddingNum.PopText"  />		
+                    style="@style/PopText.InternalPaddingNum"  />		
 		    </LinearLayout>
 
             </LinearLayout>
@@ -130,7 +129,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/InternalPaddingNum.TemperatureAndDescText" >
+                style="@style/TemperatureAndDescText.InternalPaddingNum" >
             </TextView>
             
             <LinearLayout
@@ -164,7 +163,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10" 
-                style="@style/InternalPaddingNum.RegularText" >        
+                style="@style/RegularText.InternalPaddingNum" >        
             </TextView>
             
             <LinearLayout
@@ -178,7 +177,7 @@
                     android:layout_weight="1"
                     android:hint="@string/weatherForecast"
                     android:minLines="2"
-                    style="@style/InternalPaddingNum.PopText"  />     
+                    style="@style/PopText.InternalPaddingNum"  />     
             </LinearLayout>
 
             
@@ -220,7 +219,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/InternalPaddingNum.TemperatureAndDescText" >
+                style="@style/TemperatureAndDescText.InternalPaddingNum" >
             </TextView>
             
             <LinearLayout
@@ -254,7 +253,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/InternalPaddingNum.RegularText"  >        
+                style="@style/RegularText.InternalPaddingNum"  >        
             </TextView>
             
             <LinearLayout
@@ -268,7 +267,7 @@
                     android:layout_weight="1"
                     android:hint="@string/weatherForecast"
                     android:minLines="2"
-                    style="@style/InternalPaddingNum.PopText"  />     
+                    style="@style/PopText.InternalPaddingNum"  />     
             </LinearLayout>
 
             
@@ -300,7 +299,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/InternalPaddingNum.TemperatureAndDescText" >
+                style="@style/TemperatureAndDescText.InternalPaddingNum" >
             </TextView>
             
             <LinearLayout
@@ -334,7 +333,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="top"
                 android:ems="10"
-                style="@style/InternalPaddingNum.RegularText"  >        
+                style="@style/RegularText.InternalPaddingNum"  >        
             </TextView>
             
             <LinearLayout
@@ -348,7 +347,7 @@
                     android:layout_weight="1"
                     android:hint="@string/weatherForecast"
                     android:minLines="2"
-                    style="@style/InternalPaddingNum.PopText"  />     
+                    style="@style/PopText.InternalPaddingNum"  />     
             </LinearLayout>
 
             
