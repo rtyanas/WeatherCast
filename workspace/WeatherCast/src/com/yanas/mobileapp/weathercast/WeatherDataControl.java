@@ -82,7 +82,7 @@ public class WeatherDataControl  {
         displayData = displayData_in;
         try {
             dateOfData = sdfInput.parse(displayData.getTemperature().getPeriod());
-            Log.d("DisplayWeatherInfoAccessPageFragmnt", "Date: "+ dateOfData);
+            if(GlobalSettings.weatherData) Log.d("DisplayWeatherInfoAccessPageFragmnt", "Date: "+ dateOfData);
             todaysDate = sdfDisplay.format(dateOfData);
             hour  = Integer.parseInt(sdfSunCheck.format(dateOfData));
             month = Integer.parseInt(sdfMonth.format(dateOfData));
@@ -164,7 +164,7 @@ public class WeatherDataControl  {
                 returnStr = 
                         getTemperatureValue(Integer.parseInt(displayData.getTemperature().getValue()) );      
             } catch(NumberFormatException nfe) {
-                if(GlobalSettings.display_weatherInfo_access_pagefrag) 
+                if(GlobalSettings.weatherData) 
                     Log.e("DisplayWeatherInfoAccessPageFragment", "Temperature number parse error.");
             }
         }
@@ -179,7 +179,7 @@ public class WeatherDataControl  {
                 windIconStr = 
                         getWindValue(Integer.parseInt(displayData.getWindSustained().getValue()) );      
             } catch(NumberFormatException nfe) {
-                if(GlobalSettings.display_weatherInfo_access_pagefrag) 
+                if(GlobalSettings.weatherData) 
                     Log.e("DisplayWeatherInfoAccessPageFragment", "Wind number parse error.");
             }
         }
@@ -245,7 +245,7 @@ public class WeatherDataControl  {
                 compassDir = 
                         getRoseValue(Integer.parseInt(displayData.getWindDirection().getValue()));              
             } catch(NumberFormatException nfe) {
-                if(GlobalSettings.display_weatherInfo_access_pagefrag) 
+                if(GlobalSettings.weatherData) 
                     Log.e("DisplayWeatherInfoAccessPageFragment", "Wind direction number parse error.");
             }
         }
@@ -349,7 +349,7 @@ public class WeatherDataControl  {
                 cloudConfigStr = 
                         getCloudConfigValue(Integer.parseInt(displayData.getCloudAmount().getValue()));
             } catch(NumberFormatException nfe) {
-                if(GlobalSettings.display_weatherInfo_access_pagefrag) 
+                if(GlobalSettings.weatherData) 
                     Log.e("DisplayWeatherInfoAccessPageFragment", "Wind direction number parse error.");
             }
         }
@@ -366,7 +366,7 @@ public class WeatherDataControl  {
                         getRainConfigValue(Integer.parseInt(displayData.getPropPrecip12().getValue()));
                 
             } catch(NumberFormatException nfe) {
-                if(GlobalSettings.display_weatherInfo_access_pagefrag) 
+                if(GlobalSettings.weatherData) 
                     Log.e("DisplayWeatherInfoAccessPageFragment", "Wind direction number parse error.");
             }
         }
