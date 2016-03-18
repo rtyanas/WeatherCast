@@ -6,7 +6,8 @@
     <color name="bluedark6" type="color">#116888</color>
     <color name="darkpurple" type="color">#FF9933CC</color>
     <color name="blueBackground" type="color">#c9def6</color>
- 
+    <color name="blueBackgroundtransparent" type="color">#88c9def6</color>
+    
 
     <color name="white">#FFFFFF</color>
     <color name="ivory">#FFFFF0</color>
@@ -116,6 +117,7 @@
     <color name="dimgray">#696969</color>
     <color name="mediumaquamarine">#66CDAA</color>
     <color name="cornflowerblue">#6495ED</color>
+    <color name="cornflowerbluetransparent">#776495ED</color>
     <color name="cadetblue">#5F9EA0</color>
     <color name="darkolivegreen">#556B2F</color>
     <color name="indigo">#4B0082</color>
