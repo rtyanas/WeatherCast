@@ -34,6 +34,8 @@ public class DisplayWeatherInfoQuadGraphicsActivity extends FragmentActivity {
     String location;
     SettingsWeather.PanelSelectionEnum displayStyle;
 
+    private int orientation = 0;
+
     /**
      * The pager adapter, which provides the pages to the view pager widget.
      */
@@ -45,6 +47,10 @@ public class DisplayWeatherInfoQuadGraphicsActivity extends FragmentActivity {
 		setContentView(R.layout.activity_display_weather_info);
 		// Show the Up button in the action bar.
 		setupActionBar();
+
+        orientation = getResources().getConfiguration().orientation;
+        if(GlobalSettings.display_weatherInfo_access_pagefrag) 
+            Log.d(DisplayWeatherInfoQuadGraphicsActivity.class.getName(), "Orientation: "+ orientation);
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -65,7 +71,8 @@ public class DisplayWeatherInfoQuadGraphicsActivity extends FragmentActivity {
         location = intent.getStringExtra(StationListActivity.LOCATION_ID);
 		displayStyle = (SettingsWeather.PanelSelectionEnum)intent.getSerializableExtra(MainActivity.DISPLAY_STYLE_ID);
 		
-		Log.d("DisplayWeatherInfoQuadGraphicsActivity", "Display Style: "+ displayStyle);
+        if(GlobalSettings.display_weatherInfo_access_pagefrag) 
+            Log.d("DisplayWeatherInfoQuadGraphicsActivity", "Display Style: "+ displayStyle);
 
 		
 		new AssembleWeatherAsync().execute(this);
@@ -207,15 +214,15 @@ public class DisplayWeatherInfoQuadGraphicsActivity extends FragmentActivity {
                 break;
             case QUAD_PANE_ONLY_GRAPHICS :
 //                returnFrag = DisplayWeatherInfoAccessQGPageFragment.create(ddSubL);
-                return DisplayWeatherInfoAccessQGPageFragment.create(ddSubL);
+                return DisplayWeatherInfoAccessQGPageFragment.create(ddSubL, orientation);
 //                break;
             case QUAD_PANE_ONLY_MIN_GRAPHICS :
 //                returnFrag = DisplayWeatherInfoAccessQGPageFragment.create(ddSubL);
-                return DisplayWeatherInfoAccessMinQGPageFragment.create(ddSubL);
+                return DisplayWeatherInfoAccessMinQGPageFragment.create(ddSubL, orientation);
 //                break;
             }
 //            return returnFrag;
-          return DisplayWeatherInfoAccessQGPageFragment.create(ddSubL);
+          return DisplayWeatherInfoAccessQGPageFragment.create(ddSubL, orientation);
         }
 
         @Override
