@@ -27,6 +27,7 @@ import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.DisplayData;
 import com.yanas.utils.StringUtils;
 
 import android.app.Fragment;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
@@ -52,6 +53,8 @@ public class DisplayWeatherInfoAccessMinQGPageFragment extends Fragment {
     public static final String ARG_TEMP = "temp";
     public static final String STATIONDATA_DATETIME_ARG = "station_datetime_Data";
 
+    private int orientation = 0;
+
     /**
      * The fragment's page number, which is set to the argument value for {@link #ARG_PAGE}.
      */
@@ -61,11 +64,13 @@ public class DisplayWeatherInfoAccessMinQGPageFragment extends Fragment {
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
      */
-    public static DisplayWeatherInfoAccessMinQGPageFragment create(ArrayList<DisplayData> dataSelected_in) {
+    public static DisplayWeatherInfoAccessMinQGPageFragment create(
+            ArrayList<DisplayData> dataSelected_in, int orientation_in) {
         DisplayWeatherInfoAccessMinQGPageFragment fragment = new DisplayWeatherInfoAccessMinQGPageFragment();
         Bundle args = new Bundle();
         
         args.putSerializable(STATIONDATA_DATETIME_ARG, dataSelected_in);
+        args.putSerializable(MainActivity.ORIENTATION, orientation_in);
         fragment.setArguments(args);
 
         return fragment;
@@ -85,6 +90,9 @@ public class DisplayWeatherInfoAccessMinQGPageFragment extends Fragment {
             for(DisplayData dd : displayDataL) {
                 weatherControl.add(new WeatherDataControl(dd) );
             }
+            orientation = getArguments().getInt(MainActivity.ORIENTATION);
+            if(GlobalSettings.display_weatherInfo_access_pagefrag)
+                Log.d(DisplayWeatherInfoAccessMinQGPageFragment.class.getName(), "onCreate() Orientation: "+ orientation);
         } else {
         	Log.e("DisplayWeatherInfoAccessQGPageFragment", "getArguments() is null");
         }
@@ -103,12 +111,26 @@ public class DisplayWeatherInfoAccessMinQGPageFragment extends Fragment {
 
         // Set Header: city and zip
         if(weatherControl != null && weatherControl.get(0) != null && 
-                weatherControl.get(0).getDateOfData() != null)
-       
-            ((TextView) rootView.findViewById(R.id.cityZip)).setText(StringUtils.createStationRow(weatherControl.get(0).getCity(), 
-                weatherControl.get(0).getState(), 
-                weatherControl.get(0).getZipcode())
-                +" - "+ weatherControl.get(0).getTodaysDate());
+                weatherControl.get(0).getDateOfData() != null) {
+            
+            if(orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                ((TextView) rootView.findViewById(R.id.cityZip)).setText(
+                        StringUtils.createStationRow(
+                                weatherControl.get(0).getCity(), 
+                                weatherControl.get(0).getState(), 
+                                weatherControl.get(0).getZipcode()));
+                TextView dateTextV = ((TextView) rootView.findViewById(R.id.date));
+                if(dateTextV != null) // check if orientation is correct. 
+                                      // Sometimes the activity says landscape but portrait is up 
+                    dateTextV.setText( weatherControl.get(0).getTodaysDate());
+            }
+            else {
+                ((TextView) rootView.findViewById(R.id.cityZip)).setText(StringUtils.createStationRow(weatherControl.get(0).getCity(), 
+                        weatherControl.get(0).getState(), 
+                        weatherControl.get(0).getZipcode())
+                        +" - "+ weatherControl.get(0).getTodaysDate());
+            }
+        }       
         else
             ((TextView) rootView.findViewById(R.id.cityZip)).setText("Data Not Available");
             
