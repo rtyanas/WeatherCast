@@ -12,9 +12,9 @@
   <LinearLayout 
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="horizontal"
+      android:orientation="vertical"
       android:paddingRight="10dp"
-      android:layout_weight="5" >
+      android:layout_weight="6" >
 
             <TextView 
                 android:id="@+id/cityZip"
@@ -25,7 +25,15 @@
                 style="@style/TitleText"
                 />
       
-  </LinearLayout>
+            <TextView 
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:ems="12"
+                style="@style/TitleText"
+                />
+            </LinearLayout>
     
 	<!-- Day 1 and 2 -->
     <LinearLayout 
