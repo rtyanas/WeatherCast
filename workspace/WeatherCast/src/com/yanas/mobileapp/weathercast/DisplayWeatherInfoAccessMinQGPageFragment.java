@@ -90,9 +90,6 @@ public class DisplayWeatherInfoAccessMinQGPageFragment extends Fragment {
             for(DisplayData dd : displayDataL) {
                 weatherControl.add(new WeatherDataControl(dd) );
             }
-            orientation = getArguments().getInt(MainActivity.ORIENTATION);
-            if(GlobalSettings.display_weatherInfo_access_pagefrag)
-                Log.d(DisplayWeatherInfoAccessMinQGPageFragment.class.getName(), "onCreate() Orientation: "+ orientation);
         } else {
         	Log.e("DisplayWeatherInfoAccessQGPageFragment", "getArguments() is null");
         }
@@ -106,6 +103,7 @@ public class DisplayWeatherInfoAccessMinQGPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                                 Bundle savedInstanceState) {
 
+        orientation = getArguments().getInt(MainActivity.ORIENTATION);
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.display_weather_min_qg_layout, container, false);
 
