@@ -32,7 +32,7 @@
     
     <style name="TitleText" >
         <item name="android:textColor">@color/darkgoldenrod</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold </item>
         <item name="android:background">@drawable/titleborder</item>
         <item name="android:paddingTop">10dp</item>
