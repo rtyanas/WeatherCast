@@ -2,6 +2,8 @@ package com.yanas.mobileapp.weathercast;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
@@ -60,15 +62,19 @@ public class MainActivity extends ListActivity
 	public final static String ZIP_ARG = "com.yanas.mobileapp.weathercast.ZIP";
 	public final static String LAT_ARG = "com.yanas.mobileapp.weathercast.LAT";
 	public final static String LON_ARG = "com.yanas.mobileapp.weathercast.LON";
+    public static final String BACKGROUND = "com.yanas.mobileapp.weathercast.LON";
 
-	static final int new_station_result = 1;
+    public static final String ORIENTATION = "com.yanas.mobileapp.weathercast.ORIENTATION";
+
+    static final int new_station_result = 1;
+
 	
 	protected Object mActionMode;
 	public int selectedItem = -1;
 	
 	private UserSettingsDbData userSettingsDbData;
 	public static SettingsWeather settings;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -115,7 +121,22 @@ public class MainActivity extends ListActivity
 		ArrayList<String> stationsAL = new ArrayList<String>();
 		
 		cityZipList = cityZipDbData.getAllCityZipData();
-		
+		boolean citySort = true;
+		if(citySort)
+    		Collections.sort(cityZipList, new Comparator<StationSelected>() {
+    		    @Override
+    		    public int compare(StationSelected citySt1, StationSelected cityState2) {
+    		        return 0;
+    		    }
+            } );
+		else // State sort
+            Collections.sort(cityZipList, new Comparator<StationSelected>() {
+                @Override
+                public int compare(StationSelected citySt1, StationSelected cityState2) {
+                    return 0;
+                }
+            } );
+		    
 		boolean first = true;
 		
 		String station = "";
@@ -159,7 +180,9 @@ public class MainActivity extends ListActivity
 		return true;
 	}
 
-	
+	/**
+	 * Menu item selected
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -249,7 +272,7 @@ public class MainActivity extends ListActivity
         String stationData[] = item.split(",");
         int ZIPCODE = 2;
         if(stationData.length >= 3) {
-            if( ("".equals(stationData[ZIPCODE]) ) ) {
+            if( ("".equals(stationData[ZIPCODE].trim()) ) ) {
                 isZipCodeOK = false;                
                 error = "Sorry, zip code is required.";
                 Log.e("MainActivity", "Zipcode invalid");
@@ -322,10 +345,12 @@ public class MainActivity extends ListActivity
             if(station_in.length > 0)
                 station = station_in[0];
             
+            if(GlobalSettings.main_activity) Log.d(MainActivity.class.getName() +":ValidateInternetRunDisplayAsync", 
+                                                    "Station: "+ station);
+            
             ConnectivityManager cm =
                       (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getActiveNetworkInfo();
-              
             
             if (netInfo == null ) {
                 return "";
@@ -338,7 +363,7 @@ public class MainActivity extends ListActivity
             try {
               InetAddress ipAddr = InetAddress.getByName("yahoo.com"); 
             
-              if ("".equals(ipAddr.toString()) ) {
+              if (ipAddr == null || "".equals(ipAddr.toString()) ) {
                   return "";
               } else {
                   return station +",<"+ ipAddr.toString() +">"+ ipAddr.isReachable(500);
@@ -353,7 +378,7 @@ public class MainActivity extends ListActivity
 //            if(progressD.isShowing()) {
 //                progressD.dismiss();
 //            }
-            if("".equalsIgnoreCase(station_in) ) {
+            if(MainActivity.settings.getPanelSelect() == null || station_in == null ||  "".equalsIgnoreCase(station_in) ) {
                 showValidateAlert(titleError, "Internet is not available.");
             }
             else {
@@ -395,7 +420,9 @@ public class MainActivity extends ListActivity
                         startActivity(intent);                            
 
                         break;
-                        
+
+                    default:
+                        showValidateAlert(titleError, "Data not available.");
                 }
                 
             }
