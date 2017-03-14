@@ -21,8 +21,20 @@ public class SettingsWeather {
         }
     };
 
+    public enum SortSelectionEnum  {
+        NO_SORT(0), SORT_BY_CITY(1), SORT_BY_STATE(2) ;
+        private int value;
+        private SortSelectionEnum(int val) {
+            value = val;
+        }
+        public int getValue() {
+            return value;
+        }
+    };
+
     private int id;
     private PanelSelectionEnum panelSelect;
+    private SortSelectionEnum sortSelect;
     private int backgroundColor;
     private int cityStateListSort;
     UserSettingsDbData userSettingsDbData;
@@ -42,6 +54,7 @@ public class SettingsWeather {
         
         // Default values
         panelSelect = PanelSelectionEnum.QUAD_PANE_ONLY_NUMBERS;
+        sortSelect = SortSelectionEnum.NO_SORT;
         backgroundColor = 0;
         cityStateListSort = 0;
         return true;
@@ -105,6 +118,18 @@ public class SettingsWeather {
         else if(panelSelect == PanelSelectionEnum.SINGLE_PANE.getValue() ) {
             this.panelSelect = PanelSelectionEnum.SINGLE_PANE;
         }
+    }
+    
+    public SortSelectionEnum getSortSelect() {
+        return sortSelect;
+    }
+
+    public int getSortSelectInt() {
+        return sortSelect.getValue();
+    }
+
+    public void setSortSelect(SortSelectionEnum in_sortSelect) {
+        this.sortSelect = in_sortSelect;
     }
     
     public int getBackgroundColor() {

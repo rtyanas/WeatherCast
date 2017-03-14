@@ -27,9 +27,13 @@
     <string name="cancel">Cancel</string>
     <string name="delete_str">Delete</string>
     <string name="ok">OK</string>
-    <string name="action_days_per_screen">Days Per Screen</string>
-    <string name="action_days_per_screen_1">One Day Per Screen</string>
-    <string name="action_days_per_screen_graphic_4">Four Days Per Screen (Graphics)</string>
-    <string name="action_days_per_screen_min_graphic_4">Four Days Per Screen (Min Graphics)</string>
-    <string name="action_days_per_screen_number_4">Four Days Per Screen (Numeric)</string>
+    <string name="add_city_to_list">Add City to List </string>
+    <string name="action_days_per_screen">Manage Forecast Format </string>
+    <string name="action_days_per_screen_1">1 Day Description</string>
+    <string name="action_days_per_screen_graphic_4">4 Days - Graphics</string>
+    <string name="action_days_per_screen_min_graphic_4">4 Days - Min Graphics</string>
+    <string name="action_days_per_screen_number_4">4 Days - Typed</string>
+    <string name="resort_locations_list">Sort Locations List</string>
+    <string name="resort_locations_list_by_state">Sort By State</string>
+    <string name="resort_locations_list_by_city">Sort By City</string>
 </resources>

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Vector;
 
 import com.yanas.mobileapp.weathercast.SettingsWeather.PanelSelectionEnum;
+import com.yanas.mobileapp.weathercast.SettingsWeather.SortSelectionEnum;
 import com.yanas.mobileapp.weathercast.datastore.CityListDbData;
 import com.yanas.mobileapp.weathercast.datastore.CityListDbHelper;
 import com.yanas.mobileapp.weathercast.datastore.UserSettingsDbData;
@@ -86,6 +87,7 @@ public class MainActivity extends ListActivity
 		userSettingsDbData.open();
 		settings = new SettingsWeather(userSettingsDbData);
 		settings.getSettingsWeather();
+        settings.setSortSelect(SortSelectionEnum.SORT_BY_STATE);
 		
 		cityZipDbData = new CityListDbData(this);
 		cityZipDbData.open();
@@ -121,19 +123,19 @@ public class MainActivity extends ListActivity
 		ArrayList<String> stationsAL = new ArrayList<String>();
 		
 		cityZipList = cityZipDbData.getAllCityZipData();
-		boolean citySort = true;
-		if(citySort)
+
+		if( settings.getSortSelectInt() == SortSelectionEnum.SORT_BY_CITY.getValue() )
     		Collections.sort(cityZipList, new Comparator<StationSelected>() {
     		    @Override
-    		    public int compare(StationSelected citySt1, StationSelected cityState2) {
-    		        return 0;
+    		    public int compare(StationSelected cityState1, StationSelected cityState2) {
+    		        return cityState1.getCity().compareToIgnoreCase(cityState2.getCity());
     		    }
             } );
-		else // State sort
+		else if( settings.getSortSelectInt() == SortSelectionEnum.SORT_BY_STATE.getValue() ) 
             Collections.sort(cityZipList, new Comparator<StationSelected>() {
                 @Override
-                public int compare(StationSelected citySt1, StationSelected cityState2) {
-                    return 0;
+                public int compare(StationSelected cityState1, StationSelected cityState2) {
+                    return cityState1.getState().compareToIgnoreCase(cityState2.getState());
                 }
             } );
 		    
@@ -224,7 +226,19 @@ public class MainActivity extends ListActivity
             settings.setPanelSelect(PanelSelectionEnum.QUAD_PANE_ONLY_MIN_GRAPHICS);
             break;
             
-		}
+        case R.id.sort_by_state:
+            if(GlobalSettings.main_activity) Log.d("MainActivity", "onOptionsItemSelected, sort_by_state");
+            settings.setSortSelect(SortSelectionEnum.SORT_BY_STATE);
+            populateStationList();
+            break;
+       
+        case R.id.sort_by_city:
+            if(GlobalSettings.main_activity) Log.d("MainActivity", "onOptionsItemSelected, sort_by_city");
+            settings.setSortSelect(SortSelectionEnum.SORT_BY_CITY);
+            populateStationList();
+            break;
+       
+        }
 		if(settings.saveSettingsWeather() <= 0) {
 		    Log.e("onOptionsItemSelected", "saveSettingsWeather unsuccessful");
 		}

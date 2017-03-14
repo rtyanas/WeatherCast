@@ -4,7 +4,21 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="@string/add_city_to_list"/>
+    <item android:id="@+id/resort_locations_menu_options"
+          android:title="@string/resort_locations_list"
+          android:showAsAction="never" >
+          <menu>
+  
+            <item android:id="@+id/sort_by_state"
+                  android:title="@string/resort_locations_list_by_state"
+                  android:showAsAction="never" />
+            <item android:id="@+id/sort_by_city"
+                  android:title="@string/resort_locations_list_by_city"
+                  android:showAsAction="never" />
+            </menu>
+    </item>
+    
     <item android:id="@+id/action_days_per_screen"
           android:title="@string/action_days_per_screen"
           android:showAsAction="never" >
