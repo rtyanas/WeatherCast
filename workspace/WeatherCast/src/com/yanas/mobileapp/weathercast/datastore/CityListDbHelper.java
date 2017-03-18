@@ -1,11 +1,11 @@
 package com.yanas.mobileapp.weathercast.datastore;
 
-import com.yanas.mobileapp.weathercast.GlobalSettings;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.yanas.mobileapp.weathercast.GlobalSettings;
 
 public class CityListDbHelper  extends SQLiteOpenHelper {
 
@@ -18,7 +18,7 @@ public class CityListDbHelper  extends SQLiteOpenHelper {
 	  public static final String COLUMN_LON = "lon";
 
 	  private static final String DATABASE_NAME = "weathercast.db";
-	  public static final int DATABASE_VERSION = 4;
+	  public static final int DATABASE_VERSION = 6;
 
 	  // Database creation sql statement
 	  private static final String DATABASE_CREATE = "create table "
@@ -36,7 +36,7 @@ public class CityListDbHelper  extends SQLiteOpenHelper {
 
 	  @Override
 	  public void onCreate(SQLiteDatabase database) {
-	      if(GlobalSettings.city_list_db_data) Log.d(CityListDbHelper.class.getName(), "Create DB and Table: "+ DATABASE_CREATE);
+	      if(GlobalSettings.city_list_db_data) { Log.d(CityListDbHelper.class.getName(), "Create DB and Table: "+ DATABASE_CREATE); }
 	    database.execSQL(DATABASE_CREATE);
 	  }
 

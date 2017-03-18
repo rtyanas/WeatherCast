@@ -1,6 +1,7 @@
 workspace/.metadata
 workspace/WeatherCast/bin/
 workspace/WeatherCast/bin/classes/
+workspace/WeatherCast/bin/AndroidManifest.xml
 *.class
 *.log
 *.ap_
