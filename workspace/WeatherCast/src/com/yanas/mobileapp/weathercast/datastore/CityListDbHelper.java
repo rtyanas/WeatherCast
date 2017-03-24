@@ -9,7 +9,7 @@ import com.yanas.mobileapp.weathercast.GlobalSettings;
 
 public class CityListDbHelper  extends SQLiteOpenHelper {
 
-	  public static final String TABLE = "buildings";
+	  public static final String TABLE = "cities";
 	  public static final String COLUMN_ID = "_id";
 	  public static final String COLUMN_CITY = "city";
 	  public static final String COLUMN_STATE = "state";
@@ -17,8 +17,22 @@ public class CityListDbHelper  extends SQLiteOpenHelper {
 	  public static final String COLUMN_LAT = "lat";
 	  public static final String COLUMN_LON = "lon";
 
+      public static final String USER_SETTINGS_TABLE = "UserSettings";
+      public static final String US_COLUMN_ID = "_id";
+      public static final String US_COLUMN_DISPLAY_TYPE = "display_type";
+      public static final String US_COLUMN_BACKGROUND_COLOR = "backround_color";
+      public static final String US_COLUMN_CITY_LIST_SORT = "city_list_sort";
+
+      // Database creation sql statement
+      private static final String US_DATABASE_CREATE = "create table "
+          + USER_SETTINGS_TABLE + "(" + US_COLUMN_ID + " integer primary key autoincrement, " + 
+          US_COLUMN_DISPLAY_TYPE + " integer, " +
+          US_COLUMN_BACKGROUND_COLOR + " integer, " +
+          US_COLUMN_CITY_LIST_SORT + " integer " +
+          ");";
+
 	  private static final String DATABASE_NAME = "weathercast.db";
-	  public static final int DATABASE_VERSION = 6;
+	  public static final int DATABASE_VERSION = 13;
 
 	  // Database creation sql statement
 	  private static final String DATABASE_CREATE = "create table "
@@ -36,7 +50,9 @@ public class CityListDbHelper  extends SQLiteOpenHelper {
 
 	  @Override
 	  public void onCreate(SQLiteDatabase database) {
-	      if(GlobalSettings.city_list_db_data) { Log.d(CityListDbHelper.class.getName(), "Create DB and Table: "+ DATABASE_CREATE); }
+	      // if(GlobalSettings.city_list_db_data) { Log.d(CityListDbHelper.class.getName(), "Create DB and Table: "+ DATABASE_CREATE); }
+	      Log.d(CityListDbHelper.class.getName(), "Create DB and Table: "+ DATABASE_CREATE+ ", "+ US_DATABASE_CREATE);
+        database.execSQL(US_DATABASE_CREATE);
 	    database.execSQL(DATABASE_CREATE);
 	  }
 
@@ -46,6 +62,7 @@ public class CityListDbHelper  extends SQLiteOpenHelper {
 	        "Upgrading database from version " + oldVersion + " to "
 	            + newVersion + ", which will destroy all old data");
 	    db.execSQL("DROP TABLE IF EXISTS " + TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + USER_SETTINGS_TABLE);
 	    onCreate(db);
 	  }
 

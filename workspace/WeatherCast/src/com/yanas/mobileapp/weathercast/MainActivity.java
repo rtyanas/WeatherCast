@@ -90,13 +90,7 @@ public class MainActivity extends ListActivity
         settings.setSortSelect(SortSelectionEnum.SORT_BY_STATE);
 		
 		cityZipDbData = new CityListDbData(this);
-		cityZipDbData.open();
-		// long numRecsAdded = cityZipDbData.initDB(stations);
-		// Log.d("MainActivity", "numRecsAdded: "+ numRecsAdded);
-
-		initStationData();
-		
-		populateStationList();
+		new OpenCityDBAsync().execute("");
 
 		getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
         	@Override
@@ -118,6 +112,29 @@ public class MainActivity extends ListActivity
 	}
 	
 	
+    public class OpenCityDBAsync extends AsyncTask<String, Integer, String> {
+              
+      public OpenCityDBAsync() {
+      }
+      
+      protected void onPreExecute() {
+      }
+      
+      protected String doInBackground(String... openDB )
+      {
+          cityZipDbData.open();
+          return "";
+      }
+      
+      protected void onPostExecute(String createList)
+      {
+          initStationData();
+          
+          populateStationList();
+      }
+      
+  } // ValidateInternetRunDisplayAsync
+  
 	private boolean populateStationList() {
 		
 		ArrayList<String> stationsAL = new ArrayList<String>();

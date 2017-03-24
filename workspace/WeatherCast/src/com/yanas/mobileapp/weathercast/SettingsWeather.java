@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.yanas.mobileapp.weathercast.datastore.CityListDbHelper;
 import com.yanas.mobileapp.weathercast.datastore.UserSettingsDbData;
-import com.yanas.mobileapp.weathercast.datastore.UserSettingsDbHelper;
 
 public class SettingsWeather {
     
