@@ -32,7 +32,7 @@ public class CityListDbHelper  extends SQLiteOpenHelper {
           ");";
 
 	  private static final String DATABASE_NAME = "weathercast.db";
-	  public static final int DATABASE_VERSION = 13;
+	  public static final int DATABASE_VERSION = 14;
 
 	  // Database creation sql statement
 	  private static final String DATABASE_CREATE = "create table "

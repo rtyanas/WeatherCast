@@ -3,6 +3,7 @@ package com.yanas.mobileapp.weathercast;
 import android.database.DatabaseUtils;
 import android.util.Log;
 
+import com.yanas.mobileapp.weathercast.datastore.CityListDbData;
 import com.yanas.mobileapp.weathercast.datastore.CityListDbHelper;
 import com.yanas.mobileapp.weathercast.datastore.UserSettingsDbData;
 
