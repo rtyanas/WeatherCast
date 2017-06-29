@@ -24,6 +24,7 @@ import java.util.Locale;
 import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.DisplayData;
 import com.yanas.utils.StringUtils;
 
+import android.R.bool;
 import android.app.Fragment;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -371,6 +372,43 @@ public class WeatherDataControl  {
             }
         }
         return rainConfigStr;
+    }
+    
+    
+    /**
+     * Check cloud and precipitation amount.  If over limits then trigger thunder symbols.
+     * @return
+     */
+    public boolean isThunder() {
+        boolean thun = false;
+        int cloudConfig = 0;
+        int rainConfig = 0;
+        int cloudLimit = 25;
+        int rainLimit = 30;
+        
+        if(displayData.getCloudAmount() != null ) {
+            try {
+                cloudConfig = (Integer.parseInt(displayData.getCloudAmount().getValue()));
+            } catch(NumberFormatException nfe) {
+                if(GlobalSettings.weatherData) 
+                    Log.e("DisplayWeatherInfoAccessPageFragment", "Wind direction number parse error.");
+            }
+        }
+
+        if(displayData.getPropPrecip12() != null ) {
+            try {
+                rainConfig = (Integer.parseInt(displayData.getPropPrecip12().getValue()));
+            } catch(NumberFormatException nfe) {
+                if(GlobalSettings.weatherData) 
+                    Log.e("DisplayWeatherInfoAccessPageFragment", "Wind direction number parse error.");
+            }
+        }
+        
+        if(cloudConfig > cloudLimit && rainConfig > rainLimit) {
+            thun = true;
+        }
+
+        return thun;
     }
     
 

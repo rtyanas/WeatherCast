@@ -212,19 +212,19 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         
         int rainConfigId = 0;
 
-        if( weatherC.getPredominantWxType().contains("freezing") ) {
+        if( weatherC.getPredominantWxType().toLowerCase().contains("freezing") ) {
              rainConfigId = viewG.getResources().getIdentifier(
                      "icey_"+ weatherC.getRainSnowIceLevel().toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast"); 
-         } else if( weatherC.getPredominantWxType().contains("snow") ) {
+         } else if( weatherC.getPredominantWxType().toLowerCase().contains("snow") ) {
              rainConfigId = viewG.getResources().getIdentifier(
                      "snow_"+ weatherC.getRainSnowIceLevel().toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast");
-         } else if( weatherC.getPredominantWxType().contains("rain") ) {
+         } else if( weatherC.getPredominantWxType().toLowerCase().contains("rain") ) {
                  rainConfigId = viewG.getResources().getIdentifier(
                      "rain_"+ weatherC.getRainSnowIceLevel().toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast"); 
          }
             
         
-        Drawable[] layers = new Drawable[2];  // Used to combine cloud and rain.
+        Drawable[] layers = new Drawable[3];  // Used to combine cloud and rain.
 
         if(cloudConfigId != 0) {
             layers[0] = viewG.getResources().getDrawable(cloudConfigId);
@@ -239,6 +239,21 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         else {
             layers[1] = viewG.getResources().getDrawable(R.drawable.cloud_noclouds);
         }
+        
+
+        // Default
+        layers[2] = viewG.getResources().getDrawable(R.drawable.cloud_noclouds);
+
+        if(weatherC.isThunder()) {
+            if( weatherC.getPredominantWxType().toLowerCase().contains("thunderstorms") &&
+                    weatherC.getPredominantWxType().toLowerCase().contains("slight chance") ) {
+                layers[2] = viewG.getResources().getDrawable(R.drawable.thunderstorm_slight_chance);
+            } 
+            else if( weatherC.getPredominantWxType().toLowerCase().contains("thunderstorms") ) {
+                layers[2] = viewG.getResources().getDrawable(R.drawable.thunderstorm);
+            }
+        }
+  
         
         return layers;
 
