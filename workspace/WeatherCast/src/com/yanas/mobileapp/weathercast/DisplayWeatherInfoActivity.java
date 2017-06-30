@@ -9,6 +9,7 @@ import com.yanas.mobileapp.weathercast.parsexml.WeatherDataParsed.DisplayData;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v13.app.FragmentStatePagerAdapter;
@@ -66,15 +67,16 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
 	}
 	
 	
-//	@Override
-//	public void onConfigurationChanged(Configuration newConfig) {
-//	    super.onConfigurationChanged(newConfig);
-//	    
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	    super.onConfigurationChanged(newConfig);
+	    
+	    Log.d("DisplayWeatherInfoActivity", "onConfigurationChanged");
 //        setContentView(R.layout.activity_display_weather_info);
 //
 //	    // Display the data onPostExecute
 //        DisplayWeatherInfoActivity.this.mPagerAdapter.notifyDataSetChanged();
-//	}
+	}
 	
 	
 	/**

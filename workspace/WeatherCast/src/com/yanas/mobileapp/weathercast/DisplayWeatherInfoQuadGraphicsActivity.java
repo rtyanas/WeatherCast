@@ -80,15 +80,15 @@ public class DisplayWeatherInfoQuadGraphicsActivity extends FragmentActivity {
 	}
 	
 	
-//	@Override
-//	public void onConfigurationChanged(Configuration newConfig) {
-//	    super.onConfigurationChanged(newConfig);
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	    super.onConfigurationChanged(newConfig);
 //	    
 //        setContentView(R.layout.activity_display_weather_info);
 //
 //	    // Display the data onPostExecute
 //        DisplayWeatherInfoActivity.this.mPagerAdapter.notifyDataSetChanged();
-//	}
+	}
 	
 	
 	/**
