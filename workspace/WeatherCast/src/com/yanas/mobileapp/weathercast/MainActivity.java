@@ -109,7 +109,7 @@ public class MainActivity extends ListActivity
         	}
         });
         
-	}
+	} // onCreate
 	
 	
     public class OpenCityDBAsync extends AsyncTask<String, Integer, String> {
@@ -133,8 +133,14 @@ public class MainActivity extends ListActivity
           populateStationList();
       }
       
-  } // ValidateInternetRunDisplayAsync
+    } // OpenCityDBAsync
   
+    
+    /**
+     * Add canned and save list of places based on zip code.
+     * Add current location to the top of the list
+     * @return
+     */
 	private boolean populateStationList() {
 		
 		ArrayList<String> stationsAL = new ArrayList<String>();
@@ -152,7 +158,10 @@ public class MainActivity extends ListActivity
             Collections.sort(cityZipList, new Comparator<StationSelected>() {
                 @Override
                 public int compare(StationSelected cityState1, StationSelected cityState2) {
-                    return cityState1.getState().compareToIgnoreCase(cityState2.getState());
+                    String stateCity1 = cityState1.getState() + cityState1.getCity();
+                    String stateCity2 = cityState2.getState() + cityState2.getCity();
+                    
+                    return ( stateCity1.compareToIgnoreCase(stateCity2) );
                 }
             } );
 		    
@@ -187,7 +196,7 @@ public class MainActivity extends ListActivity
         
 
         return true;
-	}
+	} // populateStationList
 	
 
 	@Override
@@ -255,12 +264,14 @@ public class MainActivity extends ListActivity
             populateStationList();
             break;
        
-        }
+        } // Switch
+		
 		if(settings.saveSettingsWeather() <= 0) {
 		    Log.e("onOptionsItemSelected", "saveSettingsWeather unsuccessful");
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -268,6 +279,7 @@ public class MainActivity extends ListActivity
 		
 		switch(requestCode) {
 		case new_station_result:
+		    // Get values entered for new station data
 			if(resultCode == RESULT_OK) {
 				if(GlobalSettings.main_activity) Log.d("MainActivity", "onActivityResult, "+ 
 						data.getStringExtra(CITY_ARG) +","+
@@ -293,6 +305,9 @@ public class MainActivity extends ListActivity
 	
 	String titleError = "Apologies, cannot get weather";
 	
+	/**
+	 * Retrieve selected city / state then access using REST
+	 */
     @Override 
     public void onListItemClick(ListView l, View v, int position, long id) {
         final String item = (String) this.selecedList.get(Integer.valueOf(position));
@@ -404,11 +419,16 @@ public class MainActivity extends ListActivity
             } 
         }
         
+        
+        /**
+         * Start appropriate Activity with the corresponding pane
+         * Single - displays all the weather data for one day as well as graphic
+         * Quad Graphics - displays only graphic weather data including thermometer, wind and graphic summary.
+         * Quad Graphics Min - displays only graphic weather data including wind and graphic summary.
+         * Quad Numeric - displays numeric / typed data with arrow for wind direction.
+         */
         protected void onPostExecute(String station_in)
         {
-//            if(progressD.isShowing()) {
-//                progressD.dismiss();
-//            }
             if(MainActivity.settings.getPanelSelect() == null || station_in == null ||  "".equalsIgnoreCase(station_in) ) {
                 showValidateAlert(titleError, "Internet is not available.");
             }
@@ -470,9 +490,11 @@ public class MainActivity extends ListActivity
 	}
 	
 	
+	/**
+	 * Add canned data to station array
+	 */
 	private void initStationData() {
 		
-
 		long numRows = DatabaseUtils.longForQuery(
 				cityZipDbData.getDatabase(), "SELECT COUNT(*) FROM "+ CityListDbHelper.TABLE, null);
 		
@@ -601,10 +623,8 @@ public class MainActivity extends ListActivity
 	        
 			Log.d("MainActivity", "initStationData num New Recs in DB: "+ numRows);
 		}
-
-
 		
-	}
+	} // initStationData
 
 	
 	/**
@@ -634,8 +654,12 @@ public class MainActivity extends ListActivity
         public boolean hasStableIds() {
           return true;
         }
-    }
+    } // class StableArrayAdapter
     
+    
+    /**
+     * Defined for long click
+     */
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
 
         // called when the action mode is created; startActionMode() was called
@@ -673,9 +697,13 @@ public class MainActivity extends ListActivity
           mActionMode = null;
           selectedItem = -1;
         }
-      };
+     }; // ActionMode.Callback mActionModeCallback
 
-      private void removeStation() {
+     
+     /**
+      * removeStation
+      */
+     private void removeStation() {
     	  if(GlobalSettings.main_activity) Log.d("MainActivity", "show toast");
     	  
     	  Toast.makeText(MainActivity.this,
@@ -689,7 +717,6 @@ public class MainActivity extends ListActivity
     	  cityZipDbData.deleteStation(cityZipList.get(selectedItem));
     	  
     	  populateStationList();
-
       }
 
       
