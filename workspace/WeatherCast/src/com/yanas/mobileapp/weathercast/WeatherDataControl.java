@@ -338,6 +338,33 @@ public class WeatherDataControl  {
     }
     
     
+    public String getPredominantWxCoverage() {
+        String wxCoverage = "";
+        if(displayData.getWeatherPredominant() != null) {
+            wxCoverage = displayData.getWeatherPredominant().getCoverage() == null ? "" : displayData.getWeatherPredominant().getCoverage();
+        }
+        return wxCoverage;
+    }
+    
+    
+    public String getPredominantWxIntensity() {
+        String wxIntensity = "";
+        if(displayData.getWeatherPredominant() != null) {
+            wxIntensity = displayData.getWeatherPredominant().getIntensity()== null ? "" : displayData.getWeatherPredominant().getIntensity();
+        }
+        return wxIntensity;
+    }
+    
+    
+    public String getPredominantWxQualifier() {
+        String wxQualifier = "";
+        if(displayData.getWeatherPredominant() != null) {
+            wxQualifier = displayData.getWeatherPredominant().getQualifier()== null ? "" : displayData.getWeatherPredominant().getQualifier();
+        }
+        return wxQualifier;
+    }
+    
+    
     public boolean isMoonRising() {
         return this.isMoonRise(month, hour);
     }

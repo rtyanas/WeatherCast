@@ -49,6 +49,8 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
     public static final String ARG_PAGE = "page";
     public static final String ARG_TEMP = "temp";
     public static final String STATIONDATA_DATETIME_ARG = "station_datetime_Data";
+    
+    private static String TAG = "DisplayWeatherInfoAccess";
 
     /**
      * The fragment's page number, which is set to the argument value for {@link #ARG_PAGE}.
@@ -212,7 +214,8 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
         
         int rainConfigId = 0;
 
-        if( weatherC.getPredominantWxType().toLowerCase().contains("freezing") ) {
+        if( weatherC.getPredominantWxType().toLowerCase().contains("freezing") ||
+                weatherC.getPredominantWxQualifier().toLowerCase().contains("hail")) {
              rainConfigId = viewG.getResources().getIdentifier(
                      "icey_"+ weatherC.getRainSnowIceLevel().toLowerCase(), "drawable", "com.yanas.mobileapp.weathercast"); 
          } else if( weatherC.getPredominantWxType().toLowerCase().contains("snow") ) {
@@ -224,7 +227,7 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
          }
             
         
-        Drawable[] layers = new Drawable[3];  // Used to combine cloud and rain.
+        Drawable[] layers = new Drawable[4];  // Used to combine cloud and rain thunder and coverage (slight chance, chance, heavy).
 
         if(cloudConfigId != 0) {
             layers[0] = viewG.getResources().getDrawable(cloudConfigId);
@@ -246,14 +249,39 @@ public class DisplayWeatherInfoAccessPageFragment extends Fragment {
 
         if(weatherC.isThunder()) {
             if( weatherC.getPredominantWxType().toLowerCase().contains("thunderstorms") &&
-                    weatherC.getPredominantWxType().toLowerCase().contains("slight chance") ) {
+                    (
+                    weatherC.getPredominantWxCoverage().toLowerCase().contains("chance") ||
+                    weatherC.getPredominantWxType().toLowerCase().contains("chance")
+                    )) {
                 layers[2] = viewG.getResources().getDrawable(R.drawable.thunderstorm_slight_chance);
+                Log.d(TAG, "Using: R.drawable.thunderstorm_slight_chance, "+ weatherC.getPredominantWxType().toLowerCase() +
+                        ", getPredominantWxCoverage(): "+ weatherC.getPredominantWxCoverage() +
+                        ", getPredominantWxIntensity(): "+ weatherC.getPredominantWxIntensity());
             } 
             else if( weatherC.getPredominantWxType().toLowerCase().contains("thunderstorms") ) {
+                // 08-18 18:17:46.950: D/DisplayWeatherInfoAccess(22455): 
+                // Using: R.drawable.thunderstorm, thunderstorms, getPredominantWxCoverage(): definitely, chance, slight chance
+                // getPredominantWxIntensity(): heavy, none
+
                 layers[2] = viewG.getResources().getDrawable(R.drawable.thunderstorm);
+                Log.d(TAG, "Using: R.drawable.thunderstorm, "+ weatherC.getPredominantWxType().toLowerCase() +
+                        ", getPredominantWxCoverage(): "+ weatherC.getPredominantWxCoverage() +
+                        ", getPredominantWxIntensity(): "+ weatherC.getPredominantWxIntensity());
             }
         }
   
+        // Default
+        layers[3] = viewG.getResources().getDrawable(R.drawable.cloud_noclouds);
+
+        if(weatherC.getPredominantWxIntensity().toLowerCase().contains("heavy") )  {
+            layers[3] = viewG.getResources().getDrawable(R.drawable.coverage_heavy);
+        }
+        else if(weatherC.getPredominantWxIntensity().toLowerCase().contains("chance") )  {
+            
+        }
+        else if(weatherC.getPredominantWxIntensity().toLowerCase().contains("slight chance") )  {
+            
+        }
         
         return layers;
 
