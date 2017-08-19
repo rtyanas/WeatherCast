@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yanas.mobileapp.weathercast"
-    android:versionCode="29"
-    android:versionName="2.9" >
+    android:versionCode="210"
+    android:versionName="2.10" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -33,9 +33,9 @@
             android:name=".DisplayWeatherInfoActivity"
             android:label="@string/app_name"
             android:parentActivityName=".StationListActivity" 
-            android:configChanges="orientation|keyboardHidden|screenSize" 
+           
          >
-            
+           <!--   android:configChanges="orientation|keyboardHidden|screenSize"  --> 
             <!-- android:parentActivityName="com.yanas.mobileapp.weathercast.StationListActivity" -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -45,8 +45,9 @@
             android:name=".DisplayWeatherInfoQuadNumbersActivity"
             android:label="@string/app_name"
             android:parentActivityName=".StationListActivity" 
-            android:configChanges="orientation|keyboardHidden|screenSize" 
+            
             >
+            <!-- android:configChanges="orientation|keyboardHidden|screenSize"  -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.yanas.mobileapp.weathercast" />
@@ -55,9 +56,11 @@
             android:name=".DisplayWeatherInfoQuadGraphicsActivity"
             android:label="@string/app_name"
             android:parentActivityName=".StationListActivity"  
-            android:configChanges="orientation|keyboardHidden|screenSize" 
+             
             >
  
+            <!-- android:configChanges="orientation|keyboardHidden|screenSize" -->
+            
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.yanas.mobileapp.weathercast" />
