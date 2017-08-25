@@ -40,6 +40,11 @@ public class DisplayWeatherInfoQuadNumbersActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        init();
+    }
+    
+    private void init() {
+        
 		setContentView(R.layout.activity_display_weather_info);
 		// Show the Up button in the action bar.
 		setupActionBar();
@@ -62,7 +67,9 @@ public class DisplayWeatherInfoQuadNumbersActivity extends FragmentActivity {
 		Intent intent = getIntent();
 		location = intent.getStringExtra(StationListActivity.LOCATION_ID);
 		
-		new AssembleWeatherAsync().execute(this);
+		if(ddL == null) {
+	        new AssembleWeatherAsync().execute(this);
+		}
 
 	}
 	
@@ -71,10 +78,11 @@ public class DisplayWeatherInfoQuadNumbersActivity extends FragmentActivity {
 	public void onConfigurationChanged(Configuration newConfig) {
 	    super.onConfigurationChanged(newConfig);
 	    
-//        setContentView(R.layout.activity_display_weather_info);
-//
-//	    // Display the data onPostExecute
-//        DisplayWeatherInfoActivity.this.mPagerAdapter.notifyDataSetChanged();
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE ||
+                newConfig.orientation == Configuration.ORIENTATION_PORTRAIT )
+        {
+            init();            
+        }
 	}
 	
 	
@@ -99,7 +107,7 @@ public class DisplayWeatherInfoQuadNumbersActivity extends FragmentActivity {
                             DisplayWeatherInfoQuadNumbersActivity.this.location.split(",")[0] : "This land") +
                     " is a pleasant place.");
 	        
-	        if( ! this.progressD.isShowing())
+	        if(this.progressD != null  &&  ! this.progressD.isShowing())
 	            this.progressD.show();
 	    }
 	    
@@ -114,7 +122,7 @@ public class DisplayWeatherInfoQuadNumbersActivity extends FragmentActivity {
 	    
 	    protected void onPostExecute(WeatherDataParsed wdp_in)
 	    {
-	        if(progressD.isShowing()) {
+	        if(this.progressD != null  &&  progressD.isShowing()) {
 	            progressD.dismiss();
 	        }
 	        

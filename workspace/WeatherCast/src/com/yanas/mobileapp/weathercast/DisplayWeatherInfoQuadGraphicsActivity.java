@@ -33,7 +33,7 @@ public class DisplayWeatherInfoQuadGraphicsActivity extends FragmentActivity {
     List<DisplayData> ddL = null;
     String location;
     SettingsWeather.PanelSelectionEnum displayStyle;
-
+    
     private int orientation = 0;
 
     /**
@@ -46,11 +46,16 @@ public class DisplayWeatherInfoQuadGraphicsActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_weather_info);
 		// Show the Up button in the action bar.
-		setupActionBar();
+		init();
+	}
+	
+	private void init() {
+	    
+        setupActionBar();
 
         orientation = getResources().getConfiguration().orientation;
         if(GlobalSettings.display_weatherInfo_access_pagefrag) 
-            Log.d(DisplayWeatherInfoQuadGraphicsActivity.class.getName(), "Orientation: "+ orientation);
+            Log.d(DisplayWeatherInfoQuadGraphicsActivity.class.getName(), "init(), Orientation: "+ orientation);
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -67,27 +72,34 @@ public class DisplayWeatherInfoQuadGraphicsActivity extends FragmentActivity {
             }
         });
 
-		Intent intent = getIntent();
+        Intent intent = getIntent();
         location = intent.getStringExtra(StationListActivity.LOCATION_ID);
-		displayStyle = (SettingsWeather.PanelSelectionEnum)intent.getSerializableExtra(MainActivity.DISPLAY_STYLE_ID);
-		
+        displayStyle = (SettingsWeather.PanelSelectionEnum)intent.getSerializableExtra(MainActivity.DISPLAY_STYLE_ID);
+        
         if(GlobalSettings.display_weatherInfo_access_pagefrag) 
             Log.d("DisplayWeatherInfoQuadGraphicsActivity", "Display Style: "+ displayStyle);
 
-		
-		new AssembleWeatherAsync().execute(this);
-
+        if(ddL == null) {
+            new AssembleWeatherAsync().execute(this);
+        }
 	}
 	
 	
+	/**
+	 * If change from 
+	 */
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 	    super.onConfigurationChanged(newConfig);
-//	    
-//        setContentView(R.layout.activity_display_weather_info);
-//
-//	    // Display the data onPostExecute
-//        DisplayWeatherInfoActivity.this.mPagerAdapter.notifyDataSetChanged();
+	    
+        if(GlobalSettings.display_weatherInfo_access_pagefrag) 
+            Log.d(DisplayWeatherInfoQuadGraphicsActivity.class.getName(), "onConfigurationChanged(), Orientation: "+ orientation);
+
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE ||
+                newConfig.orientation == Configuration.ORIENTATION_PORTRAIT )
+        {
+            init();            
+        }
 	}
 	
 	
@@ -112,7 +124,7 @@ public class DisplayWeatherInfoQuadGraphicsActivity extends FragmentActivity {
                             DisplayWeatherInfoQuadGraphicsActivity.this.location.split(",")[0] : "This land") +
                     " is a pleasant place.");
 	        
-	        if( ! this.progressD.isShowing())
+	        if( this.progressD != null  &&  ! this.progressD.isShowing())
 	            this.progressD.show();
 	    }
 	    
@@ -127,7 +139,7 @@ public class DisplayWeatherInfoQuadGraphicsActivity extends FragmentActivity {
 	    
 	    protected void onPostExecute(WeatherDataParsed wdp_in)
 	    {
-	        if(progressD.isShowing()) {
+	        if( this.progressD != null  &&  progressD.isShowing()) {
 	            progressD.dismiss();
 	        }
 	        

@@ -33,7 +33,7 @@
             android:name=".DisplayWeatherInfoActivity"
             android:label="@string/app_name"
             android:parentActivityName=".StationListActivity" 
-           
+            android:configChanges="orientation|keyboardHidden|screenSize"
          >
            <!--   android:configChanges="orientation|keyboardHidden|screenSize"  --> 
             <!-- android:parentActivityName="com.yanas.mobileapp.weathercast.StationListActivity" -->
@@ -45,7 +45,7 @@
             android:name=".DisplayWeatherInfoQuadNumbersActivity"
             android:label="@string/app_name"
             android:parentActivityName=".StationListActivity" 
-            
+            android:configChanges="orientation|keyboardHidden|screenSize"
             >
             <!-- android:configChanges="orientation|keyboardHidden|screenSize"  -->
             <meta-data
@@ -56,7 +56,7 @@
             android:name=".DisplayWeatherInfoQuadGraphicsActivity"
             android:label="@string/app_name"
             android:parentActivityName=".StationListActivity"  
-             
+            android:configChanges="orientation|keyboardHidden|screenSize"
             >
  
             <!-- android:configChanges="orientation|keyboardHidden|screenSize" -->

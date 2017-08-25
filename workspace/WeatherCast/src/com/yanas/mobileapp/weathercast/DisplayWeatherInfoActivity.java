@@ -40,6 +40,11 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        init();
+    }
+    
+    private void init() {
+        
 		setContentView(R.layout.activity_display_weather_info);
 		// Show the Up button in the action bar.
 		setupActionBar();
@@ -62,7 +67,9 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
 		Intent intent = getIntent();
 		location = intent.getStringExtra(StationListActivity.LOCATION_ID);
 		
-		new AssembleWeatherAsync().execute(this);
+		if(ddL == null) {
+	        new AssembleWeatherAsync().execute(this);
+		}
 
 	}
 	
@@ -71,11 +78,14 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
 	public void onConfigurationChanged(Configuration newConfig) {
 	    super.onConfigurationChanged(newConfig);
 	    
-	    Log.d("DisplayWeatherInfoActivity", "onConfigurationChanged");
-//        setContentView(R.layout.activity_display_weather_info);
-//
-//	    // Display the data onPostExecute
-//        DisplayWeatherInfoActivity.this.mPagerAdapter.notifyDataSetChanged();
+        if(GlobalSettings.display_weatherInfo_access_pagefrag) 
+            Log.d("DisplayWeatherInfoActivity", "onConfigurationChanged");
+
+	    if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE ||
+                newConfig.orientation == Configuration.ORIENTATION_PORTRAIT )
+        {
+            init();            
+        }
 	}
 	
 	
@@ -100,7 +110,7 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
                             DisplayWeatherInfoActivity.this.location.split(",")[0] : "This land") +
                     " is a pleasant place.");
 	        
-	        if( ! this.progressD.isShowing())
+	        if(this.progressD != null  &&   ! this.progressD.isShowing())
 	            this.progressD.show();
 	    }
 	    
@@ -115,7 +125,7 @@ public class DisplayWeatherInfoActivity extends FragmentActivity {
 	    
 	    protected void onPostExecute(WeatherDataParsed wdp_in)
 	    {
-	        if(progressD.isShowing()) {
+	        if(this.progressD != null  &&  progressD.isShowing()) {
 	            progressD.dismiss();
 	        }
 	        
